@@ -1,0 +1,49 @@
+<html>
+  <head>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous" />
+    <script type="module">
+      import init, { say } from './hello_lib.js';
+      async function run() {
+        await init();
+        // const result = say("Michael");
+        // console.log(result);
+        var buttonOne = document.getElementById('buttonOne');
+        buttonOne.addEventListener('click', function() {
+          var input = $("#nameInput").val();
+          alert(say(input));
+        }, false);
+      }
+      run();
+    </script>
+  </head>
+  <body>
+    <div class="row">
+      <div class="col-sm-4"></div>
+      <div class="col-sm-4">
+        <b>Wasm - Say hello</b>
+      </div>
+      <div class="col-sm-4"></div>
+    </div>
+    <hr />
+    <div class="row">
+      <div class="col-sm-2"></div>
+      <div class="col-sm-4">What is your name?</div>
+      <div class="col-sm-4"> Click the button</div>
+      <div class="col-sm-2"></div>
+    </div>
+    <div class="row">
+      <div class="col-sm-2"></div>
+      <div class="col-sm-4">
+        <input type="text" id="nameInput" placeholder="", value="">
+      </div>
+      <div class="col-sm-4">
+        <button class="bg-light" id="buttonOne">Say hello</button>
+      </div>
+      <div class="col-sm-2"></div>
+    </div>
+  </body>
+  <script
+    src="https://code.jquery.com/jquery-3.4.1.js"
+    integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
+    crossorigin="anonymous"></script>
+</html>

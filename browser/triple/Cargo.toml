@@ -1,0 +1,14 @@
+[package]
+name = "triple"
+version = "0.1.0"
+authors = ["ubuntu"]
+edition = "2018"
+
+[lib]
+name = "triple_lib"
+path = "src/lib.rs"
+crate-type =["cdylib"]
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
