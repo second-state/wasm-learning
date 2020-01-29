@@ -7,6 +7,7 @@ In this example, we setup a `string` hello world WASM demo and demonstrate inter
 ```
 $ sudo apt-get update
 $ sudo apt-get -y upgrade
+$ sudo apt install build-essential
 
 $ sudo apt-get -y install apache2
 $ sudo chown -R $USER:$USER /var/www/html
@@ -14,9 +15,6 @@ $ sudo systemctl start apache2
 
 $ curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 $ source $HOME/.cargo/env
-$ rustup target add wasm32-wasi
-$ rustup override set nightly
-$ rustup target add wasm32-wasi --toolchain nightly
 
 $ curl https://rustwasm.github.io/wasm-pack/installer/init.sh -sSf | sh
 ```
