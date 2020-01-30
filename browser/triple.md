@@ -28,7 +28,9 @@ $ cargo new --lib triple
 $ cd triple
 ```
 
-## Change the triple/Cargo.toml file
+## Change the cargo config file
+
+Add the following to the [Cargo.toml](triple/Cargo.toml) file.
 
 ```
 [lib]
@@ -37,7 +39,9 @@ path = "src/lib.rs"
 crate-type =["cdylib"]
 ```
 
-## Write Rust code in src/lib.rs
+## Write Rust code
+
+Below is the entire content of the [src/lib.rs](triple/src/lib.rs) file.
 
 ```
 #[no_mangle]
@@ -59,7 +63,9 @@ $ mkdir html
 $ cp target/wasm32-wasi/release/triple_lib.wasm html/
 ```
 
-## Create a html/index.html file
+## Create an html file
+
+Below is the content of the [html/index.html](triple/html/index.html) file.
 
 ```
 <html>
