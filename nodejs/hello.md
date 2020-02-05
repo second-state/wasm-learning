@@ -80,7 +80,7 @@ Change the `new TextEncoder` to `new util.TextEncoder`.
 
 Change the `new TextDecoder` to `new util.TextDecoder`.
 
-Change the `export function say(s) {` to `function say(wasm, s) {`.
+Change the `export function say(s) {` to `function say(s) {`.
 
 Replace the whole init function to:
 
@@ -120,8 +120,8 @@ Below is the content of the [node/app.js](hello/node/app.js) file.
 const { init, say } = require('./hello_lib.js');
 
 (async () => {
-  const wasm = await init();
-  console.log(say(wasm, 'World!'));
+  await init();
+  console.log(say('World!'));
 })();
 ```
 

@@ -85,7 +85,7 @@ function getStringFromWasm0(ptr, len) {
 * @param {string} s
 * @returns {string}
 */
-function say(wasm, s) {
+function say(s) {
     try {
         var ptr0 = passStringToWasm0(s, wasm.__wbindgen_malloc, wasm.__wbindgen_realloc);
         var len0 = WASM_VECTOR_LEN;
