@@ -45,7 +45,7 @@ Below is the entire content of the [src/lib.rs](hello/src/lib.rs) file.
 use wasm_bindgen::prelude::*;
 
 #[wasm_bindgen]
-pub fn say(s: String) -> String {
+pub fn say(s: &str) -> String {
   let r = String::from("hello ");
   return r + &s;
 }
@@ -54,7 +54,7 @@ pub fn say(s: String) -> String {
 ## Build the WASM bytecode
 
 ```
-$ wasm-pack build --target web
+$ wasm-pack build --target nodejs
 ```
 
 ## Create a new Node folder
