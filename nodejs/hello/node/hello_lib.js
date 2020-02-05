@@ -1,5 +1,5 @@
-import util from 'util';
-import fs from 'fs';
+const util = require('util');
+const fs = require('fs');
 
 let wasm;
 
@@ -85,7 +85,7 @@ function getStringFromWasm0(ptr, len) {
 * @param {string} s
 * @returns {string}
 */
-export function say(s) {
+function say(wasm, s) {
     try {
         var ptr0 = passStringToWasm0(s, wasm.__wbindgen_malloc, wasm.__wbindgen_realloc);
         var len0 = WASM_VECTOR_LEN;
@@ -122,6 +122,4 @@ function init(module) {
     });
 }
 
-export default init;
-
-
+module.exports = { init, say };

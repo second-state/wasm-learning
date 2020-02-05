@@ -72,13 +72,15 @@ Because this file is designed to be used in browser, so we should make some chan
 Insert these two lines at the beginning:
 
 ```
-import util from 'util';
-import fs from 'fs';
+const util = require('util');
+const fs = require('fs');
 ```
 
 Change the `new TextEncoder` to `new util.TextEncoder`.
 
 Change the `new TextDecoder` to `new util.TextDecoder`.
+
+Change the `export function say(s) {` to `function say(wasm, s) {`.
 
 Replace the whole init function to:
 
@@ -108,57 +110,23 @@ function init(module) {
 }
 ```
 
+In the end, replace the `export default init;` to `module.exports = { init, say };`.
+
 ## Create a node file
 
 Below is the content of the [node/app.js](hello/node/app.js) file.
 
 ```
-import init, { say } from './hello_lib.js';
+const { init, say } = require('./hello_lib.js');
 
 (async () => {
-  await init();
-  console.log(say('World!'));
+  const wasm = await init();
+  console.log(say(wasm, 'World!'));
 })();
-```
-
-## Create the package.json
-
-```
-{
-  "name": "hello",
-  "version": "1.0.0",
-  "description": "",
-  "main": "app.js",
-  "dependencies": {},
-  "devDependencies": {
-    "babel-cli": "^6.26.0",
-    "babel-preset-es2015": "^6.24.1"
-  },
-  "scripts": {
-    "build": "babel *.js -d build && cp *.wasm build"
-  },
-  "author": "",
-  "license": "ISC"
-}
-```
-
-## Create the file .babelrc
-
-```
-{
-  "presets": ["es2015"]
-}
-```
-
-## Build
-
-```
-$ npm install
-$ npm run build
 ```
 
 ## Test
 
 ```
-node build/app.js
+node app.js
 ```

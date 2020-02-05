@@ -1,6 +1,6 @@
-import init, { say } from './hello_lib.js';
+const { init, say } = require('./hello_lib.js');
 
 (async () => {
-  await init();
-  console.log(say('World!'));
+  const wasm = await init();
+  console.log(say(wasm, 'World!'));
 })();
