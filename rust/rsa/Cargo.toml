@@ -1,0 +1,13 @@
+[package]
+name = "rsa"
+version = "0.1.0"
+authors = ["ubuntu"]
+edition = "2018"
+
+[lib]
+name = "rsa_lib"
+path = "src/lib.rs"
+crate-type =["cdylib"]
+
+[dependencies]
+openssl = "0.10.28"
