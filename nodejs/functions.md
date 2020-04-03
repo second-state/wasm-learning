@@ -32,25 +32,7 @@ $ cd functions
 
 ## Change the cargo config file
 
-The following is the content of the [Cargo.toml](functions/Cargo.toml) file.
-
-```
-[package]
-name = "functions"
-version = "0.1.0"
-authors = ["ubuntu"]
-edition = "2018"
-
-[lib]
-name = "functions_lib"
-path = "src/lib.rs"
-crate-type =["cdylib"]
-
-[dependencies]
-num-integer = "0.1"
-sha3 = "0.8.2"
-wasm-bindgen = "0.2.60"
-```
+The [Cargo.toml](functions/Cargo.toml) file shows the dependencies. Note the dependency for wasm-bindgen, which is required for invoking these Rust functions from JavaScript. The dependency for serde and serde-json allows us to work with JSON strings to represent complex data types.
 
 ## Write Rust code
 
@@ -60,52 +42,7 @@ The supported data types are:
 * Return value can be i32 or String or Vec<u8>
 * For complex data types, such as structs, you could return a JSON string
 
-Below is the entire content of the [src/lib.rs](functions/src/lib.rs) file.
-
-```
-extern crate num_integer;
-
-use wasm_bindgen::prelude::*;
-use num_integer::lcm;
-use sha3::{Digest, Sha3_256, Keccak256};
-
-#[wasm_bindgen]
-pub fn say(s: &str) -> String {
-  let r = String::from("hello ");
-  return r + s;
-}
-
-#[wasm_bindgen]
-pub fn obfusticate(s: String) -> String {
-  return rot13(&s);
-}
-
-#[wasm_bindgen]
-pub fn lowest_common_denominator(a: i32, b: i32) -> i32 {
-  let r = lcm(a, b);
-  return r;
-}
-
-#[wasm_bindgen]
-pub fn sha3_digest(v: Vec<u8>) -> Vec<u8> {
-  return Sha3_256::digest(&v).as_slice().to_vec();
-}
-
-#[wasm_bindgen]
-pub fn keccak_digest(s: &[u8]) -> Vec<u8> {
-  return Keccak256::digest(s).as_slice().to_vec();
-}
-
-pub fn rot13(text: &str) -> String {
-    text.chars().map(|c| {
-        match c {
-            'A' ..= 'M' | 'a' ..= 'm' => ((c as u8) + 13) as char,
-            'N' ..= 'Z' | 'n' ..= 'z' => ((c as u8) - 13) as char,
-            _ => c
-        }
-    }).collect()
-}
-```
+The [src/lib.rs](functions/src/lib.rs) file contains a few Rust functions that showcase different combinations of input / output parameters, including using JSON strings to serialize and deserialize complex data types.
 
 ## Build the WASM bytecode
 
@@ -124,20 +61,7 @@ $ cd node
 
 ## Create a node file
 
-Below is the content of the [node/app.js](functions/node/app.js) file.
-
-```
-const { say, obfusticate, lowest_common_denominator, sha3_digest, keccak_digest } = require('./functions_lib.js');
-
-var util = require('util');
-const encoder = new util.TextEncoder();
-
-console.log( say("SSVM") );
-console.log( obfusticate("A quick brown fox jumps over the lazy dog") );
-console.log( lowest_common_denominator(123, 2) );
-console.log( sha3_digest(encoder.encode("This is an important message")) );
-console.log( keccak_digest(encoder.encode("This is an important message")) );
-```
+The [node/app.js](functions/node/app.js) file shows how to call the Rust functions, running inside the Second State VM (SSVM), from JavaScript inside Node.js.
 
 ## Test
 
