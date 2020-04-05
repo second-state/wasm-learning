@@ -3,6 +3,14 @@
 
 *Checkout [the complete tutorial series](https://docs.secondstate.io/beginners-guide-to-webassembly/why-webassembly)*
 
+## On the server side in Node.js
+
+[Hello World](nodejs/hello.md)
+
+[Function input and return values](nodejs/functions.md)
+
+[RSA public key encryption](nodejs/functions.md)
+
 ## Inside the web browser
 
 Those examples demonstrate how to access WASM programs from the JS engine inside web browsers.
@@ -11,13 +19,10 @@ Those examples demonstrate how to access WASM programs from the JS engine inside
 
 [An example to manipulate strings in a WASM program](browser/hello.md)
 
-
-## On the server side in node.js
-
-[Hello World](nodejs/hello.md)
-
 ## Learing Rust
 
 [Getting started](rust/hello.md)
 
 [Command line input and output](rust/cli.md)
+
+Brought to you by the Open source dev team at [Second State](https://www.secondstate.io/). Follow us on [Twitter](https://twitter.com/secondstateinc), [Facebook](https://www.facebook.com/SecondState.io/), [LinkedIn](https://www.linkedin.com/company/second-state/), [YouTube](https://www.youtube.com/channel/UCePMT5duHcIbJlwJRSOPDMQ), or [Medium](https://medium.com/wasm)
