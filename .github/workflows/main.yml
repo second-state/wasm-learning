@@ -1,0 +1,53 @@
+name: build and test
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [10.x, 12.x]
+
+    steps:
+    - uses: actions/checkout@v2
+      
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v1
+      with:
+        node-version: ${{ matrix.node-version }}
+
+    - name: Install apt-get packages
+      run: |
+        sudo apt-get install build-essential curl wget git vim libboost-all-dev
+    
+    - name: Install npm packages
+      run: |
+        npm install -g ssvmup
+        npm install ssvm
+    
+    - name: Hello
+      run: |
+        ssvmup build
+        cp pkg/* node/
+        node node/app.js
+      working-directory: nodejs/hello
+    
+    - name: Functions
+      run: |
+        ssvmup build
+        cp pkg/* node/
+        node node/app.js
+      working-directory: nodejs/functions
+
+
+    - name: Upload artifact
+      uses: actions/upload-artifact@v1
+      with:
+        name: ubuntu-18.04-nodejs-${{ matrix.node-version }}
+        path: nodejs
