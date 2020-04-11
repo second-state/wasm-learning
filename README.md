@@ -5,6 +5,8 @@
 
 ## On the server side in Node.js
 
+![Node.js examples](https://github.com/second-state/wasm-learning/workflows/Node.js%20examples/badge.svg)
+
 [Hello World](nodejs/hello/README.md)
 
 [Function input and return values](nodejs/functions/README.md)
