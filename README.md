@@ -7,6 +7,8 @@
 
 ![Node.js examples](https://github.com/second-state/wasm-learning/workflows/Node.js%20examples/badge.svg)
 
+> Quickstart: [Fork this repository](https://github.com/second-state/ssvm-nodejs-starter) and start editing the source code files on GitHub. [Learn more](https://docs.secondstate.io/beginners-guide-to-webassembly/webassembly-on-the-server-side/the-no-software-approach). 
+
 [Hello World](nodejs/hello/README.md)
 
 [Function input and return values](nodejs/functions/README.md)
