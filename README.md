@@ -9,7 +9,9 @@
 
 [Function input and return values](nodejs/functions.md)
 
-[RSA public key encryption](nodejs/functions.md)
+[RSA public key encryption](nodejs/rsa_example.md)
+
+[Machine learning with k-means](nodejs/kmeans.md)
 
 ## Inside the web browser
 
