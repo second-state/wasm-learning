@@ -31,13 +31,6 @@ jobs:
         npm install -g ssvmup
         npm install ssvm
     
-    - name: Hello
-      run: |
-        ssvmup build
-        cp pkg/* node/
-        node node/app.js
-      working-directory: nodejs/hello
-    
     - name: Functions
       run: |
         ssvmup build
@@ -45,6 +38,19 @@ jobs:
         node node/app.js
       working-directory: nodejs/functions
 
+    - name: RSA
+      run: |
+        ssvmup build
+        cp pkg/* node/
+        node node/app.js
+      working-directory: nodejs/rsa_example
+
+    - name: k-means ML
+      run: |
+        ssvmup build
+        cp pkg/* node/
+        node node/app.js
+      working-directory: nodejs/kmeans
 
     - name: Upload artifact
       uses: actions/upload-artifact@v1
