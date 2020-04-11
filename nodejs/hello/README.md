@@ -32,7 +32,7 @@ $ cd hello
 
 ## Change the cargo config file
 
-Add the following to the [Cargo.toml](hello/Cargo.toml) file.
+Add the following to the [Cargo.toml](Cargo.toml) file.
 
 ```
 [lib]
@@ -46,7 +46,7 @@ wasm-bindgen = "0.2.59"
 
 ## Write Rust code
 
-Below is the entire content of the [src/lib.rs](hello/src/lib.rs) file.
+Below is the entire content of the [src/lib.rs](src/lib.rs) file.
 
 ```
 use wasm_bindgen::prelude::*;
@@ -75,7 +75,7 @@ $ cd node
 
 ## Create a node file
 
-Below is the content of the [node/app.js](hello/node/app.js) file.
+Below is the content of the [node/app.js](node/app.js) file.
 
 ```
 const { say } = require('./hello_lib.js');

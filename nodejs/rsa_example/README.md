@@ -32,11 +32,11 @@ $ cd rsa_example
 
 ## Change the cargo config file
 
-The [Cargo.toml](rsa_example/Cargo.toml) file shows the dependencies. Note the dependency for wasm-bindgen, which is required for invoking these Rust functions from JavaScript. The dependency for serde and serde-json allows us to work with JSON strings to represent complex data types.
+The [Cargo.toml](Cargo.toml) file shows the dependencies. Note the dependency for wasm-bindgen, which is required for invoking these Rust functions from JavaScript. The dependency for serde and serde-json allows us to work with JSON strings to represent complex data types.
 
 ## Write Rust code
 
-The [src/lib.rs](rsa_example/src/lib.rs) file contains three Rust functions to create a key pair, encrypt with the public key, and decrypt with the private key. The keys are passed into or returned from those functions as JSON strings.
+The [src/lib.rs](src/lib.rs) file contains three Rust functions to create a key pair, encrypt with the public key, and decrypt with the private key. The keys are passed into or returned from those functions as JSON strings.
 
 ## Build the WASM bytecode
 
@@ -55,7 +55,7 @@ $ cd node
 
 ## Create a node file
 
-The [node/app.js](rsa_example/node/app.js) file shows how to call the Rust functions from JavaScript to create a key pair, use the public key to encrypt a string, and then use the private key to decrypt it.
+The [node/app.js](node/app.js) file shows how to call the Rust functions from JavaScript to create a key pair, use the public key to encrypt a string, and then use the private key to decrypt it.
 
 ## Test
 

@@ -20,7 +20,7 @@ $ cd cli
 
 ## Write Rust code
 
-Below is the content of the [src/main.rs](cli/src/main.rs) file.
+Below is the content of the [src/main.rs](src/main.rs) file.
 
 ```
 use std::env;

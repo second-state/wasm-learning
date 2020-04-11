@@ -32,7 +32,7 @@ $ cd functions
 
 ## Change the cargo config file
 
-The [Cargo.toml](functions/Cargo.toml) file shows the dependencies. Note the dependency for wasm-bindgen, which is required for invoking these Rust functions from JavaScript. The dependency for serde and serde-json allows us to work with JSON strings to represent complex data types.
+The [Cargo.toml](Cargo.toml) file shows the dependencies. Note the dependency for wasm-bindgen, which is required for invoking these Rust functions from JavaScript. The dependency for serde and serde-json allows us to work with JSON strings to represent complex data types.
 
 ## Write Rust code
 
@@ -42,7 +42,7 @@ The supported data types are:
 * Return value can be i32 or String or Vec<u8>
 * For complex data types, such as structs, you could return a JSON string
 
-The [src/lib.rs](functions/src/lib.rs) file contains a few Rust functions that showcase different combinations of input / output parameters, including using JSON strings to serialize and deserialize complex data types.
+The [src/lib.rs](src/lib.rs) file contains a few Rust functions that showcase different combinations of input / output parameters, including using JSON strings to serialize and deserialize complex data types.
 
 ## Build the WASM bytecode
 
@@ -61,7 +61,7 @@ $ cd node
 
 ## Create a node file
 
-The [node/app.js](functions/node/app.js) file shows how to call the Rust functions, running inside the Second State VM (SSVM), from JavaScript inside Node.js.
+The [node/app.js](node/app.js) file shows how to call the Rust functions, running inside the Second State VM (SSVM), from JavaScript inside Node.js.
 
 ## Test
 

@@ -6,6 +6,8 @@ In this example, we demonstrate how to do high performance machine learning in N
 * Use k-means algorithm to fit a model for the simulated data points.
 * Predict which cluster a newly observed point falls into.
 
+This example is inspired by [this article](https://www.lpalmieri.com/posts/2019-12-01-taking-ml-to-production-with-rust-a-25x-speedup/), which showed that Rust produced a 25x performance gain from Python.
+
 ## Set up
 
 ```
@@ -36,11 +38,11 @@ $ cd kmeans
 
 ## Change the cargo config file
 
-The [Cargo.toml](kmeans/Cargo.toml) file shows the dependencies. Note the dependency for wasm-bindgen, which is required for invoking these Rust functions from JavaScript. The dependency for serde and serde-json allows us to work with JSON strings to represent complex data types.
+The [Cargo.toml](Cargo.toml) file shows the dependencies. Note the dependency for wasm-bindgen, which is required for invoking these Rust functions from JavaScript. The dependency for serde and serde-json allows us to work with JSON strings to represent complex data types.
 
 ## Write Rust code
 
-The [src/lib.rs](kmeans/src/lib.rs) file contains Rust functions to generate simulated data, fit a model, and make predictions from the model. The data points array and model are passed into or returned from those functions as JSON strings.
+The [src/lib.rs](src/lib.rs) file contains Rust functions to generate simulated data, fit a model, and make predictions from the model. The data points array and model are passed into or returned from those functions as JSON strings.
 
 ## Build the WASM bytecode
 
@@ -59,7 +61,7 @@ $ cd node
 
 ## Create a node file
 
-The [node/app.js](kmeans/node/app.js) file shows how to call the Rust functions from JavaScript to generate simulated data, fit a model to the data, and predict the cluster for a new observed data point.
+The [node/app.js](node/app.js) file shows how to call the Rust functions from JavaScript to generate simulated data, fit a model to the data, and predict the cluster for a new observed data point.
 
 ## Test
 
