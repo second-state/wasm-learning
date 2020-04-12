@@ -1,13 +1,13 @@
 
-# Learning WASM
+# Learning WebAssembly, Rust, and Node.js
 
-*Checkout [the complete tutorial series](https://docs.secondstate.io/beginners-guide-to-webassembly/why-webassembly)*
+Brought to you by the Open source dev team at [Second State](https://www.secondstate.io/). Follow us on [Twitter](https://twitter.com/secondstateinc), [Facebook](https://www.facebook.com/SecondState.io/), [LinkedIn](https://www.linkedin.com/company/second-state/), [YouTube](https://www.youtube.com/channel/UCePMT5duHcIbJlwJRSOPDMQ), or [Medium](https://medium.com/wasm)
 
 ## On the server side in Node.js
 
 ![Node.js examples](https://github.com/second-state/wasm-learning/workflows/Node.js%20examples/badge.svg)
 
-Building Rust + JavaScript hybrid apps for Node.js. [See why](https://docs.secondstate.io/serverless-cloud/the-case-for-webassembly-on-the-server-side).
+Developers: [Getting started](https://docs.secondstate.io/beginners-guide-to-webassembly/webassembly-on-the-server-side) building Rust + JavaScript hybrid apps for Node.js.
 
 * Rust's performance
 * WebAssembly's security and portability
@@ -37,4 +37,4 @@ Those examples demonstrate how to access WASM programs from the JS engine inside
 
 [Command line input and output](rust/cli/README.md)
 
-Brought to you by the Open source dev team at [Second State](https://www.secondstate.io/). Follow us on [Twitter](https://twitter.com/secondstateinc), [Facebook](https://www.facebook.com/SecondState.io/), [LinkedIn](https://www.linkedin.com/company/second-state/), [YouTube](https://www.youtube.com/channel/UCePMT5duHcIbJlwJRSOPDMQ), or [Medium](https://medium.com/wasm)
+
