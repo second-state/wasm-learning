@@ -1,4 +1,4 @@
-# The hello example
+# The functions example
 
 In this example, we demonstrate how to call Rust functions in SSVM from JavaScript.
 
