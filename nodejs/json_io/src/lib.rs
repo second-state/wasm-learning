@@ -15,6 +15,7 @@ struct Line {
   desc: String
 }
 
+// Compute the circumference given the radius
 #[wasm_bindgen]
 pub fn circumference(radius: &str) -> String {
   let r: f32 = serde_json::from_str(radius).unwrap();
@@ -22,6 +23,7 @@ pub fn circumference(radius: &str) -> String {
   return serde_json::to_string(&c).unwrap();
 }
 
+// Compute the area given the width and length of a rectangle
 #[wasm_bindgen]
 pub fn area(sides: &str) -> String {
   let s: (f32, f32) = serde_json::from_str(&sides).unwrap();
@@ -29,6 +31,7 @@ pub fn area(sides: &str) -> String {
   return serde_json::to_string(&a).unwrap();
 }
 
+// Solve a quadratic equation https://www.mathsisfun.com/quadratic-equation-solver.html
 #[wasm_bindgen]
 pub fn solve(params: &str) -> String {
   let ps: (f32, f32, f32) = serde_json::from_str(&params).unwrap();
@@ -42,6 +45,7 @@ pub fn solve(params: &str) -> String {
   return serde_json::to_string(&solution).unwrap();
 }
 
+// Draw a line between two points
 #[wasm_bindgen]
 pub fn draw(points: &str) -> String {
   let ps: (Point, Point, String) = serde_json::from_str(&points).unwrap();
