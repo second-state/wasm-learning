@@ -19,6 +19,8 @@ Developers: [Getting started](https://cloud.secondstate.io/server-side-webassemb
 
 [Function input and return values](nodejs/functions/README.md)
 
+[Paass and return values of arbitary types](nodejs/json_io/README.md)
+
 [RSA public key encryption](nodejs/rsa_example/README.md)
 
 [Machine learning with k-means](nodejs/kmeans/README.md)
