@@ -37,6 +37,13 @@ jobs:
         cp pkg/* node/
         node node/app.js
       working-directory: nodejs/functions
+      
+    - name: JSON IO
+      run: |
+        ssvmup build
+        cp pkg/* node/
+        node node/app.js
+      working-directory: nodejs/json_io
 
     - name: RSA
       run: |
