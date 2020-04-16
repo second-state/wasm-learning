@@ -13,6 +13,7 @@ crate-type =["cdylib"]
 linfa-clustering = "0.1.0"
 ndarray = "0.13.0"
 ndarray-rand = "0.11.0"
+rand = { version = "0.7.3", features = ["wasm-bindgen"] }
 rand_isaac = "0.2.0"
 approx = "0.3.2"
 serde = { version = "1.0", features = ["derive"] }

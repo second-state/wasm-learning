@@ -89,6 +89,7 @@ dependencies = [
  "cfg-if",
  "libc",
  "wasi",
+ "wasm-bindgen",
 ]
 
 [[package]]
@@ -132,6 +133,7 @@ dependencies = [
  "linfa-clustering",
  "ndarray",
  "ndarray-rand",
+ "rand",
  "rand_isaac",
  "serde",
  "serde_json",
