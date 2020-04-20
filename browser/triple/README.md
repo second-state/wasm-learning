@@ -16,9 +16,9 @@ $ sudo systemctl start apache2
 
 $ curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 $ source $HOME/.cargo/env
-$ rustup target add wasm32-wasi
+$ rustup target add wasm32-unknown-unknown
 $ rustup override set nightly
-$ rustup target add wasm32-wasi --toolchain nightly
+$ rustup target add wasm32-unknown-unknown --toolchain nightly
 ```
 
 ## Create new project
@@ -30,13 +30,15 @@ $ cd triple
 
 ## Change the cargo config file
 
-Add the following to the [Cargo.toml](Cargo.toml) file.
+Add the following `[lib]` section to the [Cargo.toml](Cargo.toml) file (just above the dependencies section as shown below)
 
 ```
 [lib]
 name = "triple_lib"
 path = "src/lib.rs"
 crate-type =["cdylib"]
+
+[dependencies]
 ```
 
 ## Write Rust code
@@ -53,14 +55,14 @@ pub extern fn triple(x: i32) -> i32 {
 ## Build the WASM bytecode
 
 ```
-$ cargo +nightly build --target wasm32-wasi --release
+$ cargo +nightly build --target wasm32-unknown-unknown --release
 ```
 
 ## Create a new HTML folder
 
 ```
 $ mkdir html
-$ cp target/wasm32-wasi/release/triple_lib.wasm html/
+$ cp target/wasm32-unknown-unknown/release/triple_lib.wasm html/
 ```
 
 ## Create an html file
@@ -134,7 +136,7 @@ $ cp html/* /var/www/html/
 ## Test
 
 ```
-http://100.24.46.159/
+http://100.xx.xx.xxx/
 ```
 
 
