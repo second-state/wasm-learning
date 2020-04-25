@@ -6,27 +6,16 @@ extern "C" {
   // Use `js_namespace` here to bind `console.log(..)` instead of just
   // `log(..)`
   #[wasm_bindgen(js_namespace = console)]
-  fn log(s: &str);
+  pub fn log(s: &str);
 
   #[wasm_bindgen(js_namespace = console)]
-  fn time(s: &str);
+  pub fn time(s: &str);
 
   #[wasm_bindgen(js_namespace = console)]
-  fn timeEnd(s: &str);
+  pub fn timeEnd(s: &str);
 }
 
-
-pub fn console_log(msg: &str) {
-    assert_eq!(mem::size_of::<usize>(), 4);
-    log(msg);
-}
-
-pub fn console_time(label: &str) {
-    assert_eq!(mem::size_of::<usize>(), 4);
-    time(label);
-}
-
-pub fn console_time_end(label: &str) {
-    assert_eq!(mem::size_of::<usize>(), 4);
-    timeEnd(label);
+// Provide a function name that comforms to Rust's convention
+pub fn time_end(s: &str) {
+    timeEnd(s);
 }
