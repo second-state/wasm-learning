@@ -26,20 +26,26 @@ pub struct Picture {
 pub fn resize_file(input: &str) {
   let p: (Dimension, String, String) = serde_json::from_str(input).unwrap();
 
-  console::time("Read file");
-  let raw = fs::read_file_sync(&(p.1));
-  console::time_end("Read file");
+  console::time("Resize file");
+  let raw = fs::read_file_sync(&p.1);
+  console::time_log("Resize file", "Done reading");
   let src = Picture {
     dim: p.0,
     raw: raw,
   };
-  console::time("Resize");
   let target = resize_impl(&src);
-  console::time_end("Resize");
+  console::time_log("Resize file", "Done resizing");
 
-  console::time("Write file");
-  fs::write_file_sync(&(p.2), &(target.raw));
-  console::time_end("Write file");
+  fs::write_file_sync(&p.2, &target.raw);
+  console::time_log("Resize file", "Done writing");
+
+  fs::copy_file_sync(&p.2, "tmp.png");
+  console::time_log("Resize file", "Done copying");
+
+  fs::unlink_sync(&p.2);
+  console::time_log("Resize file", "Done deleting");
+
+  console::time_end("Resize file");
 }
 
 pub fn resize_impl(src: &Picture) -> Picture {
