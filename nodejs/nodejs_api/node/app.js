@@ -1,5 +1,5 @@
 const fs = require('fs');
-const { resize_file } = require('../pkg/nodejs_api.js');
+const { resize_file, create_sqlite, query_sqlite } = require('../pkg/nodejs_api.js');
   
 (async () => {
   const dim = {
@@ -7,5 +7,8 @@ const { resize_file } = require('../pkg/nodejs_api.js');
     height: 100
   };
 
-  resize_file(JSON.stringify([dim, './cat.png', `./cat-${dim.width}-${dim.height}.png`]));
+  resize_file(JSON.stringify([dim, 'cat.png', `./cat-${dim.width}-${dim.height}.png`]));
+
+  create_sqlite();
+  query_sqlite();
 })();
