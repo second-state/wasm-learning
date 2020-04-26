@@ -4,6 +4,8 @@ extern crate serde_derive;
 mod fs;
 mod console;
 mod sqlite3;
+mod request;
+mod date;
 
 use std::io::{BufReader, Cursor};
 use wasm_bindgen::prelude::*;
@@ -51,7 +53,7 @@ pub fn resize_file(input: &str) {
   console::time_log("Resize file", "Done copying");
 
   fs::unlink_sync(&p.2);
-  // fs::unlink_sync("tmp.png");
+  fs::unlink_sync("tmp.png");
   console::time_log("Resize file", "Done deleting");
 
   console::time_end("Resize file");
@@ -114,4 +116,35 @@ pub fn query_sqlite() {
     console::log(&(user.id.to_string() + " : " + &user.full_name));
   }
   fs::unlink_sync("test.sqlite");
+}
+
+#[wasm_bindgen]
+pub fn fetch(url: &str) {
+  let content = request::fetch_as_string(url);
+  console::log(url);
+  console::log(&content);
+}
+
+#[wasm_bindgen]
+pub fn download(url: &str, path: &str) {
+  let content = request::fetch(url);
+  fs::write_file_sync(path, &content);
+}
+
+#[wasm_bindgen]
+pub fn show_now() {
+  console::log("Timestamp now: ");
+  console::log(&date::timestamp());
+}
+
+#[wasm_bindgen]
+pub fn utc_now() {
+  console::log("UTC time: ");
+  console::log(&date::utc_string());
+}
+
+#[wasm_bindgen]
+pub fn my_time(tz: &str) {
+  console::log(tz);
+  console::log(&date::format_date("en-US", "long", "numeric", "long", "numeric", tz, "short"));
 }

@@ -1,5 +1,5 @@
 const fs = require('fs');
-const { resize_file, create_sqlite, query_sqlite } = require('../pkg/nodejs_api.js');
+const { resize_file, create_sqlite, query_sqlite, fetch, download, show_now, utc_now, my_time } = require('../pkg/nodejs_api.js');
   
 (async () => {
   const dim = {
@@ -11,4 +11,12 @@ const { resize_file, create_sqlite, query_sqlite } = require('../pkg/nodejs_api.
 
   create_sqlite();
   query_sqlite();
+
+  fetch("https://raw.githubusercontent.com/angular/angular.js/master/LICENSE");
+  download("https://www.secondstate.io/", "secondstate.html");
+
+  show_now();
+  utc_now();
+  my_time("America/Chicago");
+
 })();
