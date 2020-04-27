@@ -28,8 +28,9 @@ jobs:
     
     - name: Install npm packages
       run: |
-        npm i ssvm ssvmup sync-request better-sqlite3
-        npm i wasm-pack
+        npm i ssvm sync-request better-sqlite3
+        npm i -g ssvmup
+        npm i -g wasm-pack
     
     - name: Functions
       run: |
