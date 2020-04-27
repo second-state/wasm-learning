@@ -1,8 +1,6 @@
-#[macro_use]
-extern crate serde_derive;
-
 use std::io::{BufReader, Cursor};
 use wasm_bindgen::prelude::*;
+use serde::{Serialize, Deserialize};
 use image::{GenericImageView, png, ImageEncoder, ImageFormat};
 use image::imageops::FilterType;
 use nodejs_helper;
@@ -44,13 +42,6 @@ pub fn resize_file(input: &str) {
   nodejs_helper::fs::write_file_sync(&p.2, &target.raw);
   nodejs_helper::console::time_log("Resize file", "Done writing");
 
-  nodejs_helper::fs::copy_file_sync(&p.2, "tmp.png");
-  nodejs_helper::console::time_log("Resize file", "Done copying");
-
-  nodejs_helper::fs::unlink_sync(&p.2);
-  nodejs_helper::fs::unlink_sync("tmp.png");
-  nodejs_helper::console::time_log("Resize file", "Done deleting");
-
   nodejs_helper::console::time_end("Resize file");
 }
 
@@ -83,7 +74,7 @@ pub fn resize_impl(src: &Picture) -> Picture {
 }
 
 #[wasm_bindgen]
-pub fn create_sqlite() {
+pub fn create_sqlite(path: &str) {
   let sql_create = "
 CREATE TABLE users (
   id INTEGER PRIMARY KEY NOT NULL, 
@@ -97,20 +88,19 @@ VALUES
 (2, 'Angus Vader', '02-03-04'),
 (3, 'Imperator Colin', '01-01-01');";
 
-  nodejs_helper::sqlite3::create("test.sqlite");
-  nodejs_helper::sqlite3::update("test.sqlite", sql_create);
-  nodejs_helper::sqlite3::update("test.sqlite", sql_insert);
+  nodejs_helper::sqlite3::create(path);
+  nodejs_helper::sqlite3::update(path, sql_create);
+  nodejs_helper::sqlite3::update(path, sql_insert);
 }
 
 #[wasm_bindgen]
-pub fn query_sqlite() {
+pub fn query_sqlite(path: &str) {
   let sql_query = "SELECT * FROM users;";
-  let rows: String = nodejs_helper::sqlite3::query("test.sqlite", sql_query);
+  let rows: String = nodejs_helper::sqlite3::query(path, sql_query);
   let users: Vec<User> = serde_json::from_str(&rows).unwrap();
   for user in users.into_iter() {
     nodejs_helper::console::log(&(user.id.to_string() + " : " + &user.full_name));
   }
-  nodejs_helper::fs::unlink_sync("test.sqlite");
 }
 
 #[wasm_bindgen]
@@ -124,6 +114,11 @@ pub fn fetch(url: &str) {
 pub fn download(url: &str, path: &str) {
   let content = nodejs_helper::request::fetch(url);
   nodejs_helper::fs::write_file_sync(path, &content);
+}
+
+#[wasm_bindgen]
+pub fn delete_file(path: &str) {
+  nodejs_helper::fs::unlink_sync(path);
 }
 
 #[wasm_bindgen]
