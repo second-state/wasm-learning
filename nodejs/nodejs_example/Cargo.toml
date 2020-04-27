@@ -1,0 +1,18 @@
+[package]
+name = "nodejs_example"
+version = "0.1.0"
+authors = ["Shishuo Wang", "Michael Yuan"]
+edition = "2018"
+
+[lib]
+name = "nodejs_example"
+path = "src/lib.rs"
+crate-type =["cdylib"]
+
+[dependencies]
+wasm-bindgen = { version="^0.2", features=["serde-serialize"] }
+nodejs-helper = "0.0.2"
+serde = "^1.0.59"
+serde_derive = "^1.0.59"
+serde_json = "^1.0.51"
+image = "0.23.0"
