@@ -28,8 +28,8 @@ jobs:
     
     - name: Install npm packages
       run: |
-        npm install -g ssvmup
-        npm install ssvm
+        npm i ssvm ssvmup sync-request better-sqlite3
+        npm i wasm-pack
     
     - name: Functions
       run: |
@@ -45,19 +45,16 @@ jobs:
         node node/app.js
       working-directory: nodejs/json_io
 
-    - name: RSA
+    - name: Nodejs API
       run: |
-        ssvmup build
-        cp pkg/* node/
-        node node/app.js
-      working-directory: nodejs/rsa_example
-
-    - name: k-means ML
-      run: |
-        ssvmup build
-        cp pkg/* node/
-        node node/app.js
-      working-directory: nodejs/kmeans
+        wasm-pack build --target nodejs
+        cd node/
+        node date.js
+        node db.js
+        node http.js
+        node image.js
+        node cleanup.js
+      working-directory: nodejs/nodejs_example
 
     - name: Upload artifact
       uses: actions/upload-artifact@v1
