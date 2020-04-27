@@ -11,7 +11,7 @@ crate-type =["cdylib"]
 
 [dependencies]
 wasm-bindgen = { version="^0.2", features=["serde-serialize"] }
-nodejs-helper = "0.0.2"
+nodejs-helper = "0.0.3"
 serde = { version = "^1.0.59", features = ["derive"] }
 serde_json = "^1.0.51"
 image = "0.23.0"
