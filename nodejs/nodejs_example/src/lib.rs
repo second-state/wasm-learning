@@ -1,5 +1,3 @@
-extern crate nodejs_helper;
-
 #[macro_use]
 extern crate serde_derive;
 
@@ -7,6 +5,7 @@ use std::io::{BufReader, Cursor};
 use wasm_bindgen::prelude::*;
 use image::{GenericImageView, png, ImageEncoder, ImageFormat};
 use image::imageops::FilterType;
+use nodejs_helper;
 
 #[derive(Serialize, Deserialize)]
 #[derive(Copy, Clone, Debug)]
