@@ -36,12 +36,14 @@ jobs:
       run: |
         ssvmup build
         node node/app.js
+        ssvmup clean
       working-directory: nodejs/functions
       
     - name: JSON IO
       run: |
         ssvmup build
         node node/app.js
+        ssvmup clean
       working-directory: nodejs/json_io
 
     - name: Nodejs API
@@ -53,6 +55,7 @@ jobs:
         node http.js
         node image.js
         node cleanup.js
+        rm -rf ../target ../pkg
       working-directory: nodejs/nodejs_example
 
     - name: Upload artifact
