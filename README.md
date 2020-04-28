@@ -19,7 +19,9 @@ Developers: [Getting started](https://cloud.secondstate.io/server-side-webassemb
 
 [Function input and return values](nodejs/functions/README.md)
 
-[Pass and return values of arbitary types](nodejs/json_io/README.md)
+[Passing and return values of arbitary types from Node.js to Rust](nodejs/json_io/README.md)
+
+[Calling Node.js functions from Rust](nodejs/nodejs_example/README.md)
 
 [RSA public key encryption](nodejs/rsa_example/README.md)
 
