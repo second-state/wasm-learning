@@ -44,15 +44,7 @@ The [src/lib.rs](src/lib.rs) file contains a few Rust functions that showcase us
 $ ssvmup build
 ```
 
-## Create a new Node folder
-
-```
-$ mkdir node
-$ cp pkg/* node/
-$ cd node
-```
-
-## Create a node file
+## Node.js app
 
 The [node/app.js](node/app.js) file shows how to call the Rust functions, running inside the Second State VM (SSVM), from JavaScript inside Node.js.
 

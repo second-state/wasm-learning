@@ -1,4 +1,4 @@
-const { circumference, area, solve, draw } = require('./json_io_lib.js');
+const { circumference, area, solve, draw } = require('../pkg/json_io_lib.js');
 
 var x = 10.;
 console.log( circumference(JSON.stringify(x)) );
