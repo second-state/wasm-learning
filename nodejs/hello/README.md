@@ -64,21 +64,12 @@ pub fn say(s: &str) -> String {
 $ ssvmup build
 ```
 
-## Create a new Node folder
-
-```
-$ mkdir node
-$ cp pkg/hello_lib_bg.wasm node/
-$ cp pkg/hello_lib.js node/
-$ cd node
-```
-
-## Create a node file
+## Node.js app
 
 Below is the content of the [node/app.js](node/app.js) file.
 
 ```
-const { say } = require('./hello_lib.js');
+const { say } = require('../pkg/hello_lib.js');
 
 const http = require('http');
 const url = require('url');

@@ -1,4 +1,4 @@
-const { say } = require('./hello_lib.js');
+const { say } = require('../pkg/hello_lib.js');
 
 const http = require('http');
 const url = require('url');
