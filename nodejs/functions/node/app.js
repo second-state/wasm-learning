@@ -1,4 +1,4 @@
-const { say, obfusticate, lowest_common_denominator, sha3_digest, keccak_digest, create_line } = require('./functions_lib.js');
+const { say, obfusticate, lowest_common_denominator, sha3_digest, keccak_digest, create_line } = require('../pkg/functions_lib.js');
 
 // Utils
 var util = require('util');
