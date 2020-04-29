@@ -35,7 +35,7 @@ Those examples demonstrate how to access WASM programs from the JS engine inside
 
 [An example to manipulate strings in a WASM program](browser/hello/README.md)
 
-## Learing Rust
+## Learning Rust
 
 [Getting started](rust/hello/README.md)
 
