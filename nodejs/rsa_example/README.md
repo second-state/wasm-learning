@@ -1,6 +1,6 @@
 # The RSA encryption and decryption example
 
-In this example, we demonstrate how to exchange complex data types between Rust and JavaScript using JSON strings. We will also show the performance advantages of Rust over JavaScript.
+In this example, we demonstrate how to exchange complex data types between Rust and JavaScript using JSON strings.
 
 ## Set up
 
@@ -57,12 +57,7 @@ The [node/app.js](node/app.js) file shows how to call the Rust functions from Ja
 ```
 $ cd node
 $ node app.js
-```
-
-## Performance
-
-To compare performance with a pure JS implementation of the RSA algorithms. You can try this.
-
-```
-$ node app_jsencrypt.js
+generate_key_pair: 2639.036ms
+encrypt_decrypt: 56.670ms
+The Times 03/Jan/2009 Chancellor on brink of second bailout for banks
 ```
