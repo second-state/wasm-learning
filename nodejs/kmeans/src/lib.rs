@@ -1,6 +1,5 @@
 use wasm_bindgen::prelude::*;
 use ndarray::{Array2, ArrayView1, ArrayView2};
-use plotters::prelude::*;
 use std::str::FromStr;
 
 use nodejs_helper;
@@ -14,6 +13,14 @@ pub fn fit (params: &str) -> String {
 
     let data = read_data(data_path, dim);
     let (means, clusters) = rkm::kmeans_lloyd(&data.view(), num_clusters);
+
+    let data_view = data.view();
+    let groups = separate_groups(&data_view, &clusters);
+    nodejs_helper::console::log(&format!("Cluster #1 has {} points", groups.0.len()));
+    nodejs_helper::console::log(&format!("Cluster #2 has {} points", groups.1.len()));
+    nodejs_helper::console::log(&format!("Cluster #3 has {} points", groups.2.len()));
+    // nodejs_helper::console::log(&format!("means {:?} clusters {:?}", means, clusters));
+    
     return serde_json::to_string(&means).unwrap();
 }
 
