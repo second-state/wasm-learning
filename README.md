@@ -27,6 +27,8 @@ Developers: [Getting started](https://cloud.secondstate.io/server-side-webassemb
 
 [Machine learning with k-means](nodejs/kmeans/README.md)
 
+[Image recognition with Tensorflow](nodejs/tensorflow/README.md)
+
 ## Inside the web browser
 
 Those examples demonstrate how to access WASM programs from the JS engine inside web browsers.
