@@ -19,7 +19,7 @@ $ [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
 $ nvm install v10.19.0
 $ nvm use v10.19.0
 
-npm install -g wasm-pack
+$ npm install -g wasm-pack
 ```
 
 ## Create new project
@@ -55,10 +55,10 @@ The [node/app.js](node/app.js) app shows how to call the Rust functions from Jav
 ## Test
 
 ```
-node app.js
+$ node app.js
 ```
 
-The first task is to recognize an image of computer scientist Grace Hopper.
+The first task is to recognize an image of computer scientist Grace Hopper. It takes 0.9s to recognize this image.
 
 ```
 Model: "mobilenet_v2_1.4_224_frozen.pb"
@@ -78,7 +78,7 @@ Category ID `654` can be found in the [imagenet_slim_labels.txt](imagenet_slim_l
 654 military uniform
 ```
 
-The second task is to recognize an image of a cat.
+The second task is to recognize an image of a cat. It takes 0.8s to recognize this image.
 
 ```
 Model: "mobilenet_v2_1.4_224_frozen.pb"
