@@ -1,4 +1,4 @@
-const { generate_key_pair, encrypt, decrypt } = require('./rsa_example_lib.js');
+const { generate_key_pair, encrypt, decrypt } = require('../pkg/rsa_example_lib.js');
 
 var util = require('util');
 const encoder = new util.TextEncoder();
