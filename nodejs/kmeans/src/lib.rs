@@ -1,54 +1,53 @@
 use wasm_bindgen::prelude::*;
-use linfa_clustering::{KMeansHyperParams, KMeans, generate_blobs};
-use ndarray::{Axis, array, Array2};
-use ndarray_rand::rand::SeedableRng;
-use rand_isaac::Isaac64Rng;
+use ndarray::{Array2, ArrayView1, ArrayView2};
+use plotters::prelude::*;
+use std::str::FromStr;
+
+use nodejs_helper;
 
 #[wasm_bindgen]
-pub fn test_data () -> String {
-    let points = array![[0., 1.], [-10., 20.], [-1., 10.]];
-    return serde_json::to_string(&points).unwrap();
+pub fn fit (params: &str) -> String {
+    let ps: (String, usize, usize) = serde_json::from_str(params).unwrap();
+    let data_path = &ps.0;
+    let dim = ps.1;
+    let num_clusters = ps.2;
+
+    let data = read_data(data_path, dim);
+    let (means, clusters) = rkm::kmeans_lloyd(&data.view(), num_clusters);
+    return serde_json::to_string(&means).unwrap();
 }
 
-#[wasm_bindgen]
-pub fn test_data_2 () -> String {
-    let points = array![[-9., 20.5]];
-    return serde_json::to_string(&points).unwrap();
+fn read_data(data_path: &str, dim: usize) -> Array2<f32> {
+    let csv_content: &[u8] = &nodejs_helper::fs::read_file_sync(data_path);
+    let mut data_reader = csv::Reader::from_reader(csv_content);
+    let mut data: Vec<f32> = Vec::new();
+    for record in data_reader.records() {
+        for field in record.unwrap().iter() {
+            let value = f32::from_str(field);
+            data.push(value.unwrap());
+        }
+    }
+    Array2::from_shape_vec((data.len() / dim, dim), data).unwrap()
 }
 
-#[wasm_bindgen]
-pub fn generate_data (center_pts: &str, cluster_size: i32) -> String {
-    let seed = 42;
-    let mut rng = Isaac64Rng::seed_from_u64(seed);
-
-    let expected_centroids: Array2<f64> = serde_json::from_str(center_pts).unwrap();
-
-    let observations = generate_blobs(cluster_size as usize, &expected_centroids, &mut rng);
-    return serde_json::to_string(&observations).unwrap();
-}
-
-#[wasm_bindgen]
-pub fn fit (center_pts: &str, data_pts: &str) -> String {
-    let seed = 42;
-    let mut rng = Isaac64Rng::seed_from_u64(seed);
-
-    let observations: Array2<f64> = serde_json::from_str(data_pts).unwrap();
-    let expected_centroids: Array2<f64> = serde_json::from_str(center_pts).unwrap();
-
-    let n_clusters = expected_centroids.len_of(Axis(0));
-    let hyperparams = KMeansHyperParams::new(n_clusters)
-        .tolerance(1e-2)
-        .build();
-    let model = KMeans::fit(hyperparams, &observations, &mut rng);
-    return serde_json::to_string(&model).unwrap();
-}
-
-#[wasm_bindgen]
-pub fn predict (p: &str, m: &str) -> String {
-    let model: KMeans = serde_json::from_str(m).unwrap();
-    let new_observation: Array2<f64> = serde_json::from_str(p).unwrap();
-
-    let closest_cluster_index = model.predict(&new_observation);
-    let closest_centroid = &model.centroids().index_axis(Axis(0), closest_cluster_index[0]);
-    return serde_json::to_string(&closest_centroid).unwrap();
+fn separate_groups<'a>(
+    data: &'a ArrayView2<f32>,
+    clusters: &[usize],
+) -> (
+    Vec<ArrayView1<'a, f32>>,
+    Vec<ArrayView1<'a, f32>>,
+    Vec<ArrayView1<'a, f32>>,
+) {
+    data.outer_iter().zip(clusters.iter()).fold(
+        (Vec::new(), Vec::new(), Vec::new()),
+        |mut state, (point, &cluster)| {
+            match cluster {
+                0 => state.0.push(point),
+                1 => state.1.push(point),
+                2 => state.2.push(point),
+                _ => (),
+            }
+            state
+        },
+    )
 }
