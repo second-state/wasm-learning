@@ -1,4 +1,4 @@
-const { test_data, test_data_2, generate_data, fit, predict } = require('./kmeans_lib.js');
+const { test_data, test_data_2, generate_data, fit, predict } = require('../pkg/kmeans_lib.js');
 
 // var centers = JSON.parse(test_data());
 // console.log(centers);
