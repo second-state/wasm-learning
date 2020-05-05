@@ -73,9 +73,3 @@ jobs:
         node app.js
         rm -rf ../target ../pkg
       working-directory: nodejs/tensorflow
-
-    - name: Upload artifact
-      uses: actions/upload-artifact@v1
-      with:
-        name: ubuntu-18.04-nodejs-${{ matrix.node-version }}
-        path: nodejs
