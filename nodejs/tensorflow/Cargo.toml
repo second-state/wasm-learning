@@ -1,0 +1,18 @@
+[package]
+name = "tract-tensorflow-wasm-example"
+version = "0.1.0"
+authors = ["Michael Yuan <michael@secondstate.io>", "Mathieu Poumeyrol <kali@zoy.org>"]
+edition = "2018"
+
+[lib]
+name = "tensorflow_lib"
+path = "src/lib.rs"
+crate-type =["cdylib"]
+
+[dependencies]
+wasm-bindgen = "=0.2.61"
+nodejs-helper = "0.0.3"
+serde = { version = "^1.0.59", features = ["derive"] }
+serde_json = "^1.0.51"
+image = { version = "0.23.0", default-features = false, features = ["jpeg", "png", "gif"] }
+tract-tensorflow = "0.6.3"
