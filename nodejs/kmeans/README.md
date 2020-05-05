@@ -60,5 +60,8 @@ The [node/app.js](node/app.js) app shows how to call the Rust functions from Jav
 ## Test
 
 ```
-node app.js
+$ cd node
+$ node app.js
 ```
+
+
