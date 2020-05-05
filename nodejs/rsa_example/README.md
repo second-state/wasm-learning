@@ -20,8 +20,7 @@ $ [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
 $ nvm install v10.19.0
 $ nvm use v10.19.0
 
-$ npm install -g ssvmup # Append --unsafe-perm if permission denied
-$ npm install ssvm
+$ npm install -g wasm-pack
 ```
 
 ## Create new project
@@ -33,7 +32,11 @@ $ cd rsa_example
 
 ## Change the cargo config file
 
-The [Cargo.toml](Cargo.toml) file shows the dependencies. Note the dependency for wasm-bindgen, which is required for invoking these Rust functions from JavaScript. The dependency for serde and serde-json allows us to work with JSON strings to represent complex data types.
+The [Cargo.toml](Cargo.toml) file shows the dependencies. 
+
+* The `wasm-bindgen` crate is required for invoking these Rust functions from JavaScript.
+* The `serde` and `serde_json` crates allow us to work with JSON strings to represent complex data types.
+* The `rand` crate is configured to use random numbers from Node.js.
 
 ## Write Rust code
 
@@ -42,16 +45,7 @@ The [src/lib.rs](src/lib.rs) file contains three Rust functions to create a key 
 ## Build the WASM bytecode
 
 ```
-$ ssvmup build
-```
-
-## Create a new Node folder
-
-```
-$ mkdir node
-$ cp pkg/rsa_example_lib_bg.wasm node/
-$ cp pkg/rsa_example_lib.js node/
-$ cd node
+$ wasm-pack build --target nodejs
 ```
 
 ## Create a node file
@@ -61,7 +55,8 @@ The [node/app.js](node/app.js) file shows how to call the Rust functions from Ja
 ## Test
 
 ```
-node app.js
+$ cd node
+$ node app.js
 ```
 
 ## Performance
@@ -69,5 +64,5 @@ node app.js
 To compare performance with a pure JS implementation of the RSA algorithms. You can try this.
 
 ```
-node app_jsencrypt.js
+$ node app_jsencrypt.js
 ```
