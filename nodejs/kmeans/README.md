@@ -38,6 +38,7 @@ The [Cargo.toml](Cargo.toml) file shows the dependencies.
 * The `wasm-bindgen` crate is required for invoking these Rust functions from JavaScript. 
 * The `serde` and `serde_json` crates allow us to work with JSON strings to represent complex data types.
 * The `rand` crate is configured to use random numbers from Node.js.
+* The `nodejs-helper` crate allows the Rust function to access console, file system, database, and network.
 
 ## Write Rust code
 
