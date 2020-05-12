@@ -56,18 +56,10 @@ $ cd node
 
 ## Create a node file
 
-The [node/app.js](node/app.js) file shows how to call the Rust functions from JavaScript to create a key pair, use the public key to encrypt a string, and then use the private key to decrypt it.
+The [node/app.js](node/app.js) file shows how to call the Rust functions from JavaScript.
 
 ## Test
 
 ```
 node app.js
-```
-
-## Performance
-
-To compare performance with a pure JS implementation of the RSA algorithms. You can try this.
-
-```
-node app_jsencrypt.js
 ```
