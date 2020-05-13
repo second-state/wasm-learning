@@ -1,7 +1,7 @@
 use recrypt::prelude::*;
 use recrypt::api::*;
 use wasm_bindgen::prelude::*;
-use nodejs_helper;
+// use nodejs_helper;
 use serde::{Serialize, Deserialize};
 
 #[derive(Serialize, Deserialize, Debug)]
@@ -23,16 +23,6 @@ struct SSTransformKey {
     public_signing_key: Vec<u8>,
     signature: Vec<u8>
 }
-
-/*
-#[derive(Serialize, Deserialize, Debug)]
-struct SSPlainValue {
-    public_key_x: Vec<u8>,
-    public_key_y: Vec<u8>,
-    plain_text: Vec<u8>,
-    signing_key_pair: Vec<u8>
-}
-*/
 
 #[derive(Serialize, Deserialize, Debug)]
 struct SSEncryptedValue {
@@ -77,15 +67,6 @@ pub fn create_identity () -> String {
     return serde_json::to_string(&result).unwrap();
 }
 
-/*
-#[wasm_bindgen]
-pub fn create_plain_text () -> Vec<u8> {
-    let recrypt = Recrypt::new();
-    let pt = recrypt.gen_plaintext();
-    return pt.bytes().to_vec();
-}
-*/
-
 #[wasm_bindgen]
 pub fn create_plain_text () -> String {
     let recrypt = Recrypt::new();
@@ -107,7 +88,7 @@ pub fn get_symmetric_key (pt: &[u8]) -> Vec<u8> {
 // Return: SSEncryptedValue
 #[wasm_bindgen]
 pub fn encrypt (ps: &str) -> String {
-    nodejs_helper::console::log(ps);
+    // nodejs_helper::console::log(ps);
     let params: (Vec<u8>, Vec<u8>, Vec<u8>, Vec<u8>) = serde_json::from_str(ps).unwrap();
     let plain_text: Plaintext = Plaintext::new_from_slice(&params.0).unwrap();
     let public_key: PublicKey = PublicKey::new_from_slice((&params.1, &params.2)).unwrap();
