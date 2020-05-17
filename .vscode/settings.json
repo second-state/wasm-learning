@@ -1,0 +1,12 @@
+{
+    "eslint.workingDirectories": [
+        {
+            "directory": "./node",
+            "changeProcessCWD": true
+        }
+    ],
+    "search.exclude": {
+        "**/target": true
+    },
+    "lldb.verboseLogging": true
+}
