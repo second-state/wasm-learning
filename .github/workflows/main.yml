@@ -65,11 +65,3 @@ jobs:
         node app.js
         rm -rf ../target ../pkg
       working-directory: nodejs/kmeans
-
-    - name: Tensorflow example
-      run: |
-        wasm-pack build --target nodejs
-        cd node/
-        node app.js
-        rm -rf ../target ../pkg
-      working-directory: nodejs/tensorflow
