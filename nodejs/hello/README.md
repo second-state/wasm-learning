@@ -61,7 +61,7 @@ pub fn say(s: &str) -> String {
 ## Build the WASM bytecode
 
 ```
-$ ssvmup build --nowasi
+$ ssvmup build
 ```
 
 ## Node.js app

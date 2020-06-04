@@ -20,7 +20,8 @@ $ [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
 $ nvm install v10.19.0
 $ nvm use v10.19.0
 
-$ npm install -g wasm-pack
+$ npm install -g ssvmup # Append --unsafe-perm if permission denied
+$ npm install ssvm
 ```
 
 ## Create new project
@@ -45,7 +46,7 @@ The [src/lib.rs](src/lib.rs) file contains three Rust functions to create a key 
 ## Build the WASM bytecode
 
 ```
-$ wasm-pack build --target nodejs
+$ ssvmup build
 ```
 
 ## Create a node file

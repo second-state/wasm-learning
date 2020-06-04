@@ -41,7 +41,7 @@ The [src/lib.rs](src/lib.rs) file contains a few Rust functions that showcase us
 ## Build the WASM bytecode
 
 ```
-$ ssvmup build --nowasi
+$ ssvmup build
 ```
 
 ## Node.js app
