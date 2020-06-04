@@ -29,7 +29,7 @@ jobs:
     - name: Install npm packages
       run: |
         npm i ssvm sync-request better-sqlite3
-        npm i -g ssvmup@v0.1.6
+        npm i -g ssvmup
         npm i -g wasm-pack
     
     - name: Functions
@@ -60,7 +60,7 @@ jobs:
 
     - name: kmeans example
       run: |
-        wasm-pack build --target nodejs
+        ssvmup build
         cd node/
         node app.js
         rm -rf ../target ../pkg

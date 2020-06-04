@@ -1,0 +1,7 @@
+# For rust
+/target
+# For ssvm-aot
+*.so
+# For npm
+package-lock.json
+node_modules
