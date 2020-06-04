@@ -1,4 +1,4 @@
-const { get_random_i32, get_random_bytes } = require('../pkg/wasi_example_lib.js');
+const { get_random_i32, get_random_bytes, print_random_i32 } = require('../pkg/wasi_example_lib.js');
 
 // Utils
 var util = require('util');
@@ -9,3 +9,4 @@ console.hex = (d) => console.log((Object(d).buffer instanceof ArrayBuffer ? new 
 console.log( "My random number is: ", get_random_i32() );
 console.log( "My random bytes are");
 console.hex( get_random_bytes() );
+print_random_i32();
