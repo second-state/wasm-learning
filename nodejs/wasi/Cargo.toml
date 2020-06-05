@@ -11,5 +11,4 @@ crate-type =["cdylib"]
 
 [dependencies]
 rand = { version = "0.7.3", features = ["wasm-bindgen"] }
-getrandom = "0.1.14"
 wasm-bindgen = "=0.2.61"
