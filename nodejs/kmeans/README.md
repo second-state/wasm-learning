@@ -2,7 +2,7 @@
 
 In this example, we demonstrate how to do high performance machine learning in Node.js. The computationally intensive machine learning code is written in Rust and executed in WebAssembly. The user-facing application that uses machine learning is written in JavaScript and runs in Node.js. The example takes some [commonly used data sets](../deps/rkm#data), computes centers for clusters, and then label each data point with its cluster.
 
-This example is inspired by [this article](https://www.lpalmieri.com/posts/2019-12-01-taking-ml-to-production-with-rust-a-25x-speedup/), which showed that Rust produced a 25x performance gain from Python.
+This example is inspired by [this article](https://www.lpalmieri.com/posts/2019-12-01-taking-ml-to-production-with-rust-a-25x-speedup/), which showed that Rust produced a 25x performance gain from Python. [This IBM case study](https://developer.ibm.com/technologies/web-development/articles/why-webassembly-and-rust-together-improve-nodejs-performance/) also shows the Rust and WebAssembly resulted in a 12x to 15x performance gain over plain Node.js.
 
 ## Set up
 
@@ -38,7 +38,6 @@ The [Cargo.toml](Cargo.toml) file shows the dependencies.
 * The `wasm-bindgen` crate is required for invoking these Rust functions from JavaScript. 
 * The `serde` and `serde_json` crates allow us to work with JSON strings to represent complex data types.
 * The `rand` crate is configured to use random numbers from Node.js.
-* The `nodejs-helper` crate allows the Rust function to access console, file system, database, and network.
 
 ## Write Rust code
 
@@ -47,7 +46,7 @@ The [src/lib.rs](src/lib.rs) file contains Rust functions to generate simulated 
 ## Build the WASM bytecode
 
 ```
-$ wasm-pack build --target nodejs
+$ ssvmup build
 ```
 
 ## Create a node app
