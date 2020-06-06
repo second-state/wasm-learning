@@ -47,6 +47,7 @@ RUN apt-get update \
     && apt-get install -y build-essential curl wget git vim libboost-all-dev \
     && npm install -g ssvmup --unsafe-perm \
     && npm install ssvm \
+    && npm install -g wasm-pack --unsafe-perm \
     #
     # Clean up
     && apt-get autoremove -y \
