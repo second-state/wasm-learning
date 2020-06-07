@@ -15,6 +15,9 @@ pub fn fit (csv_content: &[u8], dim: i32, num_clusters: i32) -> String {
 }
 
 fn read_data(csv_content: &[u8], dim: usize) -> Array2<f32> {
+    let v : Vec<u8> = csv_content.to_vec();
+    println!("INPUT length is {}", v.len());
+
     let mut data_reader = csv::Reader::from_reader(csv_content);
     let mut data: Vec<f32> = Vec::new();
     for record in data_reader.records() {
