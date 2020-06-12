@@ -1,5 +1,4 @@
 use wasm_bindgen::prelude::*;
-use serde::{Serialize, Deserialize};
 
 // Solve a quadratic equation https://www.mathsisfun.com/quadratic-equation-solver.html
 #[wasm_bindgen]
