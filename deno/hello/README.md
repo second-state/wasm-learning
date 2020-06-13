@@ -1,23 +1,31 @@
 
-Setup
+## Setup
+
+[Install Deno](https://deno.land/manual/getting_started/installation) first.
 
 ```
 $ npm install -g ssvmup # Append --unsafe-perm if permission denied
 ```
 
-Build
+## Build
 
 ```
 $ ssvmup build --target deno
 ```
 
-Run
+## Test
+
+```
+$ deno run --allow-read test.ts
+```
+
+## Run
 
 ```
 $ deno run --allow-net --allow-read server.ts
 ```
 
-Test
+## User test
 
 ```
 $ curl http://localhost:8000/
