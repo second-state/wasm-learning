@@ -69,6 +69,15 @@ jobs:
         ssvmup clean
       working-directory: nodejs/kmeans
 
+    - name: Deno example
+      run: |
+        ssvmup build --target deno
+        cd deno/
+        deno run --allow-read test.ts
+        cd ../
+        ssvmup clean
+      working-directory: deno/functions
+
     - name: Nodejs API
       run: |
         wasm-pack build --target nodejs
