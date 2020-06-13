@@ -42,6 +42,9 @@ RUN apt-get update \
     #
     && apt-get install -y nodejs npm 2>&1 \
     #
+    # Install Deno
+    && cargo install deno \
+    #
     # Install ssvmup
     #
     && apt-get install -y build-essential curl wget git vim libboost-all-dev \
