@@ -16,5 +16,6 @@ $ ssvmup build --target deno
 ## Test
 
 ```
+$ cd deno
 $ deno run --allow-read test.ts
 ```
