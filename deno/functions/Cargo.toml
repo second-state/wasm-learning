@@ -1,0 +1,17 @@
+[package]
+name = "functions"
+version = "0.1.0"
+authors = ["ubuntu"]
+edition = "2018"
+
+[lib]
+name = "functions_lib"
+path = "src/lib.rs"
+crate-type =["cdylib"]
+
+[dependencies]
+num-integer = "0.1"
+sha3 = "0.8.2"
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+wasm-bindgen = "=0.2.61"
