@@ -11,6 +11,6 @@ pub fn solve(params: &str) -> String {
     solution.1 = (((-1.) * ps.1) - discriminant.sqrt()) / (2. * ps.0);
     return serde_json::to_string(&solution).unwrap();
   } else {
-    return String::from("not rational");
+    return String::from("not real numbers");
   }
 }
