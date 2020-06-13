@@ -26,11 +26,12 @@ jobs:
       run: |
         sudo apt-get install build-essential curl wget git vim libboost-all-dev
     
-    - name: Install npm packages
+    - name: Install npm packages and deno
       run: |
         npm i ssvm sync-request better-sqlite3
         npm i -g ssvmup
         npm i -g wasm-pack
+        cargo install deno
     
     - name: Functions
       run: |
