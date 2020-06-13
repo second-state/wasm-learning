@@ -16,12 +16,14 @@ $ ssvmup build --target deno
 ## Test
 
 ```
+$ cd deno
 $ deno run --allow-read test.ts
 ```
 
 ## Run
 
 ```
+$ cd deno
 $ deno run --allow-net --allow-read server.ts
 ```
 
