@@ -33,6 +33,6 @@ $ deno run --allow-net --allow-read server.ts
 ## User test
 
 ```
-$ curl http://localhost:8000/
+$ curl http://localhost:3000/
 hello World!
 ```
