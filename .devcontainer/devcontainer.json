@@ -13,6 +13,7 @@
 		"rust-lang.rust",
 		"bungcip.better-toml",
 		"vadimcn.vscode-lldb",
+		"loiane.ts-extension-pack",
 		"dbaeumer.vscode-eslint"
 	],
 
