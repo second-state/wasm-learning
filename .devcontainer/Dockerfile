@@ -43,7 +43,7 @@ RUN apt-get update \
     && apt-get install -y nodejs npm 2>&1 \
     #
     # Install Deno
-    && cargo install deno \
+    && curl -fsSL https://deno.land/x/install/install.sh | sh \
     #
     # Install ssvmup
     #
