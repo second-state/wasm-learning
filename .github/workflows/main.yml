@@ -31,7 +31,7 @@ jobs:
         npm i ssvm sync-request better-sqlite3
         npm i -g ssvmup
         npm i -g wasm-pack
-        cargo install deno
+        curl -fsSL https://deno.land/x/install/install.sh | sh
     
     - name: Functions
       run: |
