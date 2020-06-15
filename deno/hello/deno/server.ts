@@ -9,7 +9,7 @@ type Resp = {
 }
 
 const s = serve({ port: 3000 });
-console.log("http://localhost:8000/");
+console.log("http://localhost:3000/");
 for await (const req of s) {
   let r = {} as Resp;
   r.body = say (" World\n");
