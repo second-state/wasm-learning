@@ -1,6 +1,6 @@
 # WASI
 
-In this example, we demonstrate how to access system resources from Rust functions in the SSVM.
+In this example, we demonstrate how to access system resources from Rust functions in the SSVM. Read about [Access operating system resources from WebAssembly](https://www.secondstate.io/articles/wasi-access-system-resources/)
 
 ## Prerequisites
 
