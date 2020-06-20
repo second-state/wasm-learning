@@ -1,6 +1,6 @@
 # The k-means clustering example for machine learning
 
-In this example, we demonstrate how to do high performance machine learning in Node.js. The computationally intensive machine learning code is written in Rust and executed in WebAssembly. The user-facing application that uses machine learning is written in JavaScript and runs in Node.js. The example takes some [commonly used data sets](../deps/rkm#data), computes centers for clusters, and then label each data point with its cluster.
+In this example, we demonstrate how to do high performance machine learning in Node.js. The computationally intensive machine learning code is written in Rust and executed in WebAssembly. The user-facing application that uses machine learning is written in JavaScript and runs in Node.js. The example takes some [commonly used data sets](../deps/rkm#data), computes centers for clusters, and then label each data point with its cluster. Read about [machine learning in Rust and Node.js](https://www.secondstate.io/articles/machine-learning/).
 
 This example is inspired by [this article](https://www.lpalmieri.com/posts/2019-12-01-taking-ml-to-production-with-rust-a-25x-speedup/), which showed that Rust produced a 25x performance gain from Python. [This IBM case study](https://developer.ibm.com/technologies/web-development/articles/why-webassembly-and-rust-together-improve-nodejs-performance/) also shows the Rust and WebAssembly resulted in a 12x to 15x performance gain over plain Node.js.
 
