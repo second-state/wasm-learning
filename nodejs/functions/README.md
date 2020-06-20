@@ -1,6 +1,6 @@
 # The functions example
 
-In this example, we demonstrate how to call Rust functions in SSVM from JavaScript.
+In this example, we demonstrate how to call Rust functions in SSVM from JavaScript. Read about [Getting started with Rust functions in Node.js](https://www.secondstate.io/articles/getting-started-with-rust-function/).
 
 ## Prerequisites
 
