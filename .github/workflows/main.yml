@@ -73,9 +73,7 @@ jobs:
     - name: Deno example
       run: |
         ssvmup build --target deno
-        cd deno/
-        deno run --allow-read test.ts
-        cd ../
+        deno run --allow-read deno/test.ts
         ssvmup clean
       working-directory: deno/functions
 

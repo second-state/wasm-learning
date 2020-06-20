@@ -43,7 +43,7 @@ RUN apt-get update \
     && apt-get install -y nodejs npm 2>&1 \
     #
     # Install Deno
-    && cargo install deno \
+    && curl -fsSL https://deno.land/x/install/install.sh | sh \
     #
     # Install ssvmup
     #
@@ -58,4 +58,5 @@ RUN apt-get update \
     && rm -rf /var/lib/apt/lists/*
 
 # Switch back to dialog for any ad-hoc use of apt-get
+ENV PATH="/root/.deno/bin:${PATH}"
 ENV DEBIAN_FRONTEND=dialog
