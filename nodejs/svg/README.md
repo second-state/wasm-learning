@@ -21,7 +21,7 @@ $ nvm use v10.19.0
 
 $ npm install -g ssvmup # Append --unsafe-perm if permission denied
 $ npm install ssvm
-$ npm install ssvm
+$ npm install express
 ```
 
 ## Build the WASM bytecode
