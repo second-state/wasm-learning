@@ -1,6 +1,6 @@
 # The SSVM storage interface example
 
-In this example, we demonstrate how to store and load data from Rust functions running inside WebAssembly.
+In this example, we demonstrate how to store and load data from Rust functions running inside WebAssembly. Read about [the storage interface in SSVM](https://www.secondstate.io/articles/the-storage-interface-in-ssvm/).
 
 ## Prerequisites
 
