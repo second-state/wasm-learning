@@ -1,6 +1,6 @@
 # The json I/O example
 
-In this example, we demonstrate how to use JSON to call Rust functions in SSVM from JavaScript.
+In this example, we demonstrate how to use JSON to call Rust functions in SSVM from JavaScript. Read about [Rust Functions in Node.js](https://www.secondstate.io/articles/rust-functions-in-nodejs/).
 
 ## Prerequisites
 
