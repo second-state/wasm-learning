@@ -1,6 +1,6 @@
 # The RSA encryption and decryption example
 
-In this example, we demonstrate how to exchange complex data types between Rust and JavaScript using JSON strings.
+In this example, we demonstrate how to exchange complex data types between Rust and JavaScript using JSON strings. Read about [encryption and decryption in Rust and Node.js](https://www.secondstate.io/articles/encryption-and-decryption/).
 
 ## Prerequisites
 
