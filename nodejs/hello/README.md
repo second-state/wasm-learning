@@ -1,6 +1,6 @@
 # The hello example
 
-In this example, we demonstrate how to call a Rust function from a nodejs host through the SSVM.
+In this example, we demonstrate how to call a Rust function from a nodejs host through the SSVM. Read about [Getting started with Rust functions in Node.js](https://www.secondstate.io/articles/getting-started-with-rust-function/).
 
 ## Prerequisites
 
