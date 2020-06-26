@@ -1,0 +1,20 @@
+[package]
+name = "ml"
+version = "0.1.0"
+authors = ["ubuntu"]
+edition = "2018"
+
+[lib]
+name = "ml_lib"
+path = "src/lib.rs"
+crate-type =["cdylib"]
+
+[dependencies]
+wasm-bindgen = "=0.2.61"
+tera = "1.2.0"
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "=1.0.44"
+rkm = { path = "../deps/rkm" }
+ndarray = { version = "0.13.0", features = ["serde"] }
+rand = { version = "0.7.3", features = ["wasm-bindgen"] }
+csv = "1.1.3"
