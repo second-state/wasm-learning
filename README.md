@@ -7,13 +7,13 @@ Brought to you by the Open source dev team at [Second State](https://www.seconds
 
 ![Node.js examples](https://github.com/second-state/wasm-learning/workflows/Node.js%20examples/badge.svg)
 
-Developers: [Getting started](https://cloud.secondstate.io/server-side-webassembly/getting-started) building Rust + JavaScript hybrid apps for Node.js.
+Developers: [Getting started](https://www.secondstate.io/articles/getting-started-with-rust-function/) building Rust + JavaScript hybrid apps for Node.js.
 
 * Rust's performance
 * WebAssembly's security and portability
 * JavaScript's ease-of-use
 
-> Quickstart: [Fork this repository](https://github.com/second-state/ssvm-nodejs-starter) and start editing the source code files on GitHub. [Learn more](https://cloud.secondstate.io/server-side-webassembly/getting-started/the-no-software-approach). 
+> Quickstart: [Fork this repository](https://github.com/second-state/ssvm-nodejs-starter) and start editing the source code files on GitHub. [Learn more](hhttps://www.secondstate.io/articles/getting-started-rust-nodejs-vscode/). 
 
 [Hello World](nodejs/hello/README.md)
 
