@@ -2,9 +2,8 @@
 
 In this example, we demonstrate how to create and run a Rust function in the Second State Rust FaaS.
 
-## Set up
-
-[See it here](https://cloud.secondstate.io/function-as-a-service/getting-started).
+## Prerequisites
+If you have not done so already, follow these simple instructions to install [Rust](https://www.rust-lang.org/tools/install) and [ssvmup](https://www.secondstate.io/articles/ssvmup/).
 
 ## Write Rust code
 
@@ -23,7 +22,7 @@ pub fn say(context: &str, s: &str) -> String {
 ## Build the WASM bytecode
 
 ```
-$ ssvmup build --nowasi
+$ ssvmup build
 ```
 
 ## FaaS
