@@ -2,9 +2,9 @@
 
 In this example, we demonstrate how to create and run a Rust function in the Second State Rust FaaS.
 
-## Set up
+## Prerequisites
 
-[See it here](https://cloud.secondstate.io/function-as-a-service/getting-started).
+If you have not done so already, follow these simple instructions to install [Rust](https://www.rust-lang.org/tools/install) and [ssvmup](https://www.secondstate.io/articles/ssvmup/).
 
 ## Write Rust code
 
@@ -12,10 +12,12 @@ Below is the entire content of the [src/lib.rs](src/lib.rs) file.
 
 ```
 use wasm_bindgen::prelude::*;
+use std::env;
 
 #[wasm_bindgen]
-pub fn say(context: &str, s: &str) -> String {
-  if context == "emoji" {
+pub fn say(s: &str) -> String {
+  let emoji = env::var("EMOJI").unwrap_or_default(false);
+  if emoji {
     let r = String::from("👋 ");
     return r + &s;
   } else {
@@ -28,7 +30,7 @@ pub fn say(context: &str, s: &str) -> String {
 ## Build the WASM bytecode
 
 ```
-$ ssvmup build --nowasi
+$ ssvmup build
 ```
 
 ## FaaS
@@ -43,12 +45,10 @@ $ curl --location --request POST 'https://rpc.ssvm.secondstate.io:8081/api/execu
 {"wasm_id":123}
 ```
 
-Set the context for functions in this wasm file.
+Set the environmental variable `EMOJI` for functions in this wasm file.
 
 ```
-curl --location --request PUT 'https://rpc.ssvm.secondstate.io:8081/api/state/123' \
---header 'Content-Type: text/plain' \
---data-raw 'emoji'
+TBD
 ```
 
 Make a function call via the web.
