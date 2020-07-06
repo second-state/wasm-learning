@@ -29,5 +29,5 @@ $ node server.js
 Listening at http://localhost:8080
 ```
 
-Then point your browser to `http://hostname:8080` enter numeric values for `a`, `b`, `c`, and hit Solve to find the roots.
+Then point your browser to `http://hostname:8080` enter numeric values for `a`, `b`, `c`, and hit the "Solve" button to find the roots.
 
