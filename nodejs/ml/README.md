@@ -21,7 +21,7 @@ $ node server.js
 
 ## User testing
 
-Point your browser to http://localhost:8080/, upload a CSV file for 2D data points, and hit the "Draw" button. The web app provides sample CSV files you can download and then upload to process. The birch3 data set is large and will take a few minutes to complete.
+Point your browser to http://localhost:8080/, upload a CSV file for 2D data points, and hit the "Draw" button. The web app provides sample CSV files you can download and then upload to process. The birch3 data set is large and will take longer to complete.
 
 ## Test
 
