@@ -26,12 +26,12 @@ jobs:
       run: |
         sudo apt-get install build-essential curl wget git vim libboost-all-dev
     
-    - name: Install npm packages and deno
+    - name: Install npm packages and Deno
       run: |
         npm i ssvm sync-request better-sqlite3
         npm i -g ssvmup
         npm i -g wasm-pack
-        cargo install deno
+        curl -fsSL https://deno.land/x/install/install.sh | sh
     
     - name: Functions
       run: |
@@ -73,7 +73,7 @@ jobs:
     - name: Deno example
       run: |
         ssvmup build --target deno
-        deno run --allow-read deno/test.ts
+        $HOME/.deno/bin/deno run --allow-read deno/test.ts
         ssvmup clean
       working-directory: deno/functions
 
