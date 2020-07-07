@@ -14,7 +14,7 @@ Below is the entire content of the [src/lib.rs](src/lib.rs) file.
 use wasm_bindgen::prelude::*;
 
 #[wasm_bindgen]
-pub fn say(context: &str, s: &str) -> String {
+pub fn say(s: &str) -> String {
   let r = String::from("hello ");
   return r + s;
 }
@@ -35,13 +35,13 @@ $ curl --location --request POST 'https://rpc.ssvm.secondstate.io:8081/api/execu
 --header 'Content-Type: application/octet-stream' \
 --header 'SSVM-Description: say hello' \
 --data-binary 'pkg/hello_lib_bg.wasm'
-{"wasm_id":123}
+{"wasm_id":1}
 ```
 
 Make a function call via the web.
 
 ```
-$ curl --location --request POST 'https://rpc.ssvm.secondstate.io:8081/api/run/123/say' \
+$ curl --location --request POST 'https://rpc.ssvm.secondstate.io:8081/api/run/1/say' \
 --header 'Content-Type: text/plain' \
 --data-raw 'Second State FaaS'
 hello Second State FaaS
