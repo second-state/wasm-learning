@@ -14,7 +14,7 @@ Below is the entire content of the [src/lib.rs](src/lib.rs) file.
 use wasm_bindgen::prelude::*;
 
 #[wasm_bindgen]
-pub fn say(context: &str, s: &str) -> String {
+pub fn say(s: &str) -> String {
   let r = String::from("hello ");
   let ret = "
     {
