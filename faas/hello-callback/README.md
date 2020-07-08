@@ -1,6 +1,6 @@
-# The hello example
+# The callback example
 
-In this example, we demonstrate how to create and run a Rust function in the Second State Rust FaaS.
+In this example, we will demonstrate how to redirect the return value from a FaaS function to another online service.
 
 ## Set up
 
@@ -18,17 +18,6 @@ pub fn say(context: &str, s: &str) -> String {
   let r = String::from("hello ");
   let ret = "
     {
-      'callback': {
-        'method': 'POST',
-        'hostname': 'api.sendgrid.com',
-        'port': 443,
-        'path': '/v3/mail/send',
-        'headers': {
-          'Content-Type': 'application/json',
-          'authorization': 'Bearer AUTH_TOKEN'
-        },
-        'maxRedirects': 20
-      },
       'personalizations': {
         [{
           'to':[{'email':'TO_EMAIL','name':''}],
@@ -39,7 +28,6 @@ pub fn say(context: &str, s: &str) -> String {
     }
   ";
   
-  let ret = ret.replace("AUTH_TOKEN", "auth_token_123");
   let ret = ret.replace("TO_EMAIL", "alice@secondstate.io");
   let ret = ret.replace("SUBJECT", &(r + &s));
   let ret = ret.replace("FROM_EMAIL", "dev@developer.com");
@@ -50,10 +38,10 @@ pub fn say(context: &str, s: &str) -> String {
 ## Build the WASM bytecode
 
 ```
-$ ssvmup build --nowasi
+$ ssvmup build
 ```
 
-## FaaS
+## Create FaaS function
 
 Upload the wasm file to the FaaS.
 
@@ -65,6 +53,18 @@ $ curl --location --request POST 'https://rpc.ssvm.secondstate.io:8081/api/execu
 {"wasm_id":123}
 ```
 
+## Redirect results to another service
+
+This is done by associating a callback object with the wasm file. The callback is a HTTP request object in JSON format. The function call's return value is submiited to the callback upon completion.
+
+```
+curl --location --request PUT 'https://rpc.ssvm.secondstate.io:8081/api/callback/123' \
+--header 'Content-Type: application/json' \
+--data-raw '{"hostname": "api.sendgrid.com","path": "/v3/mail/send","method": "POST","port": 443,"headers":{"Content-Type": "application/json","authorization": "Bearer AUTH_TOKEN"}}'
+```
+
+## Test
+
 Make a function call via the web.
 
 ```
@@ -74,5 +74,7 @@ $ curl --location --request POST 'https://rpc.ssvm.secondstate.io:8081/api/run/1
 ```
 
 The `TO_EMAIL` address in the function will now receive an email message with the "hello Second State FaaS" subject line.
+
+
 
 
