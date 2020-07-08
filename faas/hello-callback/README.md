@@ -28,9 +28,9 @@ pub fn say(context: &str, s: &str) -> String {
     }
   ";
   
-  let ret = ret.replace("TO_EMAIL", "alice@secondstate.io");
+  let ret = ret.replace("TO_EMAIL", "juntao_yuan@yahoo.com");
   let ret = ret.replace("SUBJECT", &(r + &s));
-  let ret = ret.replace("FROM_EMAIL", "dev@developer.com");
+  let ret = ret.replace("FROM_EMAIL", "michael@secondstate.io");
   return ret;
 }
 ```
@@ -60,7 +60,7 @@ This is done by associating a callback object with the wasm file. The callback i
 ```
 curl --location --request PUT 'https://rpc.ssvm.secondstate.io:8081/api/callback/123' \
 --header 'Content-Type: application/json' \
---data-raw '{"hostname": "api.sendgrid.com","path": "/v3/mail/send","method": "POST","port": 443,"headers":{"Content-Type": "application/json","authorization": "Bearer AUTH_TOKEN"}}'
+--data-raw '{"hostname": "api.sendgrid.com","path": "/v3/mail/send","method": "POST","port": 443,"headers":{"Content-Type": "application/json","authorization": "Bearer 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"}}'
 ```
 
 ## Test
