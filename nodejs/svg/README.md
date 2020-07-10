@@ -2,6 +2,8 @@
 
 In this example, we demonstrate how to use JSON to call Rust functions in SSVM from JavaScript.
 
+> This technique was described by [Cetra](https://cetra3.github.io/blog/) in [this article](https://cetra3.github.io/blog/drawing-svg-graphs-rust/).
+
 ## Prerequisites
 
 If you have not done so already, follow these simple instructions to [install Rust, Node.js, SSVM, and ssvmup](https://www.secondstate.io/articles/setup-rust-nodejs/).
