@@ -60,7 +60,7 @@ This is done by associating a callback object with the wasm file. The callback i
 ```
 curl --location --request PUT 'https://rpc.ssvm.secondstate.io:8081/api/callback/123' \
 --header 'Content-Type: application/json' \
---data-raw '{"hostname": "api.sendgrid.com","path": "/v3/mail/send","method": "POST","port": 443,"headers":{"Content-Type": "application/json","authorization": "Bearer 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"}}'
+--data-raw '{"hostname": "api.sendgrid.com","path": "/v3/mail/send","method": "POST","port": 443,"headers":{"Content-Type": "application/json","authorization": "Bearer SG.xxxx"}}'
 ```
 
 ## Test
