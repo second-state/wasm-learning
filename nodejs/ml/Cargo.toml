@@ -16,5 +16,5 @@ serde = { version = "1.0", features = ["derive"] }
 serde_json = "=1.0.44"
 rkm = { path = "../deps/rkm" }
 ndarray = { version = "0.13.0", features = ["serde"] }
-rand = { version = "0.7.3", features = ["wasm-bindgen"] }
+rand = "0.7.3"
 csv = "1.1.3"
