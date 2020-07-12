@@ -1,0 +1,276 @@
+<?xml version="1.0" standalone="no"?>
+<svg
+  width="100%"
+  height="100%"
+  viewBox="0 0 {{width + padding * 2}} {{height + padding * 2}}"
+  preserveAspectRatio="xMidYMid meet"
+  xmlns="http://www.w3.org/2000/svg"
+  >
+  <text 
+    x="{{width/2 + padding}}"
+    y="{{padding / 2}}"
+    font-family="-apple-system, system-ui, BlinkMacSystemFont, Roboto"
+    dominant-baseline="middle"
+    text-anchor="middle"
+    font-size="18"
+    fill="#74838f"
+    font-weight="700"
+    >
+    {{name}}
+  </text>
+  {% for i in range(end=lines + 1) %}
+  {% set offset_x = padding + loop.index0/lines * width %}
+  {% set offset_y = padding + loop.index0/lines * height %}
+  <text
+    x="{{padding - 5}}"
+    font-family="-apple-system, system-ui, BlinkMacSystemFont, Roboto"
+    y="{{offset_y}}"
+    dominant-baseline="middle"
+    text-anchor="end"
+    font-size="12"
+    fill="#74838f"
+    font-weight="bold"
+    >
+    {{ (lines - loop.index0)/lines * y_range + y_min | round(method="ceil", precision=2) }}
+    
+  </text>
+  <text
+    x="{{offset_x}}"
+    font-family="-apple-system, system-ui, BlinkMacSystemFont, Roboto"
+    y="{{height + padding + 10}}"
+    dominant-baseline="hanging"
+    text-anchor="middle"
+    font-size="12"
+    fill="#74838f"
+    font-weight="bold"
+  >
+  {{ (loop.index0-lines)/lines * x_range + x_range + x_min | round(method="ceil", precision=2) }}
+  </text>
+
+  <path stroke="#74838f" stroke-width="2.0" d="M {{offset_x}} {{height + padding}} L {{offset_x}} {{height + padding + 10}}" />
+  <path stroke="#74838f" stroke-dasharray="10 6" stroke-width="0.5"  d="M {{offset_x}} {{padding}} L {{offset_x}} {{height + padding}}" />
+  <path stroke="#74838f" stroke-dasharray="10 6" stroke-width="0.5"  d="M {{padding}} {{offset_y}} L {{width + padding}} {{offset_y}}" />
+  
+  {% if loop.index0 == lines %}
+  <path stroke="#74838f" stroke-width="2" fill="none"  d="M {{padding}} {{offset_y}} L {{width + padding}} {{offset_y}}" />
+  {% endif %}  
+
+  {% if loop.index0 == 0 %}
+  <path stroke="#74838f" stroke-width="2" fill="none"  d="M {{offset_x}} {{padding}} L {{offset_x}} {{height + padding}}" />
+  {% endif %} 
+
+  {% endfor %}
+
+
+  
+  {% if model == "Linear Regression" %}
+  {% for point in path %}
+  {% set x = point.0 %}
+  {% set y = point.1 %}
+  <g stroke="{{colour}}" stroke-width="2" fill="{{colour}}">
+    <circle cx="{{x}}" cy="{{y}}" r="2" />
+  </g>
+  {% endfor %}
+  {% set x1 = point1.0 %}
+  {% set y1 = point1.1 %}
+  {% set x2 = point2.0 %}
+  {% set y2 = point2.1 %}
+  <path stroke="blue" stroke-width="2" fill="none"  d="M {{ x1 }} {{ y1 }} L {{ x2 }} {{ y2 }}" />
+  
+  {% elif model == "Logistic Regression" %}
+  {% for point in path %}
+  {% set x = point.0 %}
+  {% set y = point.1 %}
+  {% if loop.index0 < n/2 %}
+  {% if preds[loop.index0] <= 0.5 %}
+  <g stroke="{{colour}}" stroke-width="2" fill="{{colour}}">
+    <circle cx="{{x}}" cy="{{y}}" r="2" />
+  </g>
+  {% else %}
+  <g stroke="{{colour}}" stroke-width="2" fill="{{colour}}">
+    <polygon points="{{x-1}}, {{y+1}} {{x+1}}, {{y+1}}, {{x}}, {{y-1}}"/>
+  </g>
+  {% endif %}
+  {% else %}
+  {% if preds[loop.index0] <= 0.5 %}
+  <g stroke="red" stroke-width="2" fill="red">
+    <circle cx="{{x}}" cy="{{y}}" r="2" />
+  </g>
+  {% else %}
+  <g stroke="red" stroke-width="2" fill="red">
+    <polygon points="{{x-1}}, {{y+1}} {{x+1}}, {{y+1}}, {{x}}, {{y-1}}"/>
+  </g>
+  {% endif %}
+  {% endif %}
+  {% endfor %}
+  {% set x1 = point1.0 %}
+  {% set y1 = point1.1 %}
+  {% set x2 = point2.0 %}
+  {% set y2 = point2.1 %}
+  <path stroke="blue" stroke-width="2" fill="none"  d="M {{ x1 }} {{ y1 }} L {{ x2 }} {{ y2 }}" />
+  
+  {% elif model == "Generalized Linear Models" %}
+  {% for point in path %}
+  {% set x = point.0 %}
+  {% set y = point.1 %}
+  {% if loop.index0 < n/2 %}
+  {% if preds[loop.index0] <= 0.5 %}
+  <g stroke="{{colour}}" stroke-width="2" fill="{{colour}}">
+    <circle cx="{{x}}" cy="{{y}}" r="2" />
+  </g>
+  {% else %}
+  <g stroke="{{colour}}" stroke-width="2" fill="{{colour}}">
+    <polygon points="{{x-1}}, {{y+1}} {{x+1}}, {{y+1}}, {{x}}, {{y-1}}"/>
+  </g>
+  {% endif %}
+  {% else %}
+  {% if preds[loop.index0] <= 0.5 %}
+  <g stroke="red" stroke-width="2" fill="red">
+    <circle cx="{{x}}" cy="{{y}}" r="2" />
+  </g>
+  {% else %}
+  <g stroke="red" stroke-width="2" fill="red">
+    <polygon points="{{x-1}}, {{y+1}} {{x+1}}, {{y+1}}, {{x}}, {{y-1}}"/>
+  </g>
+  {% endif %}
+  {% endif %}
+  {% endfor %}
+
+  {% elif model == "K-Means Clustering" %}
+  {% for point in path %}
+  {% set x = point.0 %}
+  {% set y = point.1 %}
+  <g stroke="{{colour}}" stroke-width="2" fill="{{colour}}">
+    <circle cx="{{x}}" cy="{{y}}" r="2" />
+  </g>
+  {% endfor %}
+  {% for c in centers %}
+  {% set x = c.0 %}
+  {% set y = c.1 %}
+  <g stroke="red" stroke-width="2" fill="red">
+    <polygon points="{{x-2}}, {{y-2}} {{x+2}}, {{y-2}}, {{x}}, {{y+2}}"/>
+  </g>
+  {% endfor %}
+
+  {% elif model == "Naive Bayes Classifiers" %}
+  {% for point in path %}
+  {% set x = point.0 %}
+  {% set y = point.1 %}
+  {% if loop.index0 < n/2 %}
+  {% if preds[loop.index0] == 0.0 %}
+  <g stroke="{{colour}}" stroke-width="2" fill="{{colour}}">
+    <circle cx="{{x}}" cy="{{y}}" r="2" />
+  </g>
+  {% else %}
+  <g stroke="{{colour}}" stroke-width="2" fill="{{colour}}">
+    <polygon points="{{x-1}}, {{y+1}} {{x+1}}, {{y+1}}, {{x}}, {{y-1}}"/>
+  </g>
+  {% endif %}
+  {% else %}
+  {% if preds[loop.index0] == 0.0 %}
+  <g stroke="red" stroke-width="2" fill="red">
+    <circle cx="{{x}}" cy="{{y}}" r="2" />
+  </g>
+  {% else %}
+  <g stroke="red" stroke-width="2" fill="red">
+    <polygon points="{{x-1}}, {{y+1}} {{x+1}}, {{y+1}}, {{x}}, {{y-1}}"/>
+  </g>
+  {% endif %}
+  {% endif %}
+  {% endfor %}
+
+  {% elif model == "Neural Networks" %}
+  {% for point in path %}
+  {% set x = point.0 %}
+  {% set y = point.1 %}
+  {% if loop.index0 < n/2 %}
+  {% if preds[loop.index0] == 0.0 %}
+  <g stroke="{{colour}}" stroke-width="2" fill="{{colour}}">
+    <circle cx="{{x}}" cy="{{y}}" r="2" />
+  </g>
+  {% else %}
+  <g stroke="{{colour}}" stroke-width="2" fill="{{colour}}">
+    <polygon points="{{x-1}}, {{y+1}} {{x+1}}, {{y+1}}, {{x}}, {{y-1}}"/>
+  </g>
+  {% endif %}
+  {% else %}
+  {% if preds[loop.index0] == 0.0 %}
+  <g stroke="red" stroke-width="2" fill="red">
+    <circle cx="{{x}}" cy="{{y}}" r="2" />
+  </g>
+  {% else %}
+  <g stroke="red" stroke-width="2" fill="red">
+    <polygon points="{{x-1}}, {{y+1}} {{x+1}}, {{y+1}}, {{x}}, {{y-1}}"/>
+  </g>
+  {% endif %}
+  {% endif %}
+  {% endfor %}
+
+  {% elif model == "Support Vector Machines" %}
+  {% for point in path %}
+  {% set x = point.0 %}
+  {% set y = point.1 %}
+  {% if loop.index0 < n/2 %}
+  {% if preds[loop.index0] <= 0.5 %}
+  <g stroke="{{colour}}" stroke-width="2" fill="{{colour}}">
+    <circle cx="{{x}}" cy="{{y}}" r="2" />
+  </g>
+  {% else %}
+  <g stroke="{{colour}}" stroke-width="2" fill="{{colour}}">
+    <polygon points="{{x-1}}, {{y+1}} {{x+1}}, {{y+1}}, {{x}}, {{y-1}}"/>
+  </g>
+  {% endif %}
+  {% else %}
+  {% if preds[loop.index0] <= 0.5 %}
+  <g stroke="red" stroke-width="2" fill="red">
+    <circle cx="{{x}}" cy="{{y}}" r="2" />
+  </g>
+  {% else %}
+  <g stroke="red" stroke-width="2" fill="red">
+    <polygon points="{{x-1}}, {{y+1}} {{x+1}}, {{y+1}}, {{x}}, {{y-1}}"/>
+  </g>
+  {% endif %}
+  {% endif %}
+  {% endfor %}
+
+  {% elif model == "Gaussian Mixture Models" %}
+  {% for point in path %}
+  {% set x = point.0 %}
+  {% set y = point.1 %}
+  <g stroke="{{colour}}" stroke-width="2" fill="{{colour}}">
+    <circle cx="{{x}}" cy="{{y}}" r="2" />
+  </g>
+  {% endfor %}
+  {% for mu in means %}
+  {% set x = mu.0 %}
+  {% set y = mu.1 %}
+  <g stroke="red" stroke-width="2" fill="red">
+    <polygon points="{{x-2}}, {{y-2}} {{x+2}}, {{y-2}}, {{x}}, {{y+2}}"/>
+  </g>
+  {% endfor %}
+
+  {% elif model == "DBSCAN" %}
+  {% for point in path %}
+  {% set x = point.0 %}
+  {% set y = point.1 %}
+  {% if labels[loop.index0] == 0.0 %}
+  <g stroke="{{colour}}" stroke-width="2" fill="{{colour}}">
+    <circle cx="{{x}}" cy="{{y}}" r="2" />
+  </g>
+  {% else %}
+  <g stroke="red" stroke-width="2" fill="red">
+    <circle cx="{{x}}" cy="{{y}}" r="2" />
+  </g>
+  {% endif %}
+  {% endfor %}
+
+  {% for c in centers %}
+  {% set x = c.0 %}
+  {% set y = c.1 %}
+  <g stroke="blue" stroke-width="2" fill="blue">
+    <polygon points="{{x-2}}, {{y-2}} {{x+2}}, {{y-2}}, {{x}}, {{y+2}}"/>
+  </g>
+  {% endfor %}
+
+  {% endif %}  
+</svg>
