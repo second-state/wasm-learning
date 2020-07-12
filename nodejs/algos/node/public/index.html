@@ -32,11 +32,9 @@ function enableButton(responseText, statusText, xhr, $form)  {
     <div class="container">
 
       <h1>Plot this!</h1>
-      <p class="lead">Find the centers for the data points and plot them. Examples:</p>
+      <p class="lead">Fit models to data points and plot them. Example:</p>
       <ul>
-        <li>The iris data set has 3 centers. <a href="iris.data.csv">download CSV file</a>
-        <li>The S1 data set has 15 centers. <a href="s1.data.csv">download CSV file</a>
-        <!-- <li>The birch3 data set has 100 centers. <a href="birch3.data.csv">download CSV file</a> -->
+        <li>The iris data set. <a href="iris.data.csv">download CSV file</a>
       </ul>
 
       <form id="draw" enctype="multipart/form-data">
@@ -46,17 +44,27 @@ function enableButton(responseText, statusText, xhr, $form)  {
 	  <small id="csv_help" class="form-text text-muted">The file should contain 2D data points in the format of x1,y1,x2,y2...x_n,y_n</small>
         </div>
 
-	<div class="form-group">
-          <label for="num">Number of centers</label>
-          <input type="number" class="form-control" id="num" name="num" value="3">
-        </div>
-
         <div class="form-group">
-          <label for="title">Title</label>
-          <input type="text" class="form-control" id="title" name="title" value="Demo">
+          <label for="model">Model</label>
+	  <select class="form-control" id="model" name="model" onchange="if (this.selectedIndex==3) $('#kmeans_n_div').show();">
+            <option value="lin_reg">Linear Regression</option>
+            <option value="log_reg">Logistic Regression</option>
+            <option value="glm">Generalized Linear Model</option>
+            <option value="kmeans">K-Means Clustering</option>
+            <option value="nnet">Neural Network</option>
+            <option value="svm">Support Vector Machine</option>
+            <option value="gmm">Gaussian Mixture Model</option>
+            <option value="nb">Naive Bayes Classifier</option>
+            <option value="dbscan">DBSCAN</option>
+          </select>
         </div>
 
-        <button type="submit" class="btn btn-primary mb-2" id="fitplot" onclick="setTimeout(function(){$('#svg_img').text('Please wait. This could take a minute');$('#fitplot').prop('disabled', true);},0);return true;">Find centers and draw</button>
+	<div class="form-group" id="kmeans_n_div" style="display:none">
+          <label for="kmeans_n">K-Means: Number of centers</label>
+          <input type="number" class="form-control" id="kmeans_n" name="kmeans_n" value="3">
+        </div>
+
+        <button type="submit" class="btn btn-primary mb-2" id="fitplot" onclick="setTimeout(function(){$('#svg_img').text('Please wait. This could take a minute');$('#fitplot').prop('disabled', true);},0);return true;">Fit model and draw</button>
       </form>
 
       <div class="jumbotron">
