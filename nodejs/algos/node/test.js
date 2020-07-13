@@ -13,7 +13,7 @@ console.timeLog('algos', "log_reg");
 fs.writeFileSync("glm.svg", glm(iris_csv));
 console.timeLog('algos', "glm");
 
-fs.writeFileSync("kmeans.svg", kmeans(iris_csv));
+fs.writeFileSync("kmeans.svg", kmeans(iris_csv, 3));
 console.timeLog('algos', "kmeans");
 
 fs.writeFileSync("nnet.svg", nnet(iris_csv));
@@ -22,7 +22,7 @@ console.timeLog('algos', "nnet");
 fs.writeFileSync("svm.svg", svm(iris_csv));
 console.timeLog('algos', "svm");
 
-fs.writeFileSync("gmm.svg", gmm(iris_csv));
+fs.writeFileSync("gmm.svg", gmm(iris_csv, 3));
 console.timeLog('algos', "gmm");
 
 fs.writeFileSync("nb.svg", nb(iris_csv));

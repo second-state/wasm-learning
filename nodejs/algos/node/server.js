@@ -42,7 +42,7 @@ app.post('/draw', function (req, res) {
     svg = glm(csv_file.data);
   }
   if (model == "gmm") {
-    svg = gmm(csv_file.data);
+    svg = gmm(csv_file.data, parseInt(req.body.gmm_n));
   }
   if (model == "dbscan") {
     svg = dbscan(csv_file.data);

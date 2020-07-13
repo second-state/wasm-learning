@@ -25,6 +25,14 @@ $(function() {
 function enableButton(responseText, statusText, xhr, $form)  {
     $('#fitplot').prop('disabled', false);
 }
+
+function showParams() {
+  $('#kmeans_n_div').hide();
+  if ($('#model').prop("selectedIndex")==3) $('#kmeans_n_div').show();
+
+  $('#gmm_n_div').hide();
+  if ($('#model').prop("selectedIndex")==6) $('#gmm_n_div').show();
+}
     </script>
   </head>
 
@@ -46,7 +54,7 @@ function enableButton(responseText, statusText, xhr, $form)  {
 
         <div class="form-group">
           <label for="model">Model</label>
-	  <select class="form-control" id="model" name="model" onchange="if (this.selectedIndex==3) $('#kmeans_n_div').show();">
+	  <select class="form-control" id="model" name="model" onchange="showParams();">
             <option value="lin_reg">Linear Regression</option>
             <option value="log_reg">Logistic Regression</option>
             <option value="glm">Generalized Linear Model</option>
@@ -62,6 +70,11 @@ function enableButton(responseText, statusText, xhr, $form)  {
 	<div class="form-group" id="kmeans_n_div" style="display:none">
           <label for="kmeans_n">K-Means: Number of centers</label>
           <input type="number" class="form-control" id="kmeans_n" name="kmeans_n" value="3">
+        </div>
+
+	<div class="form-group" id="gmm_n_div" style="display:none">
+          <label for="gmm_n">GMM: Number of classes</label>
+          <input type="number" class="form-control" id="gmm_n" name="gmm_n" value="3">
         </div>
 
         <button type="submit" class="btn btn-primary mb-2" id="fitplot" onclick="setTimeout(function(){$('#svg_img').text('Please wait. This could take a minute');$('#fitplot').prop('disabled', true);},0);return true;">Fit model and draw</button>

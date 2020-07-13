@@ -91,7 +91,6 @@ impl Graph {
     let mut coefs : Vec<f64> = Vec::new();
     let mut ps : Vec<(f64, f64)> = Vec::new();
 
-
     if params.is_some() {
       // println!("{}", params.unwrap().size());
       for i in 0..params.unwrap().size() {
@@ -105,6 +104,7 @@ impl Graph {
     }
     // println!("{:?}", type_of(p1));
     // println!("{:?}", p2);
+    println!("lin_reg results: {:?}", coefs);
     context.insert("point1", &(ps[0]));
     context.insert("point2", &(ps[1])); 
 
@@ -145,6 +145,8 @@ impl Graph {
 
     // println!("{:?}", type_of(p1));
     // println!("{:?}", p2);
+    println!("log_reg results: {:?}", coefs);
+    // println!("log_reg classification: {:?}", preds);
     context.insert("point1", &(ps[0]));
     context.insert("point2", &(ps[1]));
     context.insert("n", &self.size);
@@ -168,31 +170,10 @@ impl Graph {
     let mut gl_mod = GenLinearModel::new(Bernoulli);
     gl_mod.train(&inputs, &targets).unwrap();
     
-    /*let params : Option<&Vector<f64>> = log_mod.parameters();
-    let mut coefs : Vec<f64> = Vec::new();
-    let mut p1 : (f64, f64) = (0.0, 0.0);
-    let mut p2 : (f64, f64) = (0.0, 0.0);
-    if params.is_some() {
-      // println!("{:?}", params.unwrap());
-      coefs.push(-params.unwrap()[0]/params.unwrap()[2]);
-      coefs.push(-params.unwrap()[1]/params.unwrap()[2]);
-    }
-
-    if coefs.len() > 0 {
-      p1 = (self.x_min, coefs[0] + coefs[1] * self.x_min);
-      p2 = (self.x_min + self.x_range, coefs[0] + coefs[1] * (self.x_min + self.x_range));
-      p1 = ((p1.0 - self.x_min) / self.x_range * width as f64 + padding as f64, 
-                (p1.1 - self.y_min) / self.y_range * (height as f64 * -1.0) + (padding + height) as f64);
-      p2 = ((p2.0 - self.x_min) / self.x_range * width as f64 + padding as f64, 
-                (p2.1 - self.y_min) / self.y_range * (height as f64 * -1.0) + (padding + height) as f64);
-
-    }*/
     let preds: Vec<f64> = gl_mod.predict(&inputs).unwrap().into_vec();
 
-    // println!("{:?}", type_of(p1));
-    // println!("{:?}", p2);
-    // context.insert("point1", &p1);
-    // context.insert("point2", &p2);
+    println!("glm results: {:?}", gl_mod);
+    // println!("glm classification: {:?}", preds);
     context.insert("n", &self.size);
     context.insert("preds", &preds);
 
@@ -212,7 +193,6 @@ impl Graph {
     let inputs = Matrix::new(self.size, 2, p_vec);
     let mut km = KMeansClassifier::new(num_centers);
     km.train(&inputs).unwrap();
-    println!("Kmean model trained!");
     let center_mat = km.centroids().as_ref().unwrap();
     
     let center_vec: Vec<f64> = center_mat.data().to_vec();
@@ -223,6 +203,7 @@ impl Graph {
       } 
     }
     centers = self.graph_map(centers);
+    println!("kmeans results: {:?}", centers);
 
     context.insert("centers", &centers);
     Tera::one_off(include_str!("kmeans.svg"), &mut context, true).expect("Could not draw graph")
@@ -267,7 +248,8 @@ impl Graph {
     }
     context.insert("n", &self.size);
     context.insert("preds", &preds);
-    // println!("{:?}", preds);
+    println!("nnet results: {:?}", nn);
+    // println!("nnet classification: {:?}", preds);
 
     Tera::one_off(include_str!("nnet.svg"), &mut context, true).expect("Could not draw graph")
   }
@@ -283,49 +265,22 @@ impl Graph {
     let mut context = self.create_svg_context();
 
     let svm_target_vec: Vec<f64> = target_vec.iter().map(|val| if *val == 1.0 as f64 {1. as f64} else {-1. as f64} ).collect();
-    println!("{:?}", svm_target_vec);            
     let inputs = Matrix::new(self.size, 2, p_vec);
     let targets = Vector::new(svm_target_vec);
-    // println!("Nothing yet!");
     let mut svm_mod = SVM::new(Linear::default(), 0.2);
-    println!("Model created!");
     svm_mod.train(&inputs, &targets).unwrap();
-    println!("Model trained!");
     
-    /*let params : Option<&Vector<f64>> = log_mod.parameters();
-    let mut coefs : Vec<f64> = Vec::new();
-    let mut p1 : (f64, f64) = (0.0, 0.0);
-    let mut p2 : (f64, f64) = (0.0, 0.0);
-    if params.is_some() {
-      // println!("{:?}", params.unwrap());
-      coefs.push(-params.unwrap()[0]/params.unwrap()[2]);
-      coefs.push(-params.unwrap()[1]/params.unwrap()[2]);
-    }
-
-    if coefs.len() > 0 {
-      p1 = (self.x_min, coefs[0] + coefs[1] * self.x_min);
-      p2 = (self.x_min + self.x_range, coefs[0] + coefs[1] * (self.x_min + self.x_range));
-      p1 = ((p1.0 - self.x_min) / self.x_range * width as f64 + padding as f64, 
-                (p1.1 - self.y_min) / self.y_range * (height as f64 * -1.0) + (padding + height) as f64);
-      p2 = ((p2.0 - self.x_min) / self.x_range * width as f64 + padding as f64, 
-                (p2.1 - self.y_min) / self.y_range * (height as f64 * -1.0) + (padding + height) as f64);
-
-    }*/
-    // println!("{:?}", svm_mod.predict(&inputs).unwrap());
     let preds: Vec<f64> = svm_mod.predict(&inputs).unwrap().into_vec();
-    println!("{:?}", preds);
-    // preds = preds.iter().map(|val| if *val == 1.0 as f64 {1.} else {0.}).collect();
-    // println!("{:?}", type_of(p1));
-    // println!("{:?}", p2);
-    //context.insert("point1", &p1);
-    //context.insert("point2", &p2);
+    println!("svm results: {:?}", svm_mod);
+    // println!("svm classification: {:?}", preds);
+
     context.insert("n", &self.size);
     context.insert("preds", &preds);
 
     Tera::one_off(include_str!("svm.svg"), &mut context, true).expect("Could not draw graph")
   }
 
-  pub fn gmm_svg(&self) -> String {
+  pub fn gmm_svg(&self, num_classes: usize) -> String {
     let mut p_vec: Vec<f64> = Vec::new();
     for point in &self.points {
       p_vec.push(point.x);
@@ -334,20 +289,17 @@ impl Graph {
 
     let mut context = self.create_svg_context();
 
-    let class_num: usize = 2;
+    // let class_num: usize = 2;
     let inputs = Matrix::new(self.size, 2, p_vec);
-    // println!("{:?}", inputs);
-    let mut gm = GaussianMixtureModel::new(class_num);
+    let mut gm = GaussianMixtureModel::new(num_classes);
     gm.set_max_iters(10);
     gm.cov_option = CovOption::Diagonal;
-    println!("Not trained yet!");
     gm.train(&inputs).unwrap();
-    println!("Just trained!");
 
     let mean_mat: Option<&Matrix<f64>> = gm.means();
-    if mean_mat.is_some() {
-      println!("{:?}", mean_mat.unwrap());
-    }
+    // if mean_mat.is_some() {
+    //   println!("{:?}", mean_mat.unwrap());
+    // }
 
     let mean_vec: Vec<f64> = mean_mat.unwrap().data().to_vec();
     let mut mus: Vec<(f64, f64)> = Vec::new();
@@ -358,7 +310,8 @@ impl Graph {
       } 
     }
     mus = self.graph_map(mus);
-    
+    println!("gmm results: {:?}", mus);
+
     context.insert("means", &mus);
 
     Tera::one_off(include_str!("gmm.svg"), &mut context, true).expect("Could not draw graph")
@@ -388,7 +341,6 @@ impl Graph {
     let targets = Matrix::new(self.size, 2, target_class);
     let mut nb = NaiveBayes::<Gaussian>::new();
     nb.train(&inputs, &targets).unwrap();
-    // println!("{:?}", nb.predict(&inputs));
     let pred_class: Vec<f64> = nb.predict(&inputs).unwrap().into_vec();
     let mut preds: Vec<f64> = Vec::new();
     for i in 0..self.size {
@@ -399,8 +351,9 @@ impl Graph {
       }
     }
 
-    // println!("{:?}", type_of(p1));
-    // println!("{:?}", preds);
+    println!("nb results: {:?}", nb);
+    // println!("nb classification: {:?}", preds);
+
     context.insert("n", &self.size);
     context.insert("preds", &preds);
 
@@ -425,7 +378,6 @@ impl Graph {
     db.train(&inputs).unwrap();
 
     let clustering = db.clusters().unwrap();
-    // println!("{:?}", clustering);
     let labels: Vec<f64> = clustering.data().to_vec().iter().map(|&val| match val {Some(x) => {x as f64}, _ => {-1.0}}).collect();
     let mut clusters: Vec<(f64, f64, usize)> = Vec::new(); 
     
@@ -442,6 +394,8 @@ impl Graph {
     }
     let mut centers: Vec<(f64, f64)> = clusters.iter().map(|val| (val.0/(val.2 as f64) , val.1/(val.2 as f64)) ).collect(); 
     centers = self.graph_map(centers);
+
+    println!("dbscan results: {:?}", centers);
 
     context.insert("n", &self.size);
     context.insert("labels", &labels);
@@ -516,9 +470,9 @@ pub fn svm (csv_content: &[u8]) -> String {
 }
 
 #[wasm_bindgen]
-pub fn gmm (csv_content: &[u8]) -> String {
+pub fn gmm (csv_content: &[u8], num_classes: i32) -> String {
   let graph = prepare_graph (csv_content, 800, 400, 20, "Gaussian Mixture Models");
-  graph.gmm_svg()
+  graph.gmm_svg(num_classes as usize)
 }
 
 #[wasm_bindgen]
