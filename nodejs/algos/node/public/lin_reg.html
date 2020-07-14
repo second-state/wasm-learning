@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Linear Regression</title>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.form/4.3.0/jquery.form.min.js" integrity="sha384-qlmct0AOBiA2VPZkMY3+2WqkHtIQ9lSdAsAn5RUJD/3vA5MKDgSGcdmIv4ycVxyn" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+    <script>
+$(function() {
+    var options = {
+      target: '#svg_img',
+      url: "/draw",
+      type: "post",
+      success: enableButton
+    };
+    $('#draw').ajaxForm(options);
+});
+
+function enableButton(responseText, statusText, xhr, $form)  {
+    $('#fitplot').prop('disabled', false);
+}
+    </script>
+  </head>
+
+  <body>
+    <div class="container">
+
+      <h1>Plot this!</h1>
+      <p class="lead">Fit a linear regression model to data points. Example:</p>
+      <ul>
+        <li>The iris data set. <a href="iris.data.csv">download CSV file</a>
+      </ul>
+
+      <form id="draw" enctype="multipart/form-data">
+	<div class="form-group">
+          <label for="csv_file">Please upload a CSV file for 2D data points</label>
+          <input type="file" class="form-control-file" id="csv_file" name="csv_file">
+	  <small id="csv_help" class="form-text text-muted">The file should contain 2D data points in the format of x1,y1,x2,y2...x_n,y_n</small>
+        </div>
+	<input type="hidden" name="model" value="lin_reg"/>
+
+        <button type="submit" class="btn btn-primary mb-2" id="fitplot" onclick="setTimeout(function(){$('#svg_img').text('Please wait. This could take a minute');$('#fitplot').prop('disabled', true);},0);return true;">Fit model and draw</button>
+      </form>
+
+      <div class="jumbotron">
+        <p id="svg_img" class="lead">Upload a CSV data file and press the button above!</p>
+      </div>
+
+    </div> <!-- /container -->
+  </body>
+</html>
