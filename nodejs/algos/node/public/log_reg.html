@@ -31,8 +31,8 @@ function enableButton(responseText, statusText, xhr, $form)  {
   <body>
     <div class="container">
 
-      <h1>Plot this!</h1>
-      <p class="lead">Fit a logistic regression model to data points with binary values (triangles and dots). Plot the data points with a line that seperates predicted triangles and dots. Example:</p>
+      <h1>Logistic Regression</h1>
+      <p class="lead">Fit a Logistic Regression model to data points with binary values (1 and 0). Plot the data points in triangles (1) and dots (0). Red color denotes points whose true value and predicted value disagree. Plot the model line that seperates predicted triangles and dots. Example:</p>
       <ul>
         <li>The iris data set. <a href="iris.data.csv">download CSV file</a>
       </ul>
@@ -41,7 +41,7 @@ function enableButton(responseText, statusText, xhr, $form)  {
 	<div class="form-group">
           <label for="csv_file">Please upload a CSV file for 2D data points</label>
           <input type="file" class="form-control-file" id="csv_file" name="csv_file">
-	  <small id="csv_help" class="form-text text-muted">The file should contain 2D data points in the format of x1,y1,x2,y2...x_n,y_n</small>
+	  <small id="csv_help" class="form-text text-muted">The file should contain 2D data points with values in the format of x1,y1,v1,x2,y2,v2...x_n,y_n,v_n</small>
         </div>
 	<input type="hidden" name="model" value="log_reg"/>
 

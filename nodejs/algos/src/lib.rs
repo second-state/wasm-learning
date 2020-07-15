@@ -351,7 +351,7 @@ impl Graph {
       }
     }
 
-    println!("nb results: {:?}", nb);
+    // println!("nb results: {:?}", nb);
     // println!("nb classification: {:?}", preds);
 
     context.insert("n", &self.size);
