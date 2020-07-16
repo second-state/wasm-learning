@@ -1,5 +1,7 @@
 use wasm_bindgen::prelude::*;
 use rand::prelude::*;
+use std::fs::File;
+use std::io::{Write, BufReader, BufRead, Error};
 
 #[wasm_bindgen]
 pub fn get_random_i32() -> i32 {
@@ -26,3 +28,12 @@ pub fn print_random_i32() -> i32 {
   println!("Printed from wasm: A new random number is {}", x);
   return x;
 }
+
+#[wasm_bindgen]
+pub fn create_file(path: &str, content: &str) -> String {
+  let mut output = File::create(path).unwrap();
+  output.write_all(content.as_bytes()).unwrap();
+  path.to_string()
+}
+
+
