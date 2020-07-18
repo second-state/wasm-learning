@@ -10,10 +10,12 @@ use rm::linalg::Matrix;
 use rm::linalg::Vector;
 use rm::learning::lin_reg::LinRegressor;
 use rm::learning::logistic_reg::LogisticRegressor;
+use rm::learning::optim::grad_desc::GradientDesc;
 use rm::learning::glm::{GenLinearModel, Bernoulli};
 use rm::learning::gmm::{CovOption, GaussianMixtureModel};
 use rm::learning::naive_bayes::{NaiveBayes, Gaussian};
 use rm::learning::k_means::KMeansClassifier;
+use rm::learning::k_means::KPlusPlus;
 use rm::learning::svm::SVM;
 use rm::learning::toolkit::kernel::Linear;
 use rm::learning::nnet::{NeuralNet, BCECriterion};
@@ -73,20 +75,10 @@ impl Graph {
            (val.1-self.y_min) / self.y_range * (self.height as f64 * -1.0) + (self.padding + self.height) as f64)).collect()
   }
 
-  pub fn lin_reg_svg(&self) -> String {
-    let mut xs: Vec<f64> = Vec::new();
-    let mut ys: Vec<f64> = Vec::new();
-    for point in &self.points {
-      xs.push(point.x);
-      ys.push(point.y);
-    }
-
+  pub fn lin_reg(&self, model: &str) -> String {
     let mut context = self.create_svg_context();
+    let mut lin_mod: LinRegressor = serde_json::from_str(model).unwrap();
 
-    let inputs = Matrix::new(self.size, 1, xs);
-    let targets = Vector::new(ys);
-    let mut lin_mod = LinRegressor::default();
-    lin_mod.train(&inputs, &targets).unwrap();
     let params : Option<&Vector<f64>> = lin_mod.parameters();
     let mut coefs : Vec<f64> = Vec::new();
     let mut ps : Vec<(f64, f64)> = Vec::new();
@@ -111,21 +103,18 @@ impl Graph {
     Tera::one_off(include_str!("lin_reg.svg"), &mut context, true).expect("Could not draw graph")
   }
 
-  pub fn log_reg_svg(&self) -> String {
-    let target_vec: Vec<f64> = get_label(self.size);
+  pub fn log_reg(&self, model: &str) -> String {
+    let mut context = self.create_svg_context();
+    let mut log_mod: LogisticRegressor<GradientDesc> = serde_json::from_str(model).unwrap();
+
     let mut p_vec: Vec<f64> = Vec::new();
     for point in &self.points {
       p_vec.push(point.x);
       p_vec.push(point.y);
     }
-
-    let mut context = self.create_svg_context();
-
     let inputs = Matrix::new(self.size, 2, p_vec);
-    let targets = Vector::new(target_vec);
-    let mut log_mod = LogisticRegressor::default();
-    log_mod.train(&inputs, &targets).unwrap();
-    
+    let preds: Vec<f64> = log_mod.predict(&inputs).unwrap().into_vec();
+
     let params : Option<&Vector<f64>> = log_mod.parameters();
     let mut coefs : Vec<f64> = Vec::new();
     let mut ps : Vec<(f64, f64)> = Vec::new();
@@ -141,8 +130,6 @@ impl Graph {
       ps = self.graph_map(ps);
     }
 
-    let preds: Vec<f64> = log_mod.predict(&inputs).unwrap().into_vec();
-
     // println!("{:?}", type_of(p1));
     // println!("{:?}", p2);
     println!("log_reg results: {:?}", coefs);
@@ -155,21 +142,16 @@ impl Graph {
     Tera::one_off(include_str!("log_reg.svg"), &mut context, true).expect("Could not draw graph")
   }
 
-  pub fn glm_svg(&self) -> String {
-    let target_vec: Vec<f64> = get_label(self.size);
+  pub fn glm(&self, model: &str) -> String {
+    let mut context = self.create_svg_context();
+    let mut gl_mod: GenLinearModel<Bernoulli> = serde_json::from_str(model).unwrap();
+
     let mut p_vec: Vec<f64> = Vec::new();
     for point in &self.points {
       p_vec.push(point.x);
       p_vec.push(point.y);
     }
-
-    let mut context = self.create_svg_context();
-
     let inputs = Matrix::new(self.size, 2, p_vec);
-    let targets = Vector::new(target_vec);
-    let mut gl_mod = GenLinearModel::new(Bernoulli);
-    gl_mod.train(&inputs, &targets).unwrap();
-    
     let preds: Vec<f64> = gl_mod.predict(&inputs).unwrap().into_vec();
 
     println!("glm results: {:?}", gl_mod);
@@ -180,21 +162,11 @@ impl Graph {
     Tera::one_off(include_str!("glm.svg"), &mut context, true).expect("Could not draw graph")
   }
 
-  pub fn kmeans_svg(&self, num_centers: usize) -> String {
-    let mut p_vec: Vec<f64> = Vec::new();
-    for point in &self.points {
-      p_vec.push(point.x);
-      p_vec.push(point.y);
-    }
-
+  pub fn kmeans(&self, model: &str) -> String {
     let mut context = self.create_svg_context();
+    let mut km: KMeansClassifier<KPlusPlus> = serde_json::from_str(model).unwrap();
 
-    // let center_num : usize = 2;
-    let inputs = Matrix::new(self.size, 2, p_vec);
-    let mut km = KMeansClassifier::new(num_centers);
-    km.train(&inputs).unwrap();
     let center_mat = km.centroids().as_ref().unwrap();
-    
     let center_vec: Vec<f64> = center_mat.data().to_vec();
     let mut centers: Vec<(f64, f64)> = Vec::new();
     for i in 0..center_vec.len() {
@@ -207,201 +179,6 @@ impl Graph {
 
     context.insert("centers", &centers);
     Tera::one_off(include_str!("kmeans.svg"), &mut context, true).expect("Could not draw graph")
-  }
-
-  pub fn nnet_svg(&self) -> String {
-    let target_vec: Vec<f64> = get_label(self.size);
-    let mut p_vec: Vec<f64> = Vec::new();
-    for point in &self.points {
-      p_vec.push(point.x);
-      p_vec.push(point.y);
-    }
-
-    let mut context = self.create_svg_context();
-
-    let inputs = Matrix::new(self.size, 2, p_vec);
-    let mut target_class: Vec<f64> = Vec::new();
-    for i in 0..self.size {
-      if target_vec[i] == 0. {
-        target_class.push(1.);
-        target_class.push(0.);
-      } else {
-        target_class.push(0.);
-        target_class.push(1.);
-      }
-    }
-    let targets = Matrix::new(self.size, 2, target_class);
-    let layers = &[2,5,11,7,2];
-    let criterion = BCECriterion::new(Regularization::L2(0.1));
-    println!("Criterion created!");
-    let mut nn = NeuralNet::mlp(layers, criterion, StochasticGD::default(), Sigmoid);
-    println!("Net not trained");
-    nn.train(&inputs, &targets).unwrap();
-    let pred_class: Vec<f64> = nn.predict(&inputs).unwrap().into_vec();
-    let mut preds: Vec<f64> = Vec::new();
-    for i in 0..self.size {
-      if pred_class[2*i] <= 0.5 {
-        preds.push(1.);
-      } else {
-        preds.push(0.);
-      }
-    }
-    context.insert("n", &self.size);
-    context.insert("preds", &preds);
-    println!("nnet results: {:?}", nn);
-    // println!("nnet classification: {:?}", preds);
-
-    Tera::one_off(include_str!("nnet.svg"), &mut context, true).expect("Could not draw graph")
-  }
-
-  pub fn svm_svg(&self) -> String {
-    let target_vec: Vec<f64> = get_label(self.size);
-    let mut p_vec: Vec<f64> = Vec::new();
-    for point in &self.points {
-      p_vec.push(point.x);
-      p_vec.push(point.y);
-    }
-
-    let mut context = self.create_svg_context();
-
-    let svm_target_vec: Vec<f64> = target_vec.iter().map(|val| if *val == 1.0 as f64 {1. as f64} else {-1. as f64} ).collect();
-    let inputs = Matrix::new(self.size, 2, p_vec);
-    let targets = Vector::new(svm_target_vec);
-    let mut svm_mod = SVM::new(Linear::default(), 0.2);
-    svm_mod.train(&inputs, &targets).unwrap();
-    
-    let preds: Vec<f64> = svm_mod.predict(&inputs).unwrap().into_vec();
-    println!("svm results: {:?}", svm_mod);
-    // println!("svm classification: {:?}", preds);
-
-    context.insert("n", &self.size);
-    context.insert("preds", &preds);
-
-    Tera::one_off(include_str!("svm.svg"), &mut context, true).expect("Could not draw graph")
-  }
-
-  pub fn gmm_svg(&self, num_classes: usize) -> String {
-    let mut p_vec: Vec<f64> = Vec::new();
-    for point in &self.points {
-      p_vec.push(point.x);
-      p_vec.push(point.y);
-    }
-
-    let mut context = self.create_svg_context();
-
-    // let class_num: usize = 2;
-    let inputs = Matrix::new(self.size, 2, p_vec);
-    let mut gm = GaussianMixtureModel::new(num_classes);
-    gm.set_max_iters(10);
-    gm.cov_option = CovOption::Diagonal;
-    gm.train(&inputs).unwrap();
-
-    let mean_mat: Option<&Matrix<f64>> = gm.means();
-    // if mean_mat.is_some() {
-    //   println!("{:?}", mean_mat.unwrap());
-    // }
-
-    let mean_vec: Vec<f64> = mean_mat.unwrap().data().to_vec();
-    let mut mus: Vec<(f64, f64)> = Vec::new();
-
-    for i in 0..mean_vec.len() {
-      if (i % 2) == 1 {
-        mus.push((mean_vec[i-1], mean_vec[i]));
-      } 
-    }
-    mus = self.graph_map(mus);
-    println!("gmm results: {:?}", mus);
-
-    context.insert("means", &mus);
-
-    Tera::one_off(include_str!("gmm.svg"), &mut context, true).expect("Could not draw graph")
-  }
-
-  pub fn nb_svg(&self) -> String {
-    let target_vec: Vec<f64> = get_label(self.size);
-    let mut p_vec: Vec<f64> = Vec::new();
-    for point in &self.points {
-      p_vec.push(point.x);
-      p_vec.push(point.y);
-    }
-
-    let mut context = self.create_svg_context();
-
-    let inputs = Matrix::new(self.size, 2, p_vec);
-    let mut target_class: Vec<f64> = Vec::new();
-    for i in 0..self.size {
-      if target_vec[i] == 0. {
-        target_class.push(1.);
-        target_class.push(0.);
-      } else {
-        target_class.push(0.);
-        target_class.push(1.);
-      }
-    }
-    let targets = Matrix::new(self.size, 2, target_class);
-    let mut nb = NaiveBayes::<Gaussian>::new();
-    nb.train(&inputs, &targets).unwrap();
-    let pred_class: Vec<f64> = nb.predict(&inputs).unwrap().into_vec();
-    let mut preds: Vec<f64> = Vec::new();
-    for i in 0..self.size {
-      if pred_class[2*i] == 0. {
-        preds.push(1.);
-      } else {
-        preds.push(0.)
-      }
-    }
-
-    // println!("nb results: {:?}", nb);
-    // println!("nb classification: {:?}", preds);
-
-    context.insert("n", &self.size);
-    context.insert("preds", &preds);
-
-    Tera::one_off(include_str!("nb.svg"), &mut context, true).expect("Could not draw graph")
-  }
-
-  pub fn dbscan_svg(&self) -> String {
-    let mut xs: Vec<f64> = Vec::new();
-    let mut ys: Vec<f64> = Vec::new();
-    let mut p_vec: Vec<f64> = Vec::new();
-    for point in &self.points {
-      xs.push(point.x);
-      ys.push(point.y);
-      p_vec.push(point.x);
-      p_vec.push(point.y);
-    }
-
-    let mut context = self.create_svg_context();
-
-    let inputs = Matrix::new(self.size, 2, p_vec);
-    let mut db = DBSCAN::new(0.5, 2);
-    db.train(&inputs).unwrap();
-
-    let clustering = db.clusters().unwrap();
-    let labels: Vec<f64> = clustering.data().to_vec().iter().map(|&val| match val {Some(x) => {x as f64}, _ => {-1.0}}).collect();
-    let mut clusters: Vec<(f64, f64, usize)> = Vec::new(); 
-    
-    for i in 0..self.size {
-      if labels[i] >= 0.0 {
-        if labels[i] >= clusters.len() as f64 {
-          for _ in 0..(labels[i] as usize - clusters.len()+1) {
-            clusters.push((0.0, 0.0, 0));
-          }
-        }
-        let c_index : usize = labels[i] as usize;
-        clusters[c_index] = (clusters[c_index].0+xs[i], clusters[c_index].1+ys[i], clusters[c_index].2+1);
-      }
-    }
-    let mut centers: Vec<(f64, f64)> = clusters.iter().map(|val| (val.0/(val.2 as f64) , val.1/(val.2 as f64)) ).collect(); 
-    centers = self.graph_map(centers);
-
-    println!("dbscan results: {:?}", centers);
-
-    context.insert("n", &self.size);
-    context.insert("labels", &labels);
-    context.insert("centers", &centers);
-
-    Tera::one_off(include_str!("dbscan.svg"), &mut context, true).expect("Could not draw graph")
   }
 
   pub fn create_svg_context(&self) -> Context {
@@ -432,59 +209,101 @@ impl Graph {
   }
 }
 
+#[wasm_bindgen]
+pub fn lin_reg_train (csv_content: &[u8]) -> String {
+  let data: Vec<f64> = read_data(csv_content);
+  let mut xs: Vec<f64> = Vec::new();
+  let mut ys: Vec<f64> = Vec::new();
+  for i in 0..data.len() {
+    if (i % 2) == 1 {
+      xs.push(data[i-1]);
+      ys.push(data[i]);
+    }
+  }
+
+  let inputs = Matrix::new(xs.len(), 1, xs);
+  let targets = Vector::new(ys);
+  let mut lin_mod = LinRegressor::default();
+  lin_mod.train(&inputs, &targets).unwrap();
+
+  return serde_json::to_string(&lin_mod).unwrap();
+}
 
 #[wasm_bindgen]
-pub fn lin_reg (csv_content: &[u8]) -> String {
+pub fn lin_reg_svg (csv_content: &[u8], model: &str) -> String {
   let graph = prepare_graph (csv_content, 800, 400, 20, "Linear Regression");
-  graph.lin_reg_svg()
+  graph.lin_reg(model)
 }
 
 #[wasm_bindgen]
-pub fn log_reg (csv_content: &[u8]) -> String {
+pub fn log_reg_train (csv_content: &[u8]) -> String {
+  let data: Vec<f64> = read_data(csv_content);
+  let mut p_vec: Vec<f64> = Vec::new();
+  let mut labels: Vec<f64> = Vec::new();
+  for i in 0..data.len() {
+    if (i % 3) == 2 {
+      p_vec.push(data[i-2]);
+      p_vec.push(data[i-1]);
+      labels.push(data[i]);
+    }
+  }
+
+  let inputs = Matrix::new(labels.len(), 2, p_vec);
+  let targets = Vector::new(labels.clone());
+  let mut log_mod = LogisticRegressor::default();
+  log_mod.train(&inputs, &targets).unwrap();
+
+  return serde_json::to_string(&log_mod).unwrap();
+}
+
+#[wasm_bindgen]
+pub fn log_reg_svg (csv_content: &[u8], model: &str) -> String {
   let graph = prepare_graph (csv_content, 800, 400, 20, "Logistic Regression");
-  graph.log_reg_svg()
+  graph.log_reg(model)
+}
+
+
+#[wasm_bindgen]
+pub fn glm_train (csv_content: &[u8]) -> String {
+  let data: Vec<f64> = read_data(csv_content);
+  let mut p_vec: Vec<f64> = Vec::new();
+  let mut labels: Vec<f64> = Vec::new();
+  for i in 0..data.len() {
+    if (i % 3) == 2 {
+      p_vec.push(data[i-2]);
+      p_vec.push(data[i-1]);
+      labels.push(data[i]);
+    }
+  }
+
+  let inputs = Matrix::new(labels.len(), 2, p_vec);
+  let targets = Vector::new(labels.clone());
+  let mut gl_mod = GenLinearModel::new(Bernoulli);
+  gl_mod.train(&inputs, &targets).unwrap();
+
+  return serde_json::to_string(&gl_mod).unwrap();
 }
 
 #[wasm_bindgen]
-pub fn glm (csv_content: &[u8]) -> String {
+pub fn glm_svg (csv_content: &[u8], model: &str) -> String {
   let graph = prepare_graph (csv_content, 800, 400, 20, "Generalized Linear Models");
-  graph.glm_svg()
+  graph.glm(model)
 }
 
 #[wasm_bindgen]
-pub fn kmeans (csv_content: &[u8], num_centers: i32) -> String {
+pub fn kmeans_train (csv_content: &[u8], num_centers: i32) -> String {
+  let data: Vec<f64> = read_data(csv_content);
+  let inputs = Matrix::new(data.len()/2, 2, data);
+  let mut km = KMeansClassifier::new(num_centers as usize);
+  km.train(&inputs).unwrap();
+
+  return serde_json::to_string(&km).unwrap();
+}
+
+#[wasm_bindgen]
+pub fn kmeans_svg (csv_content: &[u8], model: &str) -> String {
   let graph = prepare_graph (csv_content, 800, 400, 20, "K-Means Clustering");
-  graph.kmeans_svg(num_centers as usize)
-}
-
-#[wasm_bindgen]
-pub fn nnet (csv_content: &[u8]) -> String {
-  let graph = prepare_graph (csv_content, 800, 400, 20, "Neural Networks");
-  graph.nnet_svg()
-}
-
-#[wasm_bindgen]
-pub fn svm (csv_content: &[u8]) -> String {
-  let graph = prepare_graph (csv_content, 800, 400, 20, "Support Vector Machines");
-  graph.svm_svg()
-}
-
-#[wasm_bindgen]
-pub fn gmm (csv_content: &[u8], num_classes: i32) -> String {
-  let graph = prepare_graph (csv_content, 800, 400, 20, "Gaussian Mixture Models");
-  graph.gmm_svg(num_classes as usize)
-}
-
-#[wasm_bindgen]
-pub fn nb (csv_content: &[u8]) -> String {
-  let graph = prepare_graph (csv_content, 800, 400, 20, "Naive Bayes Classifiers");
-  graph.nb_svg()
-}
-
-#[wasm_bindgen]
-pub fn dbscan (csv_content: &[u8]) -> String {
-  let graph = prepare_graph (csv_content, 800, 400, 20, "DBSCAN");
-  graph.dbscan_svg()
+  graph.kmeans(model)
 }
 
 pub fn prepare_graph (csv_content: &[u8], width: usize, height: usize, padding: usize, title: &str) -> Graph {
@@ -546,16 +365,4 @@ fn read_data(csv_content: &[u8]) -> Vec<f64> {
     }
   }
   return data;
-}
-
-fn get_label(n : usize) -> Vec<f64> {
-  let mut target_vec: Vec<f64> = Vec::new();
-  for i in 0..n {
-    if i < n/2 {
-      target_vec.push(0.);
-    } else {
-      target_vec.push(1.);
-    }
-  }
-  target_vec
 }

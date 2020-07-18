@@ -30,6 +30,8 @@
 //! // Probabilities that each point comes from each Gaussian.
 //! println!("{:?}", post_probs.data());
 //! ```
+use serde::{Serialize, Deserialize};
+
 use linalg::{Matrix, MatrixSlice, Vector, BaseMatrix, BaseMatrixMut, Axes};
 use rulinalg::utils;
 use rulinalg::matrix::decomposition::{PartialPivLu};
@@ -43,7 +45,7 @@ use learning::error::{Error, ErrorKind};
 /// - Full : The full covariance structure.
 /// - Regularized : Adds a regularization constant to the covariance diagonal.
 /// - Diagonal : Only the diagonal covariance structure.
-#[derive(Clone, Copy, Debug)]
+#[derive(Serialize, Deserialize, Clone, Copy, Debug)]
 pub enum CovOption {
     /// The full covariance structure.
     Full,
@@ -55,7 +57,7 @@ pub enum CovOption {
 
 
 /// A Gaussian Mixture Model
-#[derive(Debug)]
+#[derive(Serialize, Deserialize, Debug)]
 pub struct GaussianMixtureModel {
     comp_count: usize,
     mix_weights: Vector<f64>,

@@ -8,6 +8,7 @@
 //! optimization algorithm but there is flexibility to introduce new
 //! algorithms and git them into the same scheme easily.
 
+use serde::{Serialize, Deserialize};
 use learning::optim::{Optimizable, OptimAlgorithm};
 use linalg::Vector;
 use linalg::{Matrix, BaseMatrix};
@@ -18,7 +19,7 @@ use learning::toolkit::rand_utils;
 const LEARNING_EPS: f64 = 1e-20;
 
 /// Batch Gradient Descent algorithm
-#[derive(Clone, Copy, Debug)]
+#[derive(Serialize, Deserialize, Clone, Copy, Debug)]
 pub struct GradientDesc {
     /// The step-size for the gradient descent steps.
     alpha: f64,
@@ -99,7 +100,7 @@ impl<M: Optimizable> OptimAlgorithm<M> for GradientDesc {
 /// Stochastic Gradient Descent algorithm.
 ///
 /// Uses basic momentum to control the learning rate.
-#[derive(Clone, Copy, Debug)]
+#[derive(Serialize, Deserialize, Clone, Copy, Debug)]
 pub struct StochasticGD {
     /// Controls the momentum of the descent
     alpha: f64,

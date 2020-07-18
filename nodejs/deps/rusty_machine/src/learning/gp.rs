@@ -25,6 +25,7 @@
 //! Alternatively one could use `gaussp.get_posterior()` which would return both
 //! the predictive mean and covariance. However, this is likely to change in
 //! a future release.
+use serde::{Serialize, Deserialize};
 
 use learning::toolkit::kernel::{Kernel, SquaredExp};
 use linalg::{Matrix, BaseMatrix, Decomposition, Cholesky};
@@ -39,7 +40,7 @@ pub trait MeanFunc {
 }
 
 /// Constant mean function
-#[derive(Clone, Copy, Debug)]
+#[derive(Serialize, Deserialize, Clone, Copy, Debug)]
 pub struct ConstMean {
     a: f64,
 }
@@ -62,7 +63,7 @@ impl MeanFunc for ConstMean {
 /// Gaussian process with generic kernel and deterministic mean function.
 /// Can be used for gaussian process regression with noise.
 /// Currently does not support classification.
-#[derive(Debug)]
+#[derive(Serialize, Deserialize, Debug)]
 pub struct GaussianProcess<T: Kernel, U: MeanFunc> {
     ker: T,
     mean: U,

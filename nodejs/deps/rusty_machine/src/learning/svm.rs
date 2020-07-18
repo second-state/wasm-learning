@@ -31,7 +31,7 @@
 //! // Hopefully we classified our new point correctly!
 //! assert!(output[0] == 1f64, "Our classifier isn't very good!");
 //! ```
-
+use serde::{Serialize, Deserialize};
 
 use linalg::{Matrix, BaseMatrix};
 use linalg::Vector;
@@ -44,7 +44,7 @@ use rand;
 use rand::Rng;
 
 /// Support Vector Machine
-#[derive(Debug)]
+#[derive(Serialize, Deserialize, Debug)]
 pub struct SVM<K: Kernel> {
     ker: K,
     alpha: Option<Vector<f64>>,

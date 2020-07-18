@@ -29,7 +29,6 @@
 //! // Hopefully we classified our new point correctly!
 //! assert!(output[0] > 17f64, "Our regressor isn't very good!");
 //! ```
-
 use linalg::{Matrix, BaseMatrix};
 use linalg::Vector;
 use learning::{LearningResult, SupModel};
@@ -38,11 +37,12 @@ use learning::toolkit::cost_fn::MeanSqError;
 use learning::optim::grad_desc::GradientDesc;
 use learning::optim::{OptimAlgorithm, Optimizable};
 use learning::error::Error;
+use serde::{Serialize, Deserialize};
 
 /// Linear Regression Model.
 ///
 /// Contains option for optimized parameter.
-#[derive(Debug)]
+#[derive(Serialize, Deserialize, Debug)]
 pub struct LinRegressor {
     /// The parameters for the regression model.
     parameters: Option<Vector<f64>>,

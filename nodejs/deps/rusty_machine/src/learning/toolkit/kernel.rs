@@ -1,6 +1,7 @@
 //! Module for kernels
 //!
 //! Currently used within Gaussian Processes and SVMs.
+use serde::{Serialize, Deserialize};
 
 use std::ops::{Add, Mul};
 
@@ -40,7 +41,7 @@ pub trait Kernel {
 /// println!("{0}", poly_plus_hypert_ker.kernel(&[1f64,2f64,3f64],
 ///                                             &[3f64,1f64,2f64]));
 /// ```
-#[derive(Debug)]
+// #[derive(Serialize, Deserialize, Debug)]
 pub struct KernelSum<T, U>
     where T: Kernel,
           U: Kernel
@@ -129,7 +130,7 @@ impl<T: Kernel, U: Kernel> Mul<KernelArith<T>> for KernelArith<U> {
 /// The Linear Kernel
 ///
 /// k(x,y) = x<sup>T</sup>y + c
-#[derive(Clone, Copy, Debug)]
+#[derive(Serialize, Deserialize, Clone, Copy, Debug)]
 pub struct Linear {
     /// Constant term added to inner product.
     pub c: f64,

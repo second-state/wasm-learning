@@ -42,7 +42,7 @@
 //! You can define your own criterion by implementing the `Criterion`
 //! trait with a concrete `CostFunc`.
 
-
+use serde::{Serialize, Deserialize};
 pub mod net_layer;
 
 use linalg::{Matrix, MatrixSlice};
@@ -509,7 +509,7 @@ pub trait Criterion {
 ///
 /// Uses the Sigmoid activation function and the
 /// cross entropy error.
-#[derive(Clone, Copy, Debug)]
+#[derive(Serialize, Deserialize, Clone, Copy, Debug)]
 pub struct BCECriterion {
     regularization: Regularization<f64>,
 }
@@ -550,7 +550,7 @@ impl BCECriterion {
 ///
 /// Uses the Linear activation function and the
 /// mean squared error.
-#[derive(Clone, Copy, Debug)]
+#[derive(Serialize, Deserialize, Clone, Copy, Debug)]
 pub struct MSECriterion {
     regularization: Regularization<f64>,
 }

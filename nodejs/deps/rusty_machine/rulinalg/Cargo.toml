@@ -1,0 +1,33 @@
+[package]
+name = "rulinalg"
+version = "0.4.2"
+authors = ["AtheMathmo"]
+
+categories = ["science"]
+description = "A linear algebra library."
+repository = "https://github.com/AtheMathmo/rulinalg"
+documentation = "https://AtheMathmo.github.io/rulinalg/"
+keywords = ["linalg","linear","algebra","linear-algebra","matrix"]
+readme = "README.md"
+license = "MIT"
+
+[features]
+io = ["csv", "rustc-serialize"]
+
+[dependencies]
+serde = { version = "1.0", features = ["derive"] }
+num = {version = "0.1.36", default-features = false }
+matrixmultiply = "0.1.13"
+
+[dev-dependencies]
+rand = "0.3"
+quickcheck = "0.4"
+itertools = "0.5.9"
+
+[dependencies.csv]
+version = "0.14.7"
+optional = true
+
+[dependencies.rustc-serialize]
+version = "0.3"
+optional = true

@@ -13,13 +13,13 @@
 //!
 //! let reg = Regularization::L1(0.5);
 //! ```
-
+use serde::{Serialize, Deserialize};
 use linalg::norm::{Euclidean, Lp, MatrixNorm};
 use linalg::{Matrix, MatrixSlice, BaseMatrix};
 use libnum::{FromPrimitive, Float};
 
 /// Model Regularization
-#[derive(Debug, Clone, Copy)]
+#[derive(Serialize, Deserialize, Debug, Clone, Copy)]
 pub enum Regularization<T: Float> {
     /// L1 Regularization
     L1(T),

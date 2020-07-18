@@ -42,6 +42,7 @@
 //!
 //! The [k-means++](https://en.wikipedia.org/wiki/K-means%2B%2B) scheme.
 
+use serde::{Serialize, Deserialize};
 use linalg::{Matrix, MatrixSlice, Axes, Vector, BaseMatrix};
 use learning::{LearningResult, UnSupModel};
 use learning::error::{Error, ErrorKind};
@@ -64,7 +65,7 @@ use std::fmt::Debug;
 ///
 /// The model will not check to ensure the data coming in is all valid.
 /// This responsibility lies with the user (for now).
-#[derive(Debug)]
+#[derive(Serialize, Deserialize, Debug)]
 pub struct KMeansClassifier<InitAlg: Initializer> {
     /// Max iterations of algorithm to run.
     iters: usize,
@@ -319,7 +320,7 @@ impl Initializer for RandomPartition {
 }
 
 /// The K-means ++ initialization scheme.
-#[derive(Debug)]
+#[derive(Serialize, Deserialize, Debug)]
 pub struct KPlusPlus;
 
 impl Initializer for KPlusPlus {

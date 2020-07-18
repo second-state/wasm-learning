@@ -39,6 +39,7 @@
 //! // Will output the target classes - otherwise our classifier is bad!
 //! println!("Final outputs --\n{}", outputs);
 //! ```
+use serde::{Serialize, Deserialize};
 
 use linalg::{Matrix, Axes, BaseMatrix, BaseMatrixMut};
 use learning::{LearningResult, SupModel};
@@ -48,7 +49,7 @@ use rulinalg::utils;
 use std::f64::consts::PI;
 
 /// The Naive Bayes model.
-#[derive(Debug, Default)]
+#[derive(Serialize, Deserialize, Debug, Default)]
 pub struct NaiveBayes<T: Distribution> {
     distr: Option<T>,
     cluster_count: Option<usize>,
@@ -232,7 +233,7 @@ pub trait Distribution {
 ///
 /// p(x|C<sub>k</sub>) = ∏<sub>i</sub> N(x<sub>i</sub> ;
 /// μ<sub>k</sub>, σ<sup>2</sup><sub>k</sub>)
-#[derive(Debug)]
+#[derive(Serialize, Deserialize, Debug)]
 pub struct Gaussian {
     theta: Matrix<f64>,
     sigma: Matrix<f64>,
@@ -313,7 +314,7 @@ impl Distribution for Gaussian {
 ///
 ///    p(x|C<sub>k</sub>) = ∏<sub>i</sub> p<sub>k</sub><sup>x<sub>i</sub></sup>
 /// (1-p)<sub>k</sub><sup>1-x<sub>i</sub></sup>
-#[derive(Debug)]
+#[derive(Serialize, Deserialize, Debug)]
 pub struct Bernoulli {
     log_probs: Matrix<f64>,
     pseudo_count: f64,
@@ -386,7 +387,7 @@ impl Distribution for Bernoulli {
 /// Defines:
 ///
 ///    p(x|C<sub>k</sub>) ∝ ∏<sub>i</sub> p<sub>k</sub><sup>x<sub>i</sub></sup>
-#[derive(Debug)]
+#[derive(Serialize, Deserialize, Debug)]
 pub struct Multinomial {
     log_probs: Matrix<f64>,
     pseudo_count: f64,

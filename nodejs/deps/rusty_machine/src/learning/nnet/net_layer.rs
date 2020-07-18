@@ -1,4 +1,5 @@
 //! Neural Network Layers
+use serde::{Serialize, Deserialize};
 
 use linalg::{Matrix, MatrixSlice, BaseMatrix};
 
@@ -12,7 +13,9 @@ use rand::distributions::{Normal, Distribution};
 
 use std::fmt::Debug;
 
+
 /// Trait for neural net layers
+// #[typetag::serde(tag = "type")]
 pub trait NetLayer : Debug {
     /// The result of propogating data forward through this layer
     fn forward(&self, input: &Matrix<f64>, params: MatrixSlice<f64>) -> LearningResult<Matrix<f64>>;
@@ -42,7 +45,7 @@ pub trait NetLayer : Debug {
 ///
 /// The parameters are a matrix of weights of size I x N
 /// where N is the dimensionality of the output and I the dimensionality of the input
-#[derive(Debug, Clone, Copy)]
+#[derive(Serialize, Deserialize, Debug, Clone, Copy)]
 pub struct Linear { 
     /// The number of dimensions of the input
     input_size: usize,
@@ -51,6 +54,7 @@ pub struct Linear {
     /// Whether or not to include a bias term
     has_bias: bool,
 }
+
 
 impl Linear {
     /// Construct a new Linear layer
@@ -97,6 +101,7 @@ fn remove_first_col(mat: Matrix<f64>) -> Matrix<f64>
     Matrix::new(rows, cols - 1, data)
 }
 
+// #[typetag::serde]
 impl NetLayer for Linear {
     /// Computes a matrix product
     ///
@@ -153,6 +158,7 @@ impl NetLayer for Linear {
     }
 }
 
+// #[typetag::serde]
 impl<T: ActivationFunc> NetLayer for T {
     /// Applies the activation function to each element of the input
     fn forward(&self, input: &Matrix<f64>, _: MatrixSlice<f64>) -> LearningResult<Matrix<f64>> {

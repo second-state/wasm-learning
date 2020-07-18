@@ -7,6 +7,7 @@
 //!
 //! You can also create your own custom activation Functions for use in your models.
 //! Just create a unit struct implementing the `ActivationFunc` trait.
+use serde::{Serialize, Deserialize};
 
 use std::fmt::Debug;
 
@@ -27,7 +28,7 @@ pub trait ActivationFunc: Clone + Debug {
 }
 
 /// Sigmoid activation function.
-#[derive(Clone, Copy, Debug)]
+#[derive(Serialize, Deserialize, Clone, Copy, Debug)]
 pub struct Sigmoid;
 
 impl ActivationFunc for Sigmoid {
@@ -55,7 +56,7 @@ impl ActivationFunc for Sigmoid {
 }
 
 /// Linear activation function.
-#[derive(Clone, Copy, Debug)]
+#[derive(Serialize, Deserialize, Clone, Copy, Debug)]
 pub struct Linear;
 
 impl ActivationFunc for Linear {
@@ -77,7 +78,7 @@ impl ActivationFunc for Linear {
 }
 
 /// Exponential activation function.
-#[derive(Clone, Copy, Debug)]
+#[derive(Serialize, Deserialize, Clone, Copy, Debug)]
 pub struct Exp;
 
 impl ActivationFunc for Exp {
@@ -99,7 +100,7 @@ impl ActivationFunc for Exp {
 }
 
 /// Hyperbolic tangent activation function
-#[derive(Clone, Copy, Debug)]
+#[derive(Serialize, Deserialize, Clone, Copy, Debug)]
 pub struct Tanh;
 
 impl ActivationFunc for Tanh {

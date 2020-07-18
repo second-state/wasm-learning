@@ -23,6 +23,7 @@
 //!
 //! assert_eq!(output, Matrix::new(1, 2, vec![-0.6686215718235227, 0.042826190364433595]));
 //! ```
+use serde::{Serialize, Deserialize};
 
 use linalg::{Matrix, BaseMatrix, Axes};
 use linalg::Vector;
@@ -33,7 +34,7 @@ use learning::error::{Error, ErrorKind};
 /// Principal Component Analysis
 ///
 /// - PCA uses rulinalg SVD which is experimental (not yet work for large data)
-#[derive(Debug)]
+#[derive(Serialize, Deserialize, Debug)]
 pub struct PCA {
     /// number of componentsc considered
     n: Option<usize>,

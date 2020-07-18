@@ -34,7 +34,7 @@
 //! // Hopefully we classified our new point correctly!
 //! assert!(output[0] > 0.5, "Our classifier isn't very good!");
 //! ```
-
+use serde::{Serialize, Deserialize};
 use linalg::Vector;
 use linalg::{Matrix, BaseMatrix};
 
@@ -46,7 +46,7 @@ use learning::error::{Error, ErrorKind};
 /// The model is generic over a Criterion
 /// which specifies the distribution family and
 /// the link function.
-#[derive(Debug)]
+#[derive(Serialize, Deserialize, Debug)]
 pub struct GenLinearModel<C: Criterion> {
     parameters: Option<Vector<f64>>,
     criterion: C,
@@ -296,7 +296,7 @@ impl LinkFunc for Identity {
 /// The Bernoulli regression family.
 ///
 /// This is equivalent to logistic regression.
-#[derive(Clone, Copy, Debug)]
+#[derive(Serialize, Deserialize, Clone, Copy, Debug)]
 pub struct Bernoulli;
 
 impl Criterion for Bernoulli {
@@ -362,7 +362,7 @@ impl Criterion for Bernoulli {
 }
 
 /// The Binomial regression family.
-#[derive(Debug)]
+#[derive(Serialize, Deserialize, Debug)]
 pub struct Binomial {
     weights: Vec<f64>,
 }
@@ -433,7 +433,7 @@ impl Criterion for Binomial {
 /// The Normal regression family.
 ///
 /// This is equivalent to the Linear Regression model.
-#[derive(Clone, Copy, Debug)]
+#[derive(Serialize, Deserialize, Clone, Copy, Debug)]
 pub struct Normal;
 
 impl Criterion for Normal {
@@ -445,7 +445,7 @@ impl Criterion for Normal {
 }
 
 /// The Poisson regression family.
-#[derive(Clone, Copy, Debug)]
+#[derive(Serialize, Deserialize, Clone, Copy, Debug)]
 pub struct Poisson;
 
 impl Criterion for Poisson {
