@@ -54,12 +54,12 @@ jobs:
         ssvmup clean
       working-directory: nodejs/rsa_example
 
-    - name: WASI
-      run: |
-        ssvmup build
-        node node/app.js
-        ssvmup clean
-      working-directory: nodejs/wasi
+#    - name: WASI
+#      run: |
+#        ssvmup build
+#        node node/app.js
+#        ssvmup clean
+#      working-directory: nodejs/wasi
 
     - name: kmeans example
       run: |
