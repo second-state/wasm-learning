@@ -23,6 +23,7 @@ use rm::learning::toolkit::activ_fn::Sigmoid;
 use rm::learning::toolkit::regularization::Regularization;
 use rm::learning::optim::grad_desc::StochasticGD;
 use rm::learning::dbscan::DBSCAN;
+use rusty_machine::learning::pca::PCA;
 use rm::learning::SupModel;
 use rm::learning::UnSupModel;
 
@@ -77,7 +78,7 @@ impl Graph {
 
   pub fn lin_reg(&self, model: &str) -> String {
     let mut context = self.create_svg_context();
-    let mut lin_mod: LinRegressor = serde_json::from_str(model).unwrap();
+    let lin_mod: LinRegressor = serde_json::from_str(model).unwrap();
 
     let params : Option<&Vector<f64>> = lin_mod.parameters();
     let mut coefs : Vec<f64> = Vec::new();
@@ -105,7 +106,7 @@ impl Graph {
 
   pub fn log_reg(&self, model: &str) -> String {
     let mut context = self.create_svg_context();
-    let mut log_mod: LogisticRegressor<GradientDesc> = serde_json::from_str(model).unwrap();
+    let log_mod: LogisticRegressor<GradientDesc> = serde_json::from_str(model).unwrap();
 
     let mut p_vec: Vec<f64> = Vec::new();
     for point in &self.points {
@@ -144,7 +145,7 @@ impl Graph {
 
   pub fn glm(&self, model: &str) -> String {
     let mut context = self.create_svg_context();
-    let mut gl_mod: GenLinearModel<Bernoulli> = serde_json::from_str(model).unwrap();
+    let gl_mod: GenLinearModel<Bernoulli> = serde_json::from_str(model).unwrap();
 
     let mut p_vec: Vec<f64> = Vec::new();
     for point in &self.points {
@@ -164,7 +165,7 @@ impl Graph {
 
   pub fn kmeans(&self, model: &str) -> String {
     let mut context = self.create_svg_context();
-    let mut km: KMeansClassifier<KPlusPlus> = serde_json::from_str(model).unwrap();
+    let km: KMeansClassifier<KPlusPlus> = serde_json::from_str(model).unwrap();
 
     let center_mat = km.centroids().as_ref().unwrap();
     let center_vec: Vec<f64> = center_mat.data().to_vec();
@@ -179,6 +180,114 @@ impl Graph {
 
     context.insert("centers", &centers);
     Tera::one_off(include_str!("kmeans.svg"), &mut context, true).expect("Could not draw graph")
+  }
+
+  pub fn svm(&self, model: &str) -> String {
+    let mut context = self.create_svg_context();
+    let svm_mod: SVM<Linear> = serde_json::from_str(model).unwrap();
+
+    let mut p_vec: Vec<f64> = Vec::new();
+    for point in &self.points {
+      p_vec.push(point.x);
+      p_vec.push(point.y);
+    }
+    let inputs = Matrix::new(self.size, 2, p_vec);
+    let preds: Vec<f64> = svm_mod.predict(&inputs).unwrap().into_vec();
+
+    context.insert("n", &self.size);
+    context.insert("preds", &preds);
+
+    Tera::one_off(include_str!("svm.svg"), &mut context, true).expect("Could not draw graph")
+  }
+
+  pub fn gmm(&self, model: &str) -> String {
+    let mut context = self.create_svg_context();
+    let gm: GaussianMixtureModel = serde_json::from_str(model).unwrap();
+
+    let mean_mat: Option<&Matrix<f64>> = gm.means();
+    let mean_vec: Vec<f64> = mean_mat.unwrap().data().to_vec();
+    let mut mus: Vec<(f64, f64)> = Vec::new();
+
+    for i in 0..mean_vec.len() {
+      if (i % 2) == 1 {
+        mus.push((mean_vec[i-1], mean_vec[i]));
+      }
+    }
+    mus = self.graph_map(mus);
+    println!("gmm results: {:?}", mus);
+
+    context.insert("means", &mus);
+
+    Tera::one_off(include_str!("gmm.svg"), &mut context, true).expect("Could not draw graph")
+  }
+
+  pub fn dbscan(&self, model: &str) -> String {
+    let mut context = self.create_svg_context();
+    let db: DBSCAN = serde_json::from_str(model).unwrap();
+
+    let mut xs: Vec<f64> = Vec::new();
+    let mut ys: Vec<f64> = Vec::new();
+    for point in &self.points {
+      xs.push(point.x);
+      ys.push(point.y);
+    }
+
+    let clustering = db.clusters().unwrap();
+    let labels: Vec<f64> = clustering.data().to_vec().iter().map(|&val| match val {Some(x) => {x as f64}, _ => {-1.0}}).collect();
+    let mut clusters: Vec<(f64, f64, usize)> = Vec::new();
+
+    for i in 0..self.size {
+      if labels[i] >= 0.0 {
+        if labels[i] >= clusters.len() as f64 {
+          for _ in 0..(labels[i] as usize - clusters.len()+1) {
+            clusters.push((0.0, 0.0, 0));
+          }
+        }
+        let c_index : usize = labels[i] as usize;
+        clusters[c_index] = (clusters[c_index].0+xs[i], clusters[c_index].1+ys[i], clusters[c_index].2+1);
+      }
+    }
+    let mut centers: Vec<(f64, f64)> = clusters.iter().map(|val| (val.0/(val.2 as f64) , val.1/(val.2 as f64)) ).collect();
+    centers = self.graph_map(centers);
+
+    context.insert("n", &self.size);
+    context.insert("labels", &labels);
+    context.insert("centers", &centers);
+
+    Tera::one_off(include_str!("dbscan.svg"), &mut context, true).expect("Could not draw graph")
+  }
+
+  pub fn pca(&self, model: &str) -> String {
+    let mut context = self.create_svg_context();
+    let pca: PCA = serde_json::from_str(model).unwrap();
+
+    let graph_center: (f64, f64) = (self.x_min + self.x_range/2.0, self.y_min + self.y_range/2.0);
+
+    let eig_mat = pca.components().unwrap();
+    let eig_vecs: Vec<f64> = eig_mat.data().to_vec();
+    let mut eig_vecs_coefs: Vec<(f64, f64)> = Vec::new();
+    for i in 0..(eig_vecs.len()/2) {
+      eig_vecs_coefs.push((graph_center.1 - eig_vecs[2*i+1]/eig_vecs[2*i]*graph_center.0, eig_vecs[2*i+1]/eig_vecs[2*i]));
+    }
+
+    let mut eig_vecs_points : Vec<(f64, f64)> = Vec::new();
+    for i in 0..eig_vecs_coefs.len() {
+      if (eig_vecs_coefs[i].1 < 1.0) && (eig_vecs_coefs[i].1 > -1.0) {
+        eig_vecs_points.push((self.x_min, eig_vecs_coefs[i].0 + eig_vecs_coefs[i].1 * self.x_min));
+        eig_vecs_points.push((self.x_min + self.x_range, eig_vecs_coefs[i].0 + eig_vecs_coefs[i].1 * (self.x_min + self.x_range)));
+      } else {
+        eig_vecs_points.push(((self.y_min-eig_vecs_coefs[i].0) / eig_vecs_coefs[i].1, self.y_min));
+        eig_vecs_points.push(((self.y_min+self.y_range-eig_vecs_coefs[i].0) / eig_vecs_coefs[i].1, self.y_min+self.y_range));
+      }
+    }
+    eig_vecs_points = self.graph_map(eig_vecs_points);
+
+    context.insert("eig_vector1_point1", &(eig_vecs_points[0]));
+    context.insert("eig_vector1_point2", &(eig_vecs_points[1]));
+    context.insert("eig_vector2_point1", &(eig_vecs_points[2]));
+    context.insert("eig_vector2_point2", &(eig_vecs_points[3]));
+
+    Tera::one_off(include_str!("pca.svg"), &mut context, true).expect("Could not draw graph")
   }
 
   pub fn create_svg_context(&self) -> Context {
@@ -304,6 +413,84 @@ pub fn kmeans_train (csv_content: &[u8], num_centers: i32) -> String {
 pub fn kmeans_svg (csv_content: &[u8], model: &str) -> String {
   let graph = prepare_graph (csv_content, 800, 400, 20, "K-Means Clustering");
   graph.kmeans(model)
+}
+
+#[wasm_bindgen]
+pub fn svm_train (csv_content: &[u8]) -> String {
+  let data: Vec<f64> = read_data(csv_content);
+  let mut p_vec: Vec<f64> = Vec::new();
+  let mut labels: Vec<f64> = Vec::new();
+  for i in 0..data.len() {
+    if (i % 3) == 2 {
+      p_vec.push(data[i-2]);
+      p_vec.push(data[i-1]);
+      labels.push(data[i]);
+    }
+  }
+
+  let inputs = Matrix::new(labels.len(), 2, p_vec);
+  let targets = Vector::new(labels);
+  let mut svm_mod = SVM::new(Linear::default(), 0.2);
+  svm_mod.train(&inputs, &targets).unwrap();
+
+  return serde_json::to_string(&svm_mod).unwrap();
+}
+
+#[wasm_bindgen]
+pub fn svm_svg (csv_content: &[u8], model: &str) -> String {
+  let graph = prepare_graph (csv_content, 800, 400, 20, "Support Vector Machine");
+  graph.svm(model)
+}
+
+#[wasm_bindgen]
+pub fn gmm_train (csv_content: &[u8], num_centers: i32) -> String {
+  let data: Vec<f64> = read_data(csv_content);
+  let inputs = Matrix::new(data.len()/2, 2, data);
+
+  let mut gm = GaussianMixtureModel::new(num_centers as usize);
+  gm.set_max_iters(10);
+  gm.cov_option = CovOption::Diagonal;
+  gm.train(&inputs).unwrap();
+
+  return serde_json::to_string(&gm).unwrap();
+}
+
+#[wasm_bindgen]
+pub fn gmm_svg (csv_content: &[u8], model: &str) -> String {
+  let graph = prepare_graph (csv_content, 800, 400, 20, "Gaussian Mixture Model");
+  graph.gmm(model)
+}
+
+#[wasm_bindgen]
+pub fn dbscan_train (csv_content: &[u8]) -> String {
+  let data: Vec<f64> = read_data(csv_content);
+  let inputs = Matrix::new(data.len()/2, 2, data);
+  let mut db = DBSCAN::new(0.5, 2);
+  db.train(&inputs).unwrap();
+
+  return serde_json::to_string(&db).unwrap();
+}
+
+#[wasm_bindgen]
+pub fn dbscan_svg (csv_content: &[u8], model: &str) -> String {
+  let graph = prepare_graph (csv_content, 800, 400, 20, "DBSCAN");
+  graph.dbscan(model)
+}
+
+#[wasm_bindgen]
+pub fn pca_train (csv_content: &[u8]) -> String {
+  let data: Vec<f64> = read_data(csv_content);
+  let inputs = Matrix::new(data.len()/2, 2, data);
+  let mut pca = PCA::default();
+  pca.train(&inputs).unwrap();
+
+  return serde_json::to_string(&pca).unwrap();
+}
+
+#[wasm_bindgen]
+pub fn pca_svg (csv_content: &[u8], model: &str) -> String {
+  let graph = prepare_graph (csv_content, 800, 400, 20, "Principal Components Analysis");
+  graph.pca(model)
 }
 
 pub fn prepare_graph (csv_content: &[u8], width: usize, height: usize, padding: usize, title: &str) -> Graph {

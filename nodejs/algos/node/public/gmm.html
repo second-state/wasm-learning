@@ -24,6 +24,16 @@ $(function() {
 
 function enableButton(responseText, statusText, xhr, $form)  {
     $('#fitplot').prop('disabled', false);
+    $('#fitmodel').prop('disabled', false);
+}
+
+function submitOnClick() {
+  setTimeout(function(){
+    $('#svg_img').text('Please wait. This could take a minute');
+    $('#fitplot').prop('disabled', true);
+    $('#fitmodel').prop('disabled', true);
+  },0);
+  return true;
 }
     </script>
   </head>
@@ -32,25 +42,22 @@ function enableButton(responseText, statusText, xhr, $form)  {
     <div class="container">
 
       <h1>Gaussian Mixture Model</h1>
-      <p class="lead">Fit a Gaussian Mixture Model to data points. Plot the data points and fitted centers. Example:</p>
-      <ul>
-        <li>The iris data set. <a href="iris.data.csv">download CSV file</a>
-      </ul>
+      <p class="lead">Fit a Gaussian Mixture Model to data points.</p>
 
       <form id="draw" enctype="multipart/form-data">
 	<div class="form-group">
-          <label for="csv_file">Please upload a CSV file for 2D data points</label>
+          <label for="csv_file">Please upload a CSV file for 2D data points. <a href="iris.data.csv">Download an example</a></label>
           <input type="file" class="form-control-file" id="csv_file" name="csv_file">
 	  <small id="csv_help" class="form-text text-muted">The file should contain 2D data points in the format of x1,y1,x2,y2...x_n,y_n</small>
         </div>
-	<input type="hidden" name="model" value="gmm"/>
-
 	<div class="form-group" id="gmm_n_div">
           <label for="gmm_n">Number of centers</label>
           <input type="number" class="form-control" id="gmm_n" name="gmm_n" value="3">
         </div>
+	<input type="hidden" name="algo" value="gmm"/>
 
-        <button type="submit" class="btn btn-primary mb-2" id="fitplot" onclick="setTimeout(function(){$('#svg_img').text('Please wait. This could take a minute');$('#fitplot').prop('disabled', true);},0);return true;">Fit model and draw</button>
+        <button type="submit" class="btn btn-primary mb-2" id="fitplot" name="fitplot" value="1" onclick="return submitOnClick();">Draw</button>
+        <button type="submit" class="btn btn-primary mb-2" id="fitmodel" name="fitmodel" value="1" onclick="return submitOnClick();">Show model</button>
       </form>
 
       <div class="jumbotron">

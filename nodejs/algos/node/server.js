@@ -1,6 +1,6 @@
 const express = require('express');
 const fileUpload = require('express-fileupload');
-const { lin_reg, log_reg, glm, kmeans, nnet, svm, gmm, nb, dbscan } = require('../pkg/algos_lib.js');
+const { lin_reg_train, lin_reg_svg, log_reg_train, log_reg_svg, glm_train, glm_svg, kmeans_train, kmeans_svg, svm_train, svm_svg, gmm_train, gmm_svg, dbscan_train, dbscan_svg, pca_train, pca_svg } = require('../pkg/algos_lib.js');
 
 const app = express();
 const port = 8080;
@@ -13,42 +13,82 @@ app.post('/draw', function (req, res) {
   if (!req.files || Object.keys(req.files).length === 0) {
     return res.status(400).send('No files were uploaded.');
   }
-  console.log ("Received " + req.files.csv_file.name + " with size: " + req.files.csv_file.size);
-  console.log ("Received " + req.body.model);
 
+  let train_file = req.files.train_file;
   let csv_file = req.files.csv_file;
-  let model = req.body.model;
-  console.time(model + "/" + csv_file.name);
-  var svg = "";
-  if (model == "lin_reg") {
-    svg = lin_reg(csv_file.data);
+  let algo = req.body.algo;
+  console.time(algo);
+  var plot = false;
+  if (req.body.fitplot == "1") {
+    plot = true;
   }
-  if (model == "log_reg") {
-    svg = log_reg(csv_file.data);
+  var resp_data = "";
+  if (algo == "lin_reg") {
+    let model = lin_reg_train(csv_file.data);
+    resp_data = model;
+    if (plot) {
+      let svg = lin_reg_svg(csv_file.data, model);
+      resp_data = svg
+    }
   }
-  if (model == "nnet") {
-    svg = nnet(csv_file.data);
+  if (algo == "log_reg") {
+    let model = log_reg_train(train_file.data);
+    resp_data = model;
+    if (plot) {
+      let svg = log_reg_svg(csv_file.data, model);
+      resp_data = svg
+    }
   }
-  if (model == "nb") {
-    svg = nb(csv_file.data);
+  if (algo == "glm") {
+    let model = glm_train(train_file.data);
+    resp_data = model;
+    if (plot) {
+      let svg = glm_svg(csv_file.data, model);
+      resp_data = svg
+    }
   }
-  if (model == "kmeans") {
-    svg = kmeans(csv_file.data, parseInt(req.body.kmeans_n));
+  if (algo == "svm") {
+    let model = svm_train(train_file.data);
+    resp_data = model;
+    if (plot) {
+      let svg = svm_svg(csv_file.data, model);
+      resp_data = svg
+    }
   }
-  if (model == "svm") {
-    svg = svm(csv_file.data);
+  if (algo == "kmeans") {
+    let model = kmeans_train(csv_file.data, parseInt(req.body.kmeans_n));
+    resp_data = model;
+    if (plot) {
+      let svg = kmeans_svg(csv_file.data, model);
+      resp_data = svg
+    }
   }
-  if (model == "glm") {
-    svg = glm(csv_file.data);
+  if (algo == "gmm") {
+    let model = gmm_train(csv_file.data, parseInt(req.body.gmm_n));
+    resp_data = model;
+    if (plot) {
+      let svg = gmm_svg(csv_file.data, model);
+      resp_data = svg
+    }
   }
-  if (model == "gmm") {
-    svg = gmm(csv_file.data, parseInt(req.body.gmm_n));
+  if (algo == "dbscan") {
+    let model = dbscan_train(csv_file.data);
+    resp_data = model;
+    if (plot) {
+      let svg = dbscan_svg(csv_file.data, model);
+      resp_data = svg
+    }
   }
-  if (model == "dbscan") {
-    svg = dbscan(csv_file.data);
+  if (algo == "pca") {
+    let model = pca_train(csv_file.data);
+    resp_data = model;
+    if (plot) {
+      let svg = pca_svg(csv_file.data, model);
+      resp_data = svg
+    }
   }
-  console.timeEnd(model + "/" + csv_file.name);
-  res.send(svg)
+  console.timeEnd(algo);
+  res.send(resp_data)
 })
 
 app.listen(port, () => console.log(`Listening at http://localhost:${port}`))

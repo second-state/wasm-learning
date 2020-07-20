@@ -10,79 +10,54 @@
    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.form/4.3.0/jquery.form.min.js" integrity="sha384-qlmct0AOBiA2VPZkMY3+2WqkHtIQ9lSdAsAn5RUJD/3vA5MKDgSGcdmIv4ycVxyn" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-
-    <script>
-$(function() {
-    var options = {
-      target: '#svg_img',
-      url: "/draw",
-      type: "post",
-      success: enableButton
-    };
-    $('#draw').ajaxForm(options);
-});
-
-function enableButton(responseText, statusText, xhr, $form)  {
-    $('#fitplot').prop('disabled', false);
-}
-
-function showParams() {
-  $('#kmeans_n_div').hide();
-  if ($('#model').prop("selectedIndex")==3) $('#kmeans_n_div').show();
-
-  $('#gmm_n_div').hide();
-  if ($('#model').prop("selectedIndex")==6) $('#gmm_n_div').show();
-}
-    </script>
   </head>
 
   <body>
     <div class="container">
 
-      <h1>Plot this!</h1>
-      <p class="lead">Fit models to data points and plot them. Example:</p>
-      <ul>
-        <li>The iris data set. <a href="iris.data.csv">download CSV file</a>
-      </ul>
-
-      <form id="draw" enctype="multipart/form-data">
-	<div class="form-group">
-          <label for="csv_file">Please upload a CSV file for 2D data points</label>
-          <input type="file" class="form-control-file" id="csv_file" name="csv_file">
-	  <small id="csv_help" class="form-text text-muted">The file should contain 2D data points in the format of x1,y1,x2,y2...x_n,y_n</small>
-        </div>
-
-        <div class="form-group">
-          <label for="model">Model</label>
-	  <select class="form-control" id="model" name="model" onchange="showParams();">
-            <option value="lin_reg">Linear Regression</option>
-            <option value="log_reg">Logistic Regression</option>
-            <option value="glm">Generalized Linear Model</option>
-            <option value="kmeans">K-Means Clustering</option>
-            <option value="nnet">Neural Network</option>
-            <option value="svm">Support Vector Machine</option>
-            <option value="gmm">Gaussian Mixture Model</option>
-            <option value="nb">Naive Bayes Classifier</option>
-            <option value="dbscan">DBSCAN</option>
-          </select>
-        </div>
-
-	<div class="form-group" id="kmeans_n_div" style="display:none">
-          <label for="kmeans_n">K-Means: Number of centers</label>
-          <input type="number" class="form-control" id="kmeans_n" name="kmeans_n" value="3">
-        </div>
-
-	<div class="form-group" id="gmm_n_div" style="display:none">
-          <label for="gmm_n">GMM: Number of classes</label>
-          <input type="number" class="form-control" id="gmm_n" name="gmm_n" value="3">
-        </div>
-
-        <button type="submit" class="btn btn-primary mb-2" id="fitplot" onclick="setTimeout(function(){$('#svg_img').text('Please wait. This could take a minute');$('#fitplot').prop('disabled', true);},0);return true;">Fit model and draw</button>
-      </form>
-
-      <div class="jumbotron">
-        <p id="svg_img" class="lead">Upload a CSV data file and press the button above!</p>
-      </div>
+      <h1>Machine learning as a service</h1>
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th scope="col">Algo</th>
+            <th scope="col">Try it</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Linear Regression</td>
+	    <td><a href="lin_reg.html">Run</a></td>
+          </tr>
+	  <tr>
+            <td>Logistic Regression</td>
+	    <td><a href="log_reg.html">Run</a></td>
+          </tr>
+	  <tr>
+            <td>Generalized Linear Model</td>
+	    <td><a href="glm.html">Run</a></td>
+          </tr>
+	  <tr>
+            <td>K-Means Clustering</td>
+	    <td><a href="kmeans.html">Run</a></td>
+          </tr>
+	  <tr>
+            <td>Support Vector Machine</td>
+	    <td><a href="svm.html">Run</a></td>
+          </tr>
+	  <tr>
+            <td>Gaussian Mixture Model</td>
+	    <td><a href="gmm.html">Run</a></td>
+          </tr>
+	  <tr>
+            <td>DBSCAN</td>
+	    <td><a href="dbscan.html">Run</a></td>
+          </tr>
+	  <tr>
+            <td>Principal Components Analysis</td>
+	    <td><a href="pca.html">Run</a></td>
+          </tr>
+	</tbody>
+      </table>
 
     </div> <!-- /container -->
   </body>
