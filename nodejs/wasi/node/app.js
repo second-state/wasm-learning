@@ -1,4 +1,4 @@
-const { get_random_i32, get_random_bytes, print_random_i32, create_file } = require('../pkg/wasi_example_lib.js');
+const { get_random_i32, get_random_bytes, print_random_i32, print_env, create_file } = require('../pkg/wasi_example_lib.js');
 
 // Utils
 var util = require('util');
@@ -10,7 +10,5 @@ console.log( "My random number is: ", get_random_i32() );
 console.log( "My random bytes are");
 console.hex( get_random_bytes() );
 print_random_i32();
-
-// console.log("args: ", process.argv);
-// console.log("env: ", process.env);
+print_env();
 create_file("hello.txt", "Hello WASI SSVM");
