@@ -1,0 +1,14 @@
+[package]
+name = "wasi_example"
+version = "0.1.0"
+authors = ["ubuntu"]
+edition = "2018"
+
+[lib]
+name = "wasi_example_lib"
+path = "src/lib.rs"
+crate-type =["cdylib"]
+
+[dependencies]
+rand = "0.7.3"
+wasm-bindgen = "=0.2.61"
