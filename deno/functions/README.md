@@ -26,5 +26,5 @@ $ ssvmup build --target deno
 ## Test
 
 ```
-$ deno run --allow-read deno/test.ts
+$ deno run --allow-read --unstable deno/test.ts
 ```
