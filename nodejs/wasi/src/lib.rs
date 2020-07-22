@@ -37,10 +37,17 @@ pub fn print_env() -> i32 {
     println!("{}: {}", key, value);
   }
 
+  println!("The args are as follows.");
+  for argument in env::args() {
+    println!("{}", argument);
+  }
+
+  /*
   match env::var("PATH") {
     Ok(path) => println!("PATH: {}", path),
     Err(e) => println!("Couldn't read PATH ({})", e),
   };
+  */
 
   return 0;
 }

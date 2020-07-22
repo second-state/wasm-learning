@@ -11,4 +11,4 @@ console.log( "My random bytes are");
 console.hex( get_random_bytes() );
 print_random_i32();
 print_env();
-create_file("hello.txt", "Hello WASI SSVM");
+// create_file("hello.txt", "Hello WASI SSVM");
