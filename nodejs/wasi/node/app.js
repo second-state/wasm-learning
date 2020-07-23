@@ -1,4 +1,4 @@
-const { get_random_i32, get_random_bytes, print_random_i32, print_env, create_file } = require('../pkg/wasi_example_lib.js');
+const { get_random_i32, get_random_bytes, echo, print_env, create_file, read_file, del_file } = require('../pkg/wasi_example_lib.js');
 
 // Utils
 var util = require('util');
@@ -9,7 +9,11 @@ console.hex = (d) => console.log((Object(d).buffer instanceof ArrayBuffer ? new 
 console.log( "My random number is: ", get_random_i32() );
 console.log( "My random bytes are");
 console.hex( get_random_bytes() );
-print_random_i32();
+echo("I ❤️  SSVM");
 print_env();
-create_file("hello.txt", "Hello WASI SSVM\nThis is in the same folder as app.js\n");
-create_file("/hello.txt", "Hello WASI SSVM 123\nThis is in the `pkg` folder\n");
+// create_file("hello.txt", "Hello WASI SSVM\nThis is in the same folder as app.js\n");
+create_file("/hello.txt", "Hello WASI SSVM\nThis is in the `pkg` folder\n");
+// console.log( read_file("hello.txt") );
+console.log( read_file("/hello.txt") );
+// del_file("hello.txt");
+del_file("/hello.txt");
