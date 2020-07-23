@@ -73,7 +73,7 @@ jobs:
     - name: Deno example
       run: |
         ssvmup build --target deno
-        $HOME/.deno/bin/deno run --allow-read deno/test.ts
+        $HOME/.deno/bin/deno run --allow-read --unstable deno/test.ts
         ssvmup clean
       working-directory: deno/functions
 
