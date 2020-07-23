@@ -3,6 +3,39 @@ use rand::prelude::*;
 use std::fs::File;
 use std::io::{Write, BufReader, BufRead, Error};
 use std::env;
+use wasi::*;
+
+fn populate_preopens() {
+  extern "C" {
+    fn __wasilibc_register_preopened_fd(
+      fd : u32,
+      path: *const u8,
+    ) -> u32;
+  }
+  static mut populated: bool = false;
+  if unsafe { populated } {
+    return;
+  }
+  let mut fd = 0;
+  while let Ok(prestat) = unsafe { fd_prestat_get(fd) } {
+    match prestat.pr_type {
+      PREOPENTYPE_DIR => {
+        let path_len = unsafe { prestat.u.dir.pr_name_len };
+        let mut path = [0].repeat(path_len + 1);
+        path.shrink_to_fit();
+        let ptr = path.as_mut_ptr();
+        if let Ok(_) = unsafe { fd_prestat_dir_name(fd, ptr, path_len) } {
+          unsafe { __wasilibc_register_preopened_fd(fd, ptr) };
+        } else {
+          break;
+        }
+      }
+      _ => { break; }
+    }
+    fd += 1;
+  }
+  unsafe { populated = true };
+}
 
 #[wasm_bindgen]
 pub fn get_random_i32() -> i32 {
@@ -54,6 +87,7 @@ pub fn print_env() -> i32 {
 
 #[wasm_bindgen]
 pub fn create_file(path: &str, content: &str) -> String {
+  populate_preopens();
   let mut output = File::create(path).unwrap();
   output.write_all(content.as_bytes()).unwrap();
   path.to_string()

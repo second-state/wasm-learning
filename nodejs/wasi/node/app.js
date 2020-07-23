@@ -11,4 +11,5 @@ console.log( "My random bytes are");
 console.hex( get_random_bytes() );
 print_random_i32();
 print_env();
-// create_file("hello.txt", "Hello WASI SSVM");
+create_file("hello.txt", "Hello WASI SSVM\nThis is in the same folder as app.js\n");
+create_file("/hello.txt", "Hello WASI SSVM 123\nThis is in the `pkg` folder\n");
