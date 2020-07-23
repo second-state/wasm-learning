@@ -12,3 +12,4 @@ crate-type =["cdylib"]
 [dependencies]
 rand = "0.7.3"
 wasm-bindgen = "=0.2.61"
+wasi = "=0.9"
