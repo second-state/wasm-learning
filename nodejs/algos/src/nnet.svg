@@ -62,30 +62,19 @@
   {% endfor %}
 
 
-  
   {% for point in path %}
   {% set x = point.0 %}
   {% set y = point.1 %}
-  {% if loop.index0 < n/2 %}
-  {% if preds[loop.index0] == 0.0 %}
+  
+  {% if preds[loop.index0] <= 0.5 %}
   <g stroke="{{colour}}" stroke-width="2" fill="{{colour}}">
     <circle cx="{{x}}" cy="{{y}}" r="2" />
   </g>
   {% else %}
-  <g stroke="{{colour}}" stroke-width="2" fill="{{colour}}">
-    <polygon points="{{x-1}}, {{y+1}} {{x+1}}, {{y+1}}, {{x}}, {{y-1}}"/>
-  </g>
-  {% endif %}
-  {% else %}
-  {% if preds[loop.index0] == 0.0 %}
   <g stroke="red" stroke-width="2" fill="red">
     <circle cx="{{x}}" cy="{{y}}" r="2" />
   </g>
-  {% else %}
-  <g stroke="red" stroke-width="2" fill="red">
-    <polygon points="{{x-1}}, {{y+1}} {{x+1}}, {{y+1}}, {{x}}, {{y-1}}"/>
-  </g>
   {% endif %}
-  {% endif %}
-  {% endfor %}
+
+  {% endfor %} 
 </svg>

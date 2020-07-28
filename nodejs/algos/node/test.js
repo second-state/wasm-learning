@@ -31,12 +31,12 @@ model = gmm_train(iris_csv, 2);
 fs.writeFileSync("gmm.svg", gmm_svg(iris_csv, model));
 console.timeLog('algos', "gmm");
 
-model = dbscan_train(iris_csv);
-fs.writeFileSync("dbscan.svg", dbscan_svg(iris_csv, model));
-console.timeLog('algos', "dbscan");
-
 model = pca_train(iris_csv);
 fs.writeFileSync("pca.svg", pca_svg(iris_csv, model));
 console.timeLog('algos', "pca");
+
+model = dbscan_train(iris_csv);
+fs.writeFileSync("dbscan.svg", dbscan_svg(iris_csv, model));
+console.timeLog('algos', "dbscan");
 
 console.timeEnd('algos');

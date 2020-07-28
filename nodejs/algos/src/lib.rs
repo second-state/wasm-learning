@@ -223,6 +223,8 @@ impl Graph {
 
   pub fn dbscan(&self, model: &str) -> String {
     let mut context = self.create_svg_context();
+    //assure no more than 5 clusters
+    let extra_colors = &["yellow", "purple", "orange", "pink"];
     let db: DBSCAN = serde_json::from_str(model).unwrap();
 
     let mut xs: Vec<f64> = Vec::new();
@@ -233,26 +235,33 @@ impl Graph {
     }
 
     let clustering = db.clusters().unwrap();
-    let labels: Vec<f64> = clustering.data().to_vec().iter().map(|&val| match val {Some(x) => {x as f64}, _ => {-1.0}}).collect();
+    // println!("{:?}", clustering);
+    let classes: Vec<i32> = clustering.data().to_vec().iter().map(|&val| match val {Some(x) => {x as i32}, _ => {-1}}).collect();
     let mut clusters: Vec<(f64, f64, usize)> = Vec::new();
 
     for i in 0..self.size {
-      if labels[i] >= 0.0 {
-        if labels[i] >= clusters.len() as f64 {
-          for _ in 0..(labels[i] as usize - clusters.len()+1) {
+      if classes[i] >= 0 {
+        if classes[i] >= clusters.len() as i32 {
+          for _ in 0..(classes[i] as usize - clusters.len()+1) {
             clusters.push((0.0, 0.0, 0));
           }
         }
-        let c_index : usize = labels[i] as usize;
+        let c_index : usize = classes[i] as usize;
         clusters[c_index] = (clusters[c_index].0+xs[i], clusters[c_index].1+ys[i], clusters[c_index].2+1);
       }
     }
     let mut centers: Vec<(f64, f64)> = clusters.iter().map(|val| (val.0/(val.2 as f64) , val.1/(val.2 as f64)) ).collect();
     centers = self.graph_map(centers);
 
+    let mut context = self.create_svg_context();
+    //assure no more than 5 clusters
+    let extra_colors = &["yellow", "purple", "orange", "pink"];
+
     context.insert("n", &self.size);
-    context.insert("labels", &labels);
+    context.insert("classes", &classes);
     context.insert("centers", &centers);
+    context.insert("num_cluster", &centers.len());
+    context.insert("extra_colors", &extra_colors);
 
     Tera::one_off(include_str!("dbscan.svg"), &mut context, true).expect("Could not draw graph")
   }

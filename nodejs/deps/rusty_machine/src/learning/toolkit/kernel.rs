@@ -237,7 +237,7 @@ impl Kernel for Polynomial {
 /// k(x,y) = A _exp_(-||x-y||<sup>2</sup> / 2l<sup>2</sup>)
 ///
 /// Where A is the amplitude and l the length scale.
-#[derive(Clone, Copy, Debug)]
+#[derive(Serialize, Deserialize, Clone, Copy, Debug)]
 pub struct SquaredExp {
     /// The length scale of the kernel.
     pub ls: f64,

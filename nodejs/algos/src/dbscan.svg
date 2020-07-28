@@ -62,18 +62,27 @@
   {% endfor %}
 
 
-  
   {% for point in path %}
   {% set x = point.0 %}
   {% set y = point.1 %}
-  {% if labels[loop.index0] == 0.0 %}
+  {% if classes[loop.index0] == 0 %}
   <g stroke="{{colour}}" stroke-width="2" fill="{{colour}}">
     <circle cx="{{x}}" cy="{{y}}" r="2" />
   </g>
-  {% else %}
+
+  {# red points are the outliers #}
+  {% elif classes[loop.index0] == -1 %}
   <g stroke="red" stroke-width="2" fill="red">
     <circle cx="{{x}}" cy="{{y}}" r="2" />
   </g>
+
+  {% else %}
+  {% set color_index = classes[loop.index0]-1 %}
+  {% set cluster_color = extra_colors[color_index] %}
+  <g stroke="{{cluster_color}}" stroke-width="2" fill="{{cluster_color}}">
+    <circle cx="{{x}}" cy="{{y}}" r="2" />
+  </g>
+
   {% endif %}
   {% endfor %}
 

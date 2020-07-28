@@ -62,17 +62,10 @@
   {% endfor %}
 
 
-  
-  {% for point in path %}
-  {% set x = point.0 %}
-  {% set y = point.1 %}
-  <g stroke="{{colour}}" stroke-width="2" fill="{{colour}}">
-    <circle cx="{{x}}" cy="{{y}}" r="2" />
-  </g>
-  {% endfor %}
   {% set x1 = point1.0 %}
   {% set y1 = point1.1 %}
   {% set x2 = point2.0 %}
   {% set y2 = point2.1 %}
+
   <path stroke="blue" stroke-width="2" fill="none"  d="M {{ x1 }} {{ y1 }} L {{ x2 }} {{ y2 }}" />
 </svg>

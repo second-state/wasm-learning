@@ -62,7 +62,6 @@
   {% endfor %}
 
 
-  
   {% for point in path %}
   {% set x = point.0 %}
   {% set y = point.1 %}
