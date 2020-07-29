@@ -46,12 +46,31 @@ function submitOnClick() {
 
       <form id="draw" enctype="multipart/form-data">
 	<div class="form-group">
-          <label for="train_file">Please upload a CSV file for training. <a href="iris_values.data.csv">Download a training example</a></label>
-          <input type="file" class="form-control-file" id="train_file" name="train_file">
-	  <small id="csv_help" class="form-text text-muted">The file should contain 2D data points with label values (0 and 1) in the format of x1,y1,v1,x2,y2,v2...x_n,y_n,v_n</small>
+          <label for="train_data">A training data set will be used to train a Generalized Linear Model.</label>
+          <textarea class="form-control" id="train_data" name="train_data" rows="5">3.5,0.2,0
+3,0.1,0
+3.2,0.2,0
+3.1,0.2,0
+3.6,0.2,0
+3.9,0.4,0
+3.4,0.3,0
+3.4,0.2,0
+2.9,0.2,0
+3.1,0.1,0
+3.1,2.4,1
+3.1,2.3,1
+2.7,1.9,1
+3.2,2.3,1
+3.3,2.5,1
+3,2.3,1
+2.5,1.9,1
+3,2,1
+3.4,2.3,1
+3,1.8,1</textarea>
+	  <small id="train_help" class="form-text text-muted">The training data should contain 2D data points with label values (0 and 1) in the format of x1,y1,v1,x2,y2,v2...x_n,y_n,v_n</small>
         </div>
 	<div class="form-group">
-          <label for="csv_file">Please upload a CSV file for 2D data points. We will apply the trained model to predict the label value for each point. <a href="iris.data.csv">Download an example</a></label>
+          <label for="csv_file">Please upload a CSV file for 2D data points. We will apply the trained model to predict the label value for each point. <a href="iris.csv">Download an example</a></label>
           <input type="file" class="form-control-file" id="csv_file" name="csv_file">
 	  <small id="csv_help" class="form-text text-muted">The file should contain 2D data points in the format of x1,y1,x2,y2...x_n,y_n</small>
         </div>
@@ -62,7 +81,7 @@ function submitOnClick() {
       </form>
 
       <div class="jumbotron">
-        <p id="svg_img" class="lead">Upload a CSV training data file and press the button above!</p>
+        <p id="svg_img" class="lead">Upload a CSV data file and press the button above!</p>
       </div>
 
     </div> <!-- /container -->

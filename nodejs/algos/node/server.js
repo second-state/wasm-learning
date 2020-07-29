@@ -2,6 +2,10 @@ const express = require('express');
 const fileUpload = require('express-fileupload');
 const { lin_reg_train, lin_reg_svg, log_reg_train, log_reg_svg, glm_train, glm_svg, kmeans_train, kmeans_svg, svm_train, svm_svg, gmm_train, gmm_svg, dbscan_train, dbscan_svg, pca_train, pca_svg } = require('../pkg/algos_lib.js');
 
+// Utils
+var util = require('util');
+const encoder = new util.TextEncoder();
+
 const app = express();
 const port = 8080;
 app.use(express.static('public'));
@@ -14,7 +18,6 @@ app.post('/draw', function (req, res) {
     return res.status(400).send('No files were uploaded.');
   }
 
-  let train_file = req.files.train_file;
   let csv_file = req.files.csv_file;
   let algo = req.body.algo;
   console.time(algo);
@@ -32,7 +35,7 @@ app.post('/draw', function (req, res) {
     }
   }
   if (algo == "log_reg") {
-    let model = log_reg_train(train_file.data);
+    let model = log_reg_train(encoder.encode(req.body.train_data));
     resp_data = model;
     if (plot) {
       let svg = log_reg_svg(csv_file.data, model);
@@ -40,7 +43,7 @@ app.post('/draw', function (req, res) {
     }
   }
   if (algo == "glm") {
-    let model = glm_train(train_file.data);
+    let model = glm_train(encoder.encode(req.body.train_data));
     resp_data = model;
     if (plot) {
       let svg = glm_svg(csv_file.data, model);
@@ -48,7 +51,7 @@ app.post('/draw', function (req, res) {
     }
   }
   if (algo == "svm") {
-    let model = svm_train(train_file.data);
+    let model = svm_train(encoder.encode(req.body.train_data));
     resp_data = model;
     if (plot) {
       let svg = svm_svg(csv_file.data, model);
