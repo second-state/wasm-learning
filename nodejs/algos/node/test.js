@@ -3,7 +3,8 @@ const { lin_reg_train, lin_reg_svg, log_reg_train, log_reg_svg, glm_train, glm_s
 const fs = require('fs');
 var iris_csv = fs.readFileSync("iris.data.csv");
 var iris_values_csv = fs.readFileSync("iris_values.data.csv");
-var iris_svm_values_csv = fs.readFileSync("iris_svm_values.data.csv");
+var svm_csv = fs.readFileSync("svm.data.csv");
+var svm_values_csv = fs.readFileSync("svm_values.data.csv");
 var model;
 
 console.time('algos');
@@ -19,8 +20,8 @@ model = glm_train(iris_values_csv);
 fs.writeFileSync("glm.svg", glm_svg(iris_csv, model));
 console.timeLog('algos', "glm");
 
-model = svm_train(iris_svm_values_csv);
-fs.writeFileSync("svm.svg", svm_svg(iris_csv, model));
+model = svm_train(svm_values_csv);
+fs.writeFileSync("svm.svg", svm_svg(svm_csv, model));
 console.timeLog('algos', "svm");
 
 model = kmeans_train(iris_csv, 2);
