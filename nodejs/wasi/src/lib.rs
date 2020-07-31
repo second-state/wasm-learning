@@ -22,7 +22,7 @@ pub fn get_random_bytes() -> Vec<u8> {
 
 #[wasm_bindgen]
 pub fn echo(content: &str) -> String {
-  println!("Printed from Deno wasi: {}", content);
+  println!("Printed from wasi: {}", content);
   return content.to_string();
 }
 
