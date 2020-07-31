@@ -4,12 +4,9 @@ const fs = require('fs');
 var birch3_csv = fs.readFileSync("public/birch3.csv");
 var model;
 
-model = kmeans_train(birch3_csv, 15);
-fs.writeFileSync("kmeans.svg", kmeans_svg(birch3_csv, model));
-console.timeLog('algos', "kmeans");
+// model = kmeans_train(birch3_csv, 15);
+// fs.writeFileSync("kmeans.svg", kmeans_svg(birch3_csv, model));
 
-model = gmm_train(birch3_csv, 15);
+model = gmm_train(birch3_csv, 9);
+console.log(model);
 fs.writeFileSync("gmm.svg", gmm_svg(birch3_csv, model));
-console.timeLog('algos', "gmm");
-
-console.timeEnd('algos');

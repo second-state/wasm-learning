@@ -69,6 +69,12 @@ app.post('/draw', function (req, res) {
   if (algo == "gmm") {
     let model = gmm_train(csv_file.data, parseInt(req.body.gmm_n));
     resp_data = model;
+
+    let model_obj = JSON.parse(model);
+    if (!model_obj['mix_weights']['data'][0]) {
+      resp_data = "<span style='color:red'>Cannot find the specified number of centers. Please consider increase the number of centers in the form above.</span>";
+      plot = false;
+    }
     if (plot) {
       let svg = gmm_svg(csv_file.data, model);
       resp_data = svg
