@@ -4,19 +4,7 @@ use std::fs;
 use std::fs::File;
 use std::io::{Write, Read};
 use std::env;
-
-#[no_mangle]
-fn _initialize() {
-  extern "C" {
-    fn __wasm_call_ctors();
-  }
-  static mut INITED: bool = false;
-  if unsafe { INITED } {
-    return;
-  }
-  unsafe { __wasm_call_ctors() };
-  unsafe { INITED = true };
-}
+use ssvm_wasi_helper::ssvm_wasi_helper::_initialize;
 
 #[wasm_bindgen]
 pub fn get_random_i32() -> i32 {
