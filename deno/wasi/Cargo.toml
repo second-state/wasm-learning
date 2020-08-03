@@ -9,6 +9,10 @@ name = "wasi_example_lib"
 path = "src/lib.rs"
 crate-type =["cdylib"]
 
+[[bin]]
+name = "deno_wasi_example"
+path = "src/main.rs"
+
 [dependencies]
 rand = "0.7.3"
 wasm-bindgen = "=0.2.61"
