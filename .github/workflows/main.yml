@@ -88,3 +88,9 @@ jobs:
         node cleanup.js
         rm -rf ../target ../pkg
       working-directory: nodejs/nodejs_example
+
+    - name: SSVM rust wasi application  example
+      run: |
+        cargo build --release --target wasm32-wasi
+        node app.js
+      working-directory: ssvm/file-example
