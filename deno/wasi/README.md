@@ -1,4 +1,6 @@
 
+Check out this tutorial article: *[Deno Apps with WebAssembly, Rust, and WASI](https://www.secondstate.io/articles/deno-webassembly-rust-wasi/)*
+
 ## Prerequisites
 
 [Install Deno](https://deno.land/manual/getting_started/installation)
