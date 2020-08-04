@@ -32,5 +32,5 @@ $ deno run --allow-read --allow-env --unstable deno/test.ts arg1 arg2
 ## Test main exec
 
 ```
-$ deno run --allow-read --allow-env --unstable pkg/deno_wasi_example.js
+$ deno run --allow-read --allow-write --allow-env --unstable pkg/deno_wasi_example.js
 ```
