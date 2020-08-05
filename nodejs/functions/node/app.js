@@ -1,4 +1,4 @@
-const { say, obfusticate, lowest_common_denominator, sha3_digest, keccak_digest, create_line } = require('../pkg/functions_lib.js');
+const { say, obfusticate, lowest_common_multiple, sha3_digest, keccak_digest, create_line } = require('../pkg/functions_lib.js');
 
 // Utils
 var util = require('util');
@@ -8,7 +8,7 @@ console.hex = (d) => console.log((Object(d).buffer instanceof ArrayBuffer ? new 
 
 console.log( say("SSVM") );
 console.log( obfusticate("A quick brown fox jumps over the lazy dog") );
-console.log( lowest_common_denominator(123, 2) );
+console.log( lowest_common_multiple(123, 2) );
 console.hex( sha3_digest(encoder.encode("This is an important message")) );
 console.hex( keccak_digest(encoder.encode("This is an important message")) );
 
