@@ -8,7 +8,7 @@ const encoder = new util.TextEncoder();
 
 const app = express();
 const port = 8080;
-app.use(express.static('public'));
+app.use(express.static(__dirname + '/public'));
 app.use(fileUpload());
 
 app.get('/', (req, res) => res.redirect("/index.html"));
