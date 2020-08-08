@@ -30,7 +30,7 @@ Upload the wasm file to the FaaS.
 $ curl --location --request POST 'https://rpc.ssvm.secondstate.io:8081/api/executables' \
 --header 'Content-Type: application/octet-stream' \
 --header 'SSVM-Description: image recognition' \
---data-binary @'pkg/image_recognition_lib_bg.wasm'
+--data-binary '@pkg/image_recognition_lib_bg.wasm'
 ```
 
 Returns
@@ -44,7 +44,7 @@ Make a function call via the web.
 ```
 curl --location --request POST 'https://rpc.ssvm.secondstate.io:8081/api/run/123/infer' \
 --header 'Content-Type: application/octet-stream' \
---data-binary @'test/grace_hopper.jpg'
+--data-binary '@test/grace_hopper.jpg'
 ```
 
 
