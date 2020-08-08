@@ -34,7 +34,7 @@ Upload the wasm file to the FaaS.
 $ curl --location --request POST 'https://rpc.ssvm.secondstate.io:8081/api/executables' \
 --header 'Content-Type: application/octet-stream' \
 --header 'SSVM-Description: say hello' \
---data-binary @'pkg/hello_lib_bg.wasm'
+--data-binary '@pkg/hello_lib_bg.wasm'
 ```
 
 Returns
