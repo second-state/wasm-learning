@@ -27,7 +27,7 @@ pub fn echo(content: &str) -> String {
 }
 
 #[wasm_bindgen]
-pub fn print_env() -> i32 {
+pub fn print_env() {
   _initialize();
   println!("The env vars are as follows.");
   for (key, value) in env::vars() {
@@ -39,20 +39,19 @@ pub fn print_env() -> i32 {
     println!("{}", argument);
   }
 
+  /*
   match env::var("PATH") {
     Ok(path) => println!("PATH: {}", path),
     Err(e) => println!("Couldn't read PATH ({})", e),
   };
-
-  return 0;
+  */
 }
 
 #[wasm_bindgen]
-pub fn create_file(path: &str, content: &str) -> String {
+pub fn create_file(path: &str, content: &str) {
   _initialize();
   let mut output = File::create(path).unwrap();
   output.write_all(content.as_bytes()).unwrap();
-  path.to_string()
 }
 
 #[wasm_bindgen]
@@ -67,8 +66,7 @@ pub fn read_file(path: &str) -> String {
 }
 
 #[wasm_bindgen]
-pub fn del_file(path: &str) -> String {
+pub fn del_file(path: &str) {
   _initialize();
   fs::remove_file(path).expect("Unable to delete");
-  path.to_string()
 }
