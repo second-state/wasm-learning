@@ -16,8 +16,9 @@ use std::env;
 
 #[wasm_bindgen]
 pub fn say(s: &str) -> String {
-  let emoji = env::var("EMOJI").unwrap_or_default(false);
-  if emoji {
+  let arguments: Vec<String> = env::args().collect();
+  let use_emoji = arguments[1].parse().unwrap();
+  if use_emoji {
     let r = String::from("👋 ");
     return r + &s;
   } else {
@@ -48,7 +49,7 @@ $ curl --location --request POST 'https://rpc.ssvm.secondstate.io:8081/api/execu
 Set the environmental variable `EMOJI` for functions in this wasm file.
 
 ```
-TBD
+$ curl --location --request PUT 'https://rpc.ssvm.secondstate.io:8081/api/state/123' --header 'Content-Type: text/plain' --data-raw 'true'
 ```
 
 Make a function call via the web.
