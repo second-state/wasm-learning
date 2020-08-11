@@ -45,6 +45,9 @@ $ curl --location --request POST 'https://rpc.ssvm.secondstate.io:8081/api/execu
 --header 'Content-Type: application/octet-stream' \
 --header 'SSVM-Description: say hello' \
 --data-binary '@pkg/hello_lib_bg.wasm'
+```
+Returns a fresh wasm id for you to use on the upcoming requests (i.e. please don't use 123)
+```
 {"wasm_id":123}
 ```
 
@@ -67,7 +70,7 @@ The following answer is returned from the previous function call
 ```
 Now if we set the environment variable to false
 ```
-curl --location --request PUT 'https://dev.rpc.ssvm.secondstate.io:8081/api/state/123' \
+curl --location --request PUT 'https://rpc.ssvm.secondstate.io:8081/api/state/123' \
 --header 'Content-Type: text/plain' \
 --data-raw 'false'
 ```
@@ -84,7 +87,7 @@ hello Second State FaaS
 **Please note**
 If you want to inspect the value stored in the environment variable (to know if you need to updated it), you can use the following GET request
 ```
-curl https://dev.rpc.ssvm.secondstate.io:8081/api/state/123
+curl https://rpc.ssvm.secondstate.io:8081/api/state/123
 ```
 
 
