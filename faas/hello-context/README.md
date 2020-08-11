@@ -18,10 +18,8 @@ use wasm_bindgen::prelude::*;
 pub fn say(s: &str) -> String {
     // Access arguments from std env
     let arguments: Vec<String> = env::args().collect();
-    // Obtain argument as string
-    let use_emoji = arguments[1].parse().unwrap();
-    // Convert argument to boolean
-    let use_emoji_bool: bool = use_emoji.parse().unwrap();
+    // Convert argument in position 1 to boolean
+    let use_emoji_bool: bool = arguments[1].parse().unwrap();
     if use_emoji_bool {
         let r = String::from("👋 ");
         return r + &s;
