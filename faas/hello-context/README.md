@@ -67,7 +67,7 @@ The following answer is returned from the previous function call
 ```
 Now if we set the environment variable to false
 ```
-curl --location --request PUT 'https://dev.rpc.ssvm.secondstate.io:8081/api/state/293' \
+curl --location --request PUT 'https://dev.rpc.ssvm.secondstate.io:8081/api/state/123' \
 --header 'Content-Type: text/plain' \
 --data-raw 'false'
 ```
@@ -80,6 +80,11 @@ $ curl --location --request POST 'https://rpc.ssvm.secondstate.io:8081/api/run/1
 Returns 
 ```
 hello Second State FaaS
+```
+**Please note**
+If you want to inspect the value stored in the environment variable (to know if you need to updated it), you can use the following GET request
+```
+curl https://dev.rpc.ssvm.secondstate.io:8081/api/state/123
 ```
 
 
