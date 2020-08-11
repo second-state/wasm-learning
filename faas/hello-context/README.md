@@ -11,20 +11,24 @@ If you have not done so already, follow these simple instructions to install [Ru
 Below is the entire content of the [src/lib.rs](src/lib.rs) file.
 
 ```
-use wasm_bindgen::prelude::*;
 use std::env;
+use wasm_bindgen::prelude::*;
 
 #[wasm_bindgen]
 pub fn say(s: &str) -> String {
-  let arguments: Vec<String> = env::args().collect();
-  let use_emoji = arguments[1].parse().unwrap();
-  if use_emoji {
-    let r = String::from("👋 ");
-    return r + &s;
-  } else {
-    let r = String::from("hello ");
-    return r + &s;
-  }
+    // Access arguments from std env
+    let arguments: Vec<String> = env::args().collect();
+    // Obtain argument as string
+    let use_emoji = arguments[1].parse().unwrap();
+    // Convert argument to boolean
+    let use_emoji_bool: bool = use_emoji.parse().unwrap();
+    if use_emoji_bool {
+        let r = String::from("👋 ");
+        return r + &s;
+    } else {
+        let r = String::from("hello ");
+        return r + &s;
+    }
 }
 ```
 
