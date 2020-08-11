@@ -60,7 +60,26 @@ Make a function call via the web.
 $ curl --location --request POST 'https://rpc.ssvm.secondstate.io:8081/api/run/123/say' \
 --header 'Content-Type: text/plain' \
 --data-raw 'Second State FaaS'
+```
+The following answer is returned from the previous function call
+```
 👋 Second State FaaS
+```
+Now if we set the environment variable to false
+```
+curl --location --request PUT 'https://dev.rpc.ssvm.secondstate.io:8081/api/state/293' \
+--header 'Content-Type: text/plain' \
+--data-raw 'false'
+```
+We will get the non-emoji response if we again call that function
+```
+$ curl --location --request POST 'https://rpc.ssvm.secondstate.io:8081/api/run/123/say' \
+--header 'Content-Type: text/plain' \
+--data-raw 'Second State FaaS'
+```
+Returns 
+```
+hello Second State FaaS
 ```
 
 
