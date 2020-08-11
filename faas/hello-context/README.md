@@ -30,6 +30,15 @@ pub fn say(s: &str) -> String {
 }
 ```
 
+Before compiling, be sure to append the following to your `Cargo.toml` file (after the `[package]` section)
+```
+[lib]
+crate-type = ["cdylib", "rlib"]
+
+[dependencies]
+wasm-bindgen = "=0.2.61"
+```
+
 ## Build the WASM bytecode
 
 ```
@@ -38,13 +47,13 @@ $ ssvmup build
 
 ## FaaS
 
-Upload the wasm file to the FaaS.
+Upload the wasm file to the FaaS. Perhaps have a quick check to see what the name of the file in the `pkg` dir is i.e. `hello_bg.wasm` or `hello_lib_bg.wasm etc.
 
 ```
 $ curl --location --request POST 'https://rpc.ssvm.secondstate.io:8081/api/executables' \
 --header 'Content-Type: application/octet-stream' \
 --header 'SSVM-Description: say hello' \
---data-binary '@pkg/hello_lib_bg.wasm'
+--data-binary '@pkg/hello_bg.wasm'
 ```
 Returns a fresh wasm id for you to use on the upcoming requests (i.e. please don't use 123)
 ```
