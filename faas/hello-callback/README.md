@@ -36,7 +36,7 @@ pub fn say(s: &str) -> String {
     {
         "personalizations": [{
             "to": [{
-                "email": "mistermac2008@gmail.com"
+                "email": "juntao_yuan@yahoo.com"
             }]
         }],
         "from": {
