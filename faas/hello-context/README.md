@@ -58,7 +58,7 @@ $ curl --location --request POST 'https://rpc.ssvm.secondstate.io:8081/api/execu
 --header 'SSVM-Description: say hello' \
 --data-binary '@pkg/hello_bg.wasm'
 ```
-If you are deploying your own Wasm you will get a fresh wasm id for you to use on the upcoming requests. wasm_id 69 is one we prepared earlier.
+If you are deploying your own Wasm you will get a fresh wasm id for you to use on the upcoming requests. wasm_id 20 is one we prepared earlier.
 ```
 {"wasm_id":20}
 ```
