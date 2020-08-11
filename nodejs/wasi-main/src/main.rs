@@ -9,6 +9,9 @@ fn main() {
   println!("Random bytes: {:?}", get_random_bytes());
   println!("{}", echo("This is from a main function"));
   print_env();
+  create_file("/tmp.txt", "This is in a file");
+  println!("File content is {}", read_file("/tmp.txt"));
+  del_file("/tmp.txt");
 }
 
 pub fn get_random_i32() -> i32 {

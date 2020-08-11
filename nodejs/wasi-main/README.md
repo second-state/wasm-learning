@@ -1,6 +1,6 @@
-# WASI
+# WASI standalone app
 
-In this example, we demonstrate how to access system resources from Rust functions in the SSVM. Read about [Access operating system resources from WebAssembly](https://www.secondstate.io/articles/wasi-access-system-resources/)
+In this example, we demonstrate how to run a standalone WASM application from the command line.
 
 ## Prerequisites
 
@@ -12,8 +12,10 @@ If you have not done so already, follow these simple instructions to [install Ru
 $ ssvmup build
 ```
 
-## Node.js app
+## Run the application from command line
+
+We will use the Node.js command line to bootstrap the SSVM.
 
 ```
-node app.js
+$ node pkg/wasi_example_main.js arg1 arg2
 ```
