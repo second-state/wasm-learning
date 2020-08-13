@@ -1,22 +1,24 @@
 use wasm_bindgen::prelude::*;
+use serde_json::json;
 
 #[wasm_bindgen]
 pub fn say(s: &str) -> String {
   let r = String::from("hello ");
-  let ret = "
+  let ret = json!(
     {
-      'personalizations': {
-        [{
-          'to':[{'email':'TO_EMAIL','name':''}],
-          'subject':'SUBJECT'
+        "personalizations": [{
+            "to": [{
+                "email": "michael@michaelyuan.com"
+            }]
         }],
-        'from':{'email':'FROM_EMAIL','name':''}
-      }
-    }
-  ";
-  
-  let ret = ret.replace("TO_EMAIL", "juntao_yuan@yahoo.com");
-  let ret = ret.replace("SUBJECT", &(r + &s));
-  let ret = ret.replace("FROM_EMAIL", "michael@secondstate.io");
-  return ret;
+        "from": {
+            "email": "michael@secondstate.io"
+        },
+        "subject":&(r + &s),
+        "content": [{
+            "type": "text/plain",
+            "value": "This is a message from Joey and SSVM"
+        }]
+    });
+  return ret.to_string();
 }

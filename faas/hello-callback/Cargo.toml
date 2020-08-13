@@ -9,7 +9,6 @@ name = "hello_lib"
 path = "src/lib.rs"
 crate-type =["cdylib"]
 
-# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
-
 [dependencies]
 wasm-bindgen = "=0.2.61"
+serde_json = "1.0"
