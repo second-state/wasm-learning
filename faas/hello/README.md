@@ -20,6 +20,13 @@ pub fn say(s: &str) -> String {
 }
 ```
 
+Before compiling, make sure that your `Cargo.toml` file has declared the correct dependencies.
+
+```
+[dependencies]
+wasm-bindgen = "=0.2.61"
+```
+
 ## Build the WASM bytecode
 
 ```
@@ -28,7 +35,7 @@ $ ssvmup build
 
 ## FaaS
 
-Upload the wasm file to the FaaS.
+Upload the wasm file in the `pkg` folder to the FaaS. Double check the `.wasm` file name before you upload.
 
 ```
 $ curl --location --request POST 'https://rpc.ssvm.secondstate.io:8081/api/executables' \
