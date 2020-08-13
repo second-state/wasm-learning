@@ -54,50 +54,60 @@ Upload the wasm file to the FaaS. Perhaps have a quick check to see what the nam
 $ curl --location --request POST 'https://rpc.ssvm.secondstate.io:8081/api/executables' \
 --header 'Content-Type: application/octet-stream' \
 --header 'SSVM-Description: say hello' \
---data-binary '@pkg/hello_bg.wasm'
+--data-binary '@pkg/hello_lib_bg.wasm'
 ```
-If you are deploying your own Wasm you will get a fresh wasm id for you to use on the upcoming requests. wasm_id 20 is one we prepared earlier.
-```
-{"wasm_id":20}
-```
-
-Set the environmental variable `EMOJI` for functions in this wasm file.
+If you are deploying your own Wasm you will get a fresh wasm id for you to use on the upcoming requests.
 
 ```
-$ curl --location --request PUT 'https://rpc.ssvm.secondstate.io:8081/api/state/20' --header 'Content-Type: text/plain' --data-raw 'true'
+{"wasm_id":123}
+```
+
+Set the context state to string `true` for functions in this wasm file.
+
+```
+$ curl --location --request PUT 'https://rpc.ssvm.secondstate.io:8081/api/state/123' --header 'Content-Type: text/plain' --data-raw 'true'
 ```
 
 Make a function call via the web.
 
 ```
-$ curl --location --request POST 'https://rpc.ssvm.secondstate.io:8081/api/run/20/say' \
+$ curl --location --request POST 'https://rpc.ssvm.secondstate.io:8081/api/run/123/say' \
 --header 'Content-Type: text/plain' \
 --data-raw 'Second State FaaS'
 ```
 The following answer is returned from the previous function call
+
 ```
 👋 Second State FaaS
 ```
-Now if we set the environment variable to false
+
+Now if we set the context state to string `false`.
+
 ```
-curl --location --request PUT 'https://rpc.ssvm.secondstate.io:8081/api/state/20' \
+curl --location --request PUT 'https://rpc.ssvm.secondstate.io:8081/api/state/123' \
 --header 'Content-Type: text/plain' \
 --data-raw 'false'
 ```
+
 We will get the non-emoji response if we again call that function
+
 ```
-$ curl --location --request POST 'https://rpc.ssvm.secondstate.io:8081/api/run/20/say' \
+$ curl --location --request POST 'https://rpc.ssvm.secondstate.io:8081/api/run/123/say' \
 --header 'Content-Type: text/plain' \
 --data-raw 'Second State FaaS'
 ```
+
 Returns 
+
 ```
 hello Second State FaaS
 ```
+
 **Please note**
 If you want to inspect the value stored in the environment variable (to know if you need to updated it), you can use the following GET request
+
 ```
-curl https://rpc.ssvm.secondstate.io:8081/api/state/20
+curl https://rpc.ssvm.secondstate.io:8081/api/state/123
 ```
 
 
