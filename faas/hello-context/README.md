@@ -33,11 +33,9 @@ pub fn say(s: &str) -> String {
 }
 ```
 
-Before compiling, be sure to append the following to your `Cargo.toml` file (after the `[package]` section)
-```
-[lib]
-crate-type = ["cdylib", "rlib"]
+Before compiling, make sure that your `Cargo.toml` file has declared the correct dependencies.
 
+```
 [dependencies]
 wasm-bindgen = "=0.2.61"
 ```
