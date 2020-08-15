@@ -40,7 +40,7 @@ The above command will return a key like the one shown below.
 We can use this key to fetch the `String to store` data which we stored earlier. Here is an example of the HTTP request to achieve this.
 
 ```bash
-curl --location --request POST 'https://dev.rpc.ssvm.secondstate.io:8081/api/run/123/load_a_string' \
+curl --location --request POST 'https://rpc.ssvm.secondstate.io:8081/api/run/123/load_a_string' \
 --header 'Content-Type: text/plain' \
 --data-raw '29cc8944469e42189497a72b4a8ad737'
 ```
