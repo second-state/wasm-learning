@@ -23,7 +23,6 @@ pub fn store_a_string_via_std_env(_string_to_store: String) {
     let storage_key: String = json_as_object["storage_key"].to_string(); 
     // Store the _string_to_store 
     ssvm_storage::store::update(&storage_key, _string_to_store);
-    storage_key
 }
 // This example shows how a string can be loaded from storage using a key which is available via std env so there is no need to pass strings from calling code
 #[wasm_bindgen]
