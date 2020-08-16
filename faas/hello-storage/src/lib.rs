@@ -19,7 +19,7 @@ pub fn load_a_string(_storage_key: String) -> String {
 // This example manages a storage key for you. It is available via std env inside Rust so there is no need to pass strings from calling code via RPC
 #[wasm_bindgen]
 pub fn store_a_string_via_std_env(_string_to_store: String) {
-    ssvm-wasi-helper::_initialize();
+    _initialize();
     // Get the storage key from std env
     let json_as_object: Value = serde_json::from_str(env::env()).unwrap();
     let storage_key: String = json_as_object["storage_key"].to_string(); 
@@ -29,7 +29,7 @@ pub fn store_a_string_via_std_env(_string_to_store: String) {
 // This example shows how a string can be loaded from storage using a key which is available via std env so there is no need to pass strings from calling code
 #[wasm_bindgen]
 pub fn load_a_string_via_std_env() -> String {
-    ssvm-wasi-helper::_initialize();
+    _initialize();
     // Get the storage key from std env
     let json_as_object: Value = serde_json::from_str(env::env()).unwrap();
     let storage_key: String = json_as_object["storage_key"].to_string();
