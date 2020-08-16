@@ -3,6 +3,7 @@ use serde_json;
 use serde_json::{Value};
 use wasm_bindgen::prelude::*;
 use rust_storage_interface_library::ssvm_storage;
+use ssvm_wasi_helper::ssvm_wasi_helper::_initialize;
 // This example lets you create and manage new keys for every new store operation
 #[wasm_bindgen]
 pub fn store_a_string(_string_to_store: String) -> String {
