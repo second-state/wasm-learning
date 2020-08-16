@@ -1,4 +1,4 @@
-# Permanent storage example
+# Permanent storage example (immutable)
 
 If you would like to try this out, please just compile the pre-written demonstration using the following instructions
 
@@ -50,54 +50,32 @@ The command above returns the original string like this
 ```
 String to store
 ```
+# Permanent storage example (mutable)
 
-# Extra information
-This example demonstrates how to store and retrieve data from inside a Rust/Wasm executable.
+You will notice with the above examples that a brand new storage key is freshly minted each time any data is stored. There will be times that you might prefer to use the same storage key and update the data over and over. The following example shows you how to access a data storage key which we have baked into your Wasm deployment for your convenience.
 
-## Config
-This example shows how to use the `rust_storage_interface_library` inside your Rust in order to acces the storage layer.
-
-This is an example of this demonstration's Cargo.toml
-
-```Rust
-[package]
-name = "hello-storage"
-version = "0.1.0"
-authors = ["tpmccallum <mistermac2008@gmail.com>"]
-edition = "2018"
-
-# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
-[lib]
-name = "hello_storage"
-path = "src/lib.rs"
-crate-type =["cdylib"]
-
-[dependencies]
-wasm-bindgen = "=0.2.61"
-rust_storage_interface_library = "^0.1"
+When you launch your Wasm file (as shown above) a permanent storage key is created and held for your future use. Interestingly, we make this key available inside your Rust/Wasm code (by passing it into std::env for your convenience). What this means is that you don't even need to know the key. You just need to know that there is a key available for you inside your Rust code at the following location `env::var("storage_key")`. If you would like to store a value to the location of that key you can simply use the following syntax in your Rust/Wasm
 ```
-In order to bring the `rust_storage_interface_library` into scope, in our Rust, we need to add the following line to the `lib.rs`
-
-```Rust
-use rust_storage_interface_library::ssvm_storage;
+let _string_to_store = String::from("A string to store!");
+let storage_key: String = env::var("storage_key").unwrap();
+ssvm_storage::store::update(&storage_key, _string_to_store);
 ```
-
-## Rust logic/code
-The following snippets of code show how easy it is to store and load data.
-
-### Store a string
-This code shows that we can create a string and then call the `ssvm_storage::store::store` feature to store the string and (as a result) receive a key which we can use to access (load) that data again, in the future.
-
-```Rust
-let my_string = String::from("A string to store");
-let storage_key: i32 = ssvm_storage::store::store(my_string);
+If you would like to access the data stored at that permanent location, you can use the following syntax
 ```
+let storage_key: String = env::var("storage_key").unwrap();
+let retrieved_string: String = ssvm_storage::load::load_as_string(&storage_key);
+```
+Seeings how you have lauched the Wasm in this demo already, let's go ahead and call the `store_a_string_via_std_env` and `load_a_string_via_std_env` functions that we prepared earlier.
 
-The storage key that you get returned is a random combination of lower case letters and numbers i.e. `1179bb8c40084ed697dbfc2ea0890c6c`
-
-To load the string, we use the following `ssvm_storage::load::load_as_string` feature; passing in a storage key to receive (as a result) our original string.
-```Rust
-let my_loaded_string = ssvm_storage::load::load_as_string(storage_key);
+The following call will store the raw data at the mutable storage location for your wasm_id
+```bash
+curl --location --request POST 'https://dev.rpc.ssvm.secondstate.io:8081/api/run/wasm_id/store_a_string_via_std_env' \
+--header 'Content-Type: text/plain' \
+--data-raw 'This is a string to store'
+```
+The following call will load the raw data at the mutable storage location for your wasm_id
+```bash
+curl --location --request POST 'https://dev.rpc.ssvm.secondstate.io:8081/api/run/wasm_id/load_a_string_via_std_env'
 ```
 
 
