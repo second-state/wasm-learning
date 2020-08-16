@@ -58,17 +58,6 @@ String to store
 
 You will notice with the above examples that a brand new storage key is freshly minted each time any data is stored. There will be times that you might prefer to use the same storage key and update the data over and over. The following example shows you how to access a data storage key which we have baked into your Wasm deployment for your convenience.
 
-When you launch your Wasm file (as shown above) a permanent storage key is created and held for your future use. Interestingly, we make this key available inside your Rust/Wasm code (by passing it into std::env for your convenience). What this means is that you don't even need to know the key. You just need to know that there is a key available for you inside your Rust code at the following location `env::var("storage_key")`. If you would like to store a value to the location of that key you can simply use the following syntax in your Rust/Wasm
-```
-let _string_to_store = String::from("A string to store!");
-let storage_key: String = env::var("storage_key").unwrap();
-ssvm_storage::store::update(&storage_key, _string_to_store);
-```
-If you would like to access the data stored at that permanent location, you can use the following syntax
-```
-let storage_key: String = env::var("storage_key").unwrap();
-let retrieved_string: String = ssvm_storage::load::load_as_string(&storage_key);
-```
 Seeings how you have lauched the Wasm in this demo already, let's go ahead and call the `store_a_string_via_std_env` and `load_a_string_via_std_env` functions that we prepared earlier.
 
 ## Store
@@ -83,6 +72,19 @@ curl --location --request POST 'https://dev.rpc.ssvm.secondstate.io:8081/api/run
 The following call will load the raw data at the mutable storage location for your wasm_id
 ```bash
 curl --location --request POST 'https://dev.rpc.ssvm.secondstate.io:8081/api/run/wasm_id/load_a_string_via_std_env'
+```
+## How it actually works
+
+When you launch your Wasm file (as shown above) a permanent storage key is created and held for your future use. Interestingly, we make this key available inside your Rust/Wasm code (by passing it into std::env for your convenience). What this means is that you don't even need to know the key. You just need to know that there is a key available for you inside your Rust code at the following location `env::var("storage_key")`. If you would like to store a value to the location of that key you can simply use the following syntax in your Rust/Wasm
+```
+let _string_to_store = String::from("A string to store!");
+let storage_key: String = env::var("storage_key").unwrap();
+ssvm_storage::store::update(&storage_key, _string_to_store);
+```
+If you would like to access the data stored at that permanent location, you can use the following syntax
+```
+let storage_key: String = env::var("storage_key").unwrap();
+let retrieved_string: String = ssvm_storage::load::load_as_string(&storage_key);
 ```
 
 
