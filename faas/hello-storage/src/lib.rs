@@ -32,6 +32,6 @@ pub fn load_a_string_via_std_env() -> String {
     let json_as_object: Value = serde_json::from_str(env::env()).unwrap();
     let storage_key: String = json_as_object["storage_key"].to_string();
     // Use that key to load the string from permanent storage
-    let retrieved_string: String = ssvm_storage::load::load_as_string(&_storage_key);
+    let retrieved_string: String = ssvm_storage::load::load_as_string(&storage_key);
     retrieved_string
 }
