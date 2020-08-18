@@ -39,5 +39,5 @@ curl --location --request POST 'https://rpc.ssvm.secondstate.io:8081/api/run/you
 Once you have initialized the Wasm, then go ahead and increment your value. You can do this as many times as you like. The value will be updated and remain persistent for when you next return to update/increment it again.
 
 ```bash
-curl --location --request POST 'https://dev.rpc.ssvm.secondstate.io:8081/api/run/your_wasm_id_goes_here/increment'
+curl --location --request POST 'https://rpc.ssvm.secondstate.io:8081/api/run/your_wasm_id_goes_here/increment'
 ```
