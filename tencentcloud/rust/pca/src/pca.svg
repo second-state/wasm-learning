@@ -1,0 +1,86 @@
+<?xml version="1.0" standalone="no"?>
+<svg
+  width="100%"
+  height="100%"
+  viewBox="0 0 {{width + padding * 2}} {{height + padding * 2}}"
+  preserveAspectRatio="xMidYMid meet"
+  xmlns="http://www.w3.org/2000/svg"
+  >
+  <text 
+    x="{{width/2 + padding}}"
+    y="{{padding / 2}}"
+    font-family="-apple-system, system-ui, BlinkMacSystemFont, Roboto"
+    dominant-baseline="middle"
+    text-anchor="middle"
+    font-size="18"
+    fill="#74838f"
+    font-weight="700"
+    >
+    {{name}}
+  </text>
+  {% for i in range(end=lines + 1) %}
+  {% set offset_x = padding + loop.index0/lines * width %}
+  {% set offset_y = padding + loop.index0/lines * height %}
+  <text
+    x="{{padding - 5}}"
+    font-family="-apple-system, system-ui, BlinkMacSystemFont, Roboto"
+    y="{{offset_y}}"
+    dominant-baseline="middle"
+    text-anchor="end"
+    font-size="12"
+    fill="#74838f"
+    font-weight="bold"
+    >
+    {{ (lines - loop.index0)/lines * y_range + y_min | round(method="ceil", precision=2) }}
+    
+  </text>
+  <text
+    x="{{offset_x}}"
+    font-family="-apple-system, system-ui, BlinkMacSystemFont, Roboto"
+    y="{{height + padding + 10}}"
+    dominant-baseline="hanging"
+    text-anchor="middle"
+    font-size="12"
+    fill="#74838f"
+    font-weight="bold"
+  >
+  {{ (loop.index0-lines)/lines * x_range + x_range + x_min | round(method="ceil", precision=2) }}
+  </text>
+
+  <path stroke="#74838f" stroke-width="2.0" d="M {{offset_x}} {{height + padding}} L {{offset_x}} {{height + padding + 10}}" />
+  <path stroke="#74838f" stroke-dasharray="10 6" stroke-width="0.5"  d="M {{offset_x}} {{padding}} L {{offset_x}} {{height + padding}}" />
+  <path stroke="#74838f" stroke-dasharray="10 6" stroke-width="0.5"  d="M {{padding}} {{offset_y}} L {{width + padding}} {{offset_y}}" />
+  
+  {% if loop.index0 == lines %}
+  <path stroke="#74838f" stroke-width="2" fill="none"  d="M {{padding}} {{offset_y}} L {{width + padding}} {{offset_y}}" />
+  {% endif %}  
+
+  {% if loop.index0 == 0 %}
+  <path stroke="#74838f" stroke-width="2" fill="none"  d="M {{offset_x}} {{padding}} L {{offset_x}} {{height + padding}}" />
+  {% endif %} 
+
+  {% endfor %}
+
+
+  {% for point in path %}
+  {% set x = point.0 %}
+  {% set y = point.1 %}
+  <g stroke="{{colour}}" stroke-width="2" fill="{{colour}}">
+    <circle cx="{{x}}" cy="{{y}}" r="2" />
+  </g>
+  {% endfor %}
+  
+  {% set eig1_x1 = eig_vector1_point1.0 %}
+  {% set eig1_y1 = eig_vector1_point1.1 %}
+  {% set eig1_x2 = eig_vector1_point2.0 %}
+  {% set eig1_y2 = eig_vector1_point2.1 %}
+
+  {% set eig2_x1 = eig_vector2_point1.0 %}
+  {% set eig2_y1 = eig_vector2_point1.1 %}
+  {% set eig2_x2 = eig_vector2_point2.0 %}
+  {% set eig2_y2 = eig_vector2_point2.1 %}
+
+  <path stroke="blue" stroke-width="2" fill="none"  d="M {{ eig1_x1 }} {{ eig1_y1 }} L {{ eig1_x2 }} {{ eig1_y2 }}" />
+  <path stroke="yellow" stroke-width="2" fill="none"  d="M {{ eig2_x1 }} {{ eig2_y1 }} L {{ eig2_x2 }} {{ eig2_y2 }}" />
+
+</svg>
