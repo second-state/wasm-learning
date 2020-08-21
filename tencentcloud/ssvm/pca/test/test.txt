@@ -1,0 +1,4 @@
+
+$ cat test.json | ssvm pca.wasm
+
+$ curl -d @iris.csv -X POST https://service-aj0plx8u-1302315972.hk.apigw.tencentcs.com/release/my_hk
