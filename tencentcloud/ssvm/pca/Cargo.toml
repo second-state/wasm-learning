@@ -5,6 +5,7 @@ authors = ["ubuntu"]
 edition = "2018"
 
 [dependencies]
+wasm-bindgen = "=0.2.61"
 serde = { version = "1.0", features = ["derive"] }
 serde_json = "=1.0.44"
 tera = "1.2.0"
