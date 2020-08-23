@@ -1,6 +1,6 @@
 # The Principal Component Analysis (PCA) + SVG example
 
-In this example, we demonstrate how to do Principal Component Analysis (PCA) of a 2-D data array, and then plot the results in an SVG graph.
+In this example, we demonstrate how to do Principal Component Analysis (PCA) of a 2-D data array, and then plot the results in an SVG graph. Checkout the [live example here](https://www.secondstate.io/demo/2020-tencentcloud.html).
 
 > To draw SVG graphs in Rust, we used the techniques described by [Cetra](https://cetra3.github.io/blog/) in [this article](https://cetra3.github.io/blog/drawing-svg-graphs-rust/).
 
@@ -44,4 +44,12 @@ Next, go to the `test` folder and use `curl` to post a CSV data file to the acce
 $ cd test
 $ curl -d @iris.csv -X POST https://service-m9pxktbc-1302315972.hk.apigw.tencentcs.com/release/PCASVG
 ```
+
+## Web app
+
+With this serverless function available at the access path URL, we can now build a web page front end for it. The web page is just HTML and JavaScript, and can be hosted on any computer, including your local laptop, and hence is truly serverless. The web page uses JavaScript to make requests for PCA computation and SVG drawing from the cloud function.
+
+[Live web page](https://www.secondstate.io/demo/2020-tencentcloud.html) | [HTML source code](https://github.com/second-state/www/blob/master/themes/hugo-notepadium/static/demo/2020-tencentcloud.html)
+
+Note: You must [enable CORS](https://www.secondstate.io/articles/tencentcloud-api-gateway-cors/) on the Tencent serverless cloud function's API gateway in order for the JavaScript AJAX calls to succeed.
 
