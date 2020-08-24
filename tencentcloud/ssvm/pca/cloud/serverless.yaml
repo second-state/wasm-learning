@@ -1,0 +1,15 @@
+component: scf
+name: ap-guangzhou_wasm_ml_demo
+org: app
+app: WebAssemblyMLDemo
+stage: dev
+inputs:
+  name: WebAssemblyMLDemo
+  src: ./
+  description: Rust and WebAssembly Machine Learing as a Service template function 模板函数
+  handler: pca_bg.wasm
+  runtime: CustomRuntime
+  namespace: default
+  region: ap-guangzhou
+  memorySize: 128
+  timeout: 3
