@@ -1,6 +1,4 @@
-# The kMeans + SVG example
-
-In this example, we demonstrate how to do kMeans fitting of data, and then plot the results in an SVG graph.
+# Visulizing Machine Learning Algos
 
 > To draw SVG graphs in Rust, we used the techniques described by [Cetra](https://cetra3.github.io/blog/) in [this article](https://cetra3.github.io/blog/drawing-svg-graphs-rust/).
 
@@ -23,14 +21,6 @@ $ node server.js
 
 ## User testing
 
-Point your browser to http://localhost:8080/, upload a CSV file for 2D data points, and hit the "Draw" button. The web app provides sample CSV files you can download and then upload to process. The birch3 data set is large and will take longer to complete.
+Point your browser to http://localhost:8080/, and follow the instructions.
 
-## Test
 
-```
-$ node node/test.js
-<?xml version="1.0" standalone="no"?>
-<svg
-  ... ...
-</svg>
-```
