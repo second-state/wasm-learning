@@ -1,0 +1,14 @@
+[package]
+name = "base64_conv"
+version = "0.1.0"
+authors = ["ubuntu"]
+edition = "2018"
+
+[lib]
+name = "base64_conv_lib"
+path = "src/lib.rs"
+crate-type =["cdylib"]
+
+[dependencies]
+base64 = "0.12.3"
+wasm-bindgen = "=0.2.61"
