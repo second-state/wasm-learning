@@ -42,10 +42,12 @@ The above command creates the following text string
 iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAAA1BMVEX/TQBcNTh/AAAAAXRSTlPM0jRW/QAAAApJREFUeJxjYgAAAAYAAzY3fKgAAAAASUVORK5CYII=
 ```
 
-Make a reverse function call via the web, using the text from above as input
+Make a reverse function call via the web, using the text from above as input. 
+
+**Please note** - we are calling the `/bytes` endpoint here. This is because the decode function of Rust source code returns bytes as apposed to the encode function which returned a string.
 
 ```
-curl --location --request POST 'https://rpc.ssvm.secondstate.io:8081/api/run/123/decode' \
+curl --location --request POST 'https://rpc.ssvm.secondstate.io:8081/api/run/123/decode/bytes' \
 --header 'Content-Type: text/plain' \
 --data-raw 'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAAA1BMVEX/TQBcNTh/AAAAAXRSTlPM0jRW/QAAAApJREFUeJxjYgAAAAYAAzY3fKgAAAAASUVORK5CYII=' --output tmp.png
 ```
@@ -73,6 +75,8 @@ curl --location --request POST 'https://rpc.ssvm.secondstate.io:8081/api/run/123
 ```
 
 Make a reverse function call via the web.
+
+**Please note** - we are again calling the `/bytes` endpoint here, because the `decode` function of Rust source code returns bytes as apposed to the encode function which returned a string.
 
 ```
 curl --location --request POST 'https://rpc.ssvm.secondstate.io:8081/api/run/123/decode/bytes' \
