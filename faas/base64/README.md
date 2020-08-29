@@ -81,7 +81,7 @@ Make a reverse function call via the web.
 ```
 curl --location --request POST 'https://rpc.ssvm.secondstate.io:8081/api/run/123/decode/bytes' \
 --header 'Content-Type: text/plain' \
---data-raw 'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAAA1BMVEX/TQBcNTh/AAAAAXRSTlPM0jRW/QAAAApJREFUeJxjYgAAAAYAAzY3fKgAAAAASUVORK5CYII=' --output tmp.png
+--data-raw 'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAAA1BMVEX_TQBcNTh_AAAAAXRSTlPM0jRW_QAAAApJREFUeJxjYgAAAAYAAzY3fKgAAAAASUVORK5CYII=' --output tmp.png
 ```
 
 Confirm the conversion.
