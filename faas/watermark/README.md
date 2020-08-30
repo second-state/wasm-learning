@@ -19,7 +19,7 @@ Upload the wasm file in the `pkg` folder to the FaaS. Double check the `.wasm` f
 ```
 $ curl --location --request POST 'https://rpc.ssvm.secondstate.io:8081/api/executables' \
 --header 'Content-Type: application/octet-stream' \
---header 'SSVM-Description: base64' \
+--header 'SSVM-Description: watermark' \
 --data-binary '@pkg/watermark_lib_bg.wasm'
 ```
 
