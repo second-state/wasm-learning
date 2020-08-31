@@ -51,7 +51,6 @@ Make a pre-fetched FaaS call.
 
 ```
 $ curl --location --request POST 'https://rpc.ssvm.secondstate.io:8081/api/run/97/watermark/bytes' \
---header 'Content-Type: text/plain' \
 --header 'SSVM_Fetch: https://pngimg.com/uploads/dog/dog_PNG50348.png' --output tmp.png
 ```
 
