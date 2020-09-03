@@ -37,7 +37,7 @@ Set the context state to watermark text.
 $ curl --location --request PUT 'https://rpc.ssvm.secondstate.io:8081/api/state/97' --header 'Content-Type: text/plain' --data-raw 'by Second State'
 ```
 
-Make a function call via the web.
+Add watermark to a local PNG image.
 
 ```
 $ curl --location --request POST 'https://rpc.ssvm.secondstate.io:8081/api/run/97/watermark/bytes' \
@@ -47,11 +47,13 @@ $ curl --location --request POST 'https://rpc.ssvm.secondstate.io:8081/api/run/9
 
 **Please note** - we are calling the `/bytes` endpoint here, because the `decode` function of Rust source code returns bytes as apposed to the encode function which returned a string.
 
-Make a pre-fetched FaaS call.
+Make a pre-fetched FaaS call to add watermark to an Internet image.
 
 ```
 $ curl --location --request POST 'https://rpc.ssvm.secondstate.io:8081/api/run/97/watermark/bytes' \
 --header 'SSVM_Fetch: https://pngimg.com/uploads/dog/dog_PNG50348.png' --output tmp.png
 ```
 
+## Serverless web app
 
+Open web page [html/index.html](html/index.html) in any browser. See a [static demo](https://www.secondstate.io/demo/2020-watermark.html).
