@@ -1,0 +1,9 @@
+[package]
+name = "face_detect"
+version = "0.1.0"
+authors = ["YiYing He <yiying@secondstate.io>"]
+edition = "2018"
+
+[dependencies]
+tensorflow = "0.16.0"
+serde_json = "1.0"
