@@ -4,36 +4,51 @@ use imageproc::rect::Rect;
 use rust_process_interface_library::Command;
 use serde_json::{from_str, Value};
 use std::error::Error;
+use std::time::SystemTime;
 use std::{env, str};
 
 fn main() -> Result<(), Box<dyn Error>> {
     let args: Vec<String> = env::args().collect();
     let img_in_path = &args[1];
     let img_out_path = &args[2];
+    let mut time_base = SystemTime::now();
 
-    // Open image file and flatten.
+    // Open image file.
     println!("Loading image ...");
     let mut img = image::open(img_in_path)?;
-    let mut flattened: Vec<u32> = Vec::new();
-    println!("Flattening ...");
-    for (_x, _y, rgb) in img.pixels() {
-        flattened.push(rgb[2] as u32);
-        flattened.push(rgb[1] as u32);
-        flattened.push(rgb[0] as u32);
-    }
+    let mut time_dur = SystemTime::now().duration_since(time_base).expect("");
+    println!(
+        "End. cost {} ms.",
+        time_dur.as_secs() * 1000 + time_dur.subsec_millis() as u64
+    );
+    time_base = SystemTime::now();
 
-    // Call process.
+    // Flatten image.
     println!("Preparing command ...");
     let mut cmd = Command::new("face_detect");
-    cmd.stdin(img.width().to_string())
-        .stdin(" ")
-        .stdin(img.height().to_string())
-        .stdin(" ");
-    for val in &flattened {
-        cmd.stdin(val.to_string()).stdin(" ");
+    cmd.arg(img.width().to_string())
+        .arg(img.height().to_string());
+    for (_x, _y, rgb) in img.pixels() {
+        cmd.stdin_u8(rgb[2] as u8)
+            .stdin_u8(rgb[1] as u8)
+            .stdin_u8(rgb[0] as u8);
     }
+    time_dur = SystemTime::now().duration_since(time_base).expect("");
+    println!(
+        "End. cost {} ms.",
+        time_dur.as_secs() * 1000 + time_dur.subsec_millis() as u64
+    );
+    time_base = SystemTime::now();
+
+    // Call command.
     println!("Calling command ...");
     let out = cmd.output();
+    time_dur = SystemTime::now().duration_since(time_base).expect("");
+    println!(
+        "End. cost {} ms.",
+        time_dur.as_secs() * 1000 + time_dur.subsec_millis() as u64
+    );
+    time_base = SystemTime::now();
 
     // Parse results.
     let line = Pixel::from_slice(&[0, 255, 0, 0]);
@@ -49,8 +64,21 @@ fn main() -> Result<(), Box<dyn Error>> {
         let rect = Rect::at(x1, y1).of_size((x2 - x1) as u32, (y2 - y1) as u32);
         draw_hollow_rect_mut(&mut img, rect, *line);
     }
+    time_dur = SystemTime::now().duration_since(time_base).expect("");
+    println!(
+        "End. cost {} ms.",
+        time_dur.as_secs() * 1000 + time_dur.subsec_millis() as u64
+    );
+    time_base = SystemTime::now();
+
+    // Save image.
     println!("Saving image ...");
     img.save(img_out_path)?;
+    time_dur = SystemTime::now().duration_since(time_base).expect("");
+    println!(
+        "End. cost {} ms.",
+        time_dur.as_secs() * 1000 + time_dur.subsec_millis() as u64
+    );
     println!("Done.");
     Ok(())
 }

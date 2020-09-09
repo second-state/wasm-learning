@@ -27,7 +27,7 @@ $ docker run -it --rm \
     secondstate/ssvm:latest
 (docker)$ cd /root/ssvm
 (docker)$ mkdir -p build && cd build
-(docker)$ cmake -DCMAKE_BUILD_TYPE=Release -DSSVM_DISABLE_AOT_RUNTIME=On -DSTATIC_BUILD=On .. && make -j
+(docker)$ cmake -DCMAKE_BUILD_TYPE=Release .. && make -j
 ```
 
 ### Build face_detect binary
@@ -44,8 +44,19 @@ See [face_detect](https://github.com/second-state/wasm-learning/tree/master/rust
 
 ## Run
 
+Interpreter mode:
+
 ```bash
 (docker)$ cd /root/ssvm/build/tools/ssvm
 # Copy input image and wasm file to /root/ssvm/build/tools/ssvm/
 (docker)$ ./ssvm --dir .:. wasm_flatten_img_bg.wasm input_path.jpg output_path.jpg
+```
+
+AOT mode:
+
+```bash
+(docker)$ cd /root/ssvm/build/tools/ssvm-aot
+# Copy input image and wasm file to /root/ssvm/build/tools/ssvm-aot/
+(docker)$ ./ssvmc wasm_flatten_img_bg.wasm wasm_flatten_img_bg.wasm.so
+(docker)$ ./ssvmr --dir .:. wasm_flatten_img_bg.wasm.so input_path.jpg output_path.jpg
 ```
