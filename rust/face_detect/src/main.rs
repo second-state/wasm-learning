@@ -1,30 +1,20 @@
 use serde_json::json;
+use std::env;
 use std::error::Error;
 use std::io::{self, Read};
 use tensorflow::{Graph, ImportGraphDefOptions, Session, SessionOptions, SessionRunArgs, Tensor};
 
 fn main() -> Result<(), Box<dyn Error>> {
-    let mut buffer = String::new();
+    let args: Vec<String> = env::args().collect();
+    let img_width: u64 = args[1].parse::<u64>().unwrap();
+    let img_height: u64 = args[2].parse::<u64>().unwrap();
+    let mut buffer: Vec<u8> = Vec::new();
     let mut flattened: Vec<f32> = Vec::new();
-    let mut img_width: u64 = 0;
-    let mut img_height: u64 = 0;
 
-    // Parse stdin: img_width img_height vactor<flattended f32>.
-    io::stdin().read_to_string(&mut buffer)?;
-    let numline = buffer.replace("\n", " ");
-    let nums = numline.split(" ");
-    let mut iter = 0;
-    for num in nums {
-        if num != "" {
-            if iter == 0 {
-                img_width = num.parse::<u64>().unwrap();
-            } else if iter == 1 {
-                img_height = num.parse::<u64>().unwrap();
-            } else {
-                flattened.push(num.parse::<f32>().unwrap());
-            }
-            iter += 1;
-        }
+    // Parse stdin: vactor<flattended u8>.
+    io::stdin().read_to_end(&mut buffer)?;
+    for num in buffer {
+        flattened.push(num.into());
     }
 
     // Load up the graph as a byte array and create a tensorflow graph.
@@ -60,7 +50,7 @@ fn main() -> Result<(), Box<dyn Error>> {
     let bbox_res: Tensor<f32> = args.fetch(bbox)?;
 
     // Print results.
-    iter = 0;
+    let mut iter = 0;
     let mut json_vec: Vec<[f32; 4]> = Vec::new();
     while (iter * 4) < bbox_res.len() {
         json_vec.push([
