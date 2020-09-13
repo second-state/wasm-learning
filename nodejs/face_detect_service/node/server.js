@@ -2,7 +2,8 @@ const express = require('express');
 const fileUpload = require('express-fileupload');
 const { infer } = require('../pkg/face_detect_service_lib.js');
 const fs = require('fs');
-const uuidv4 = require('uuid/v4');
+// const uuidv4 = require('uuid/v4');
+const { v4: uuidv4 } = require('uuid');
 
 const app = express();
 const host = '0.0.0.0';
