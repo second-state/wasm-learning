@@ -33,18 +33,20 @@ pub fn send_email(s: &str) -> String {
             "value": &msg.body
         }]
     });
-  let auth_header: String = "{\"Content-Type\": \"application/json\",\"authorization\": \"Bearer ".to_owned() + &msg.token + "\"}}";
+  let auth_header: String = "{\"Content-Type\": \"application/json\",\"authorization\": \"Bearer ".to_owned() + &msg.token + "\"}";
 
   let mut cmd = Command::new("http_proxy");
   cmd.arg("post")
-      // .arg("https://api.sendgrid.com/v3/mail/send")
-      .arg("http://scooterlabs.com/echo")
+      .arg("https://api.sendgrid.com/v3/mail/send")
       .arg(auth_header);
   for b in payload.to_string().as_bytes() {
       cmd.stdin_u8(*b);
   }
-  let out = cmd.output();
 
-  let ret: String = str::from_utf8(&out.stdout).unwrap().to_string();
-  return ret;
+  let out = cmd.output();
+  if out.status != 0 {
+    println!("{}", str::from_utf8(&out.stderr).unwrap());
+  }
+
+  return str::from_utf8(&out.stdout).unwrap().to_string();
 }
