@@ -31,27 +31,24 @@ Returns
 
 ## Setup the watermark text
 
-Set the context state to watermark text.
-
-```
-$ curl --location --request PUT 'https://rpc.ssvm.secondstate.io:8081/api/state/97' --header 'Content-Type: text/plain' --data-raw 'by Second State'
-```
-
 Add watermark to a local PNG image.
 
 ```
-$ curl --location --request POST 'https://rpc.ssvm.secondstate.io:8081/api/run/97/watermark/bytes' \
---header 'Content-Type: application/octet-stream' \
---data-binary '@test/cat.png' --output tmp.png
+$ curl --location --request POST 'https://rpc.ssvm.secondstate.io:8081/api/multipart/run/97/watermark/bytes' \
+--header 'Content-Type: application/json' \
+--form 'input_1=Howdy Second State' \
+--form 'input_2=@test/cat.png' \
+--output tmp.png
 ```
-
-**Please note** - we are calling the `/bytes` endpoint here, because the `decode` function of Rust source code returns bytes as apposed to the encode function which returned a string.
 
 Make a pre-fetched FaaS call to add watermark to an Internet image.
 
 ```
-$ curl --location --request POST 'https://rpc.ssvm.secondstate.io:8081/api/run/97/watermark/bytes' \
---header 'SSVM_Fetch: https://pngimg.com/uploads/dog/dog_PNG50348.png' --output tmp.png
+$ curl --location --request POST 'https://rpc.ssvm.secondstate.io:8081/api/multipart/run/97/watermark/bytes' \
+--header 'Content-Type: application/json' \
+--form 'input_1=Howdy Second State' \
+--form 'fetch_input_2=https://www.secondstate.io/demo/dog.png' \
+--output tmp.png
 ```
 
 ## Serverless web app
