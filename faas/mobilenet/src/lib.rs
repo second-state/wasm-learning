@@ -11,9 +11,11 @@ pub fn infer(image_data: &[u8]) -> String {
 
     println!("Loading model ...");
     let model_data: &[u8] = include_bytes!("mobilenet_v2_1.4_224_frozen.pb");
+    println!("Loading model labels ...");
+    let labels = include_str!("imagenet_slim_labels.txt");
 
     println!("Preparing command ...");
-    let mut cmd = Command::new("image_classification_mobilenet");
+    let mut cmd = Command::new("mobilenet_v2");
     cmd.arg(model_data.len().to_string())
         .arg("input")
         .arg("MobilenetV2/Predictions/Softmax")
@@ -61,7 +63,6 @@ pub fn infer(image_data: &[u8]) -> String {
         confidence = "medium";
     }
 
-    let labels = include_str!("imagenet_slim_labels.txt");
     let mut label_lines = labels.lines();
     for _i in 0..max_index {
       label_lines.next();
