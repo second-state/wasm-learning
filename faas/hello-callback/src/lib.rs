@@ -3,7 +3,6 @@ use serde_json::json;
 
 #[wasm_bindgen]
 pub fn say(s: &str) -> String {
-  let r = String::from("hello ");
   let ret = json!(
     {
         "personalizations": [{
@@ -14,10 +13,10 @@ pub fn say(s: &str) -> String {
         "from": {
             "email": "michael@secondstate.io"
         },
-        "subject":&(r + &s),
+        "subject": &s,
         "content": [{
             "type": "text/plain",
-            "value": "This is a message from Joey and SSVM"
+            "value": &("This is a message from Second State: ".to_owned() + s)
         }]
     });
   return ret.to_string();
