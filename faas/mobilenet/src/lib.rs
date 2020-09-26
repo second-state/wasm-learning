@@ -30,6 +30,10 @@ pub fn infer(image_data: &[u8]) -> String {
     // Call command.
     println!("Calling command ...");
     let out = cmd.output();
+    if out.status != 0 {
+      println!("{}", str::from_utf8(&out.stderr).unwrap());
+      return out.status.to_string();
+    }
     
     // Parse results.
     let stdout_json: Value = from_str(str::from_utf8(&out.stdout).expect("[]")).unwrap();
