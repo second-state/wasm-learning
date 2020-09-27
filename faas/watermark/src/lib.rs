@@ -1,7 +1,7 @@
 use wasm_bindgen::prelude::*;
 use imageproc::{drawing};
 use rusttype::{Font, Scale};
-use image::{GenericImage,GenericImageView};
+use image::{GenericImageView};
 
 #[wasm_bindgen]
 pub fn watermark (watermark_text: &str, img_buf: &[u8]) -> Vec<u8> {
@@ -18,6 +18,6 @@ pub fn watermark (watermark_text: &str, img_buf: &[u8]) -> Vec<u8> {
     drawing::draw_text_mut(&mut img, image::Rgba([255u8, 255u8, 255u8, 255u8]), 0+(h/10),h/2, scale, &font, watermark_text);
 
     let mut buf = vec![];
-    img.write_to(&mut buf, image::ImageOutputFormat::Png);
+    img.write_to(&mut buf, image::ImageOutputFormat::Png).unwrap();
     return buf;
 }
