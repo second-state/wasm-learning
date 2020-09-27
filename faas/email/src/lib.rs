@@ -1,10 +1,13 @@
 use wasm_bindgen::prelude::*;
-use std::env;
+use std::str;
 use serde_json::json;
 use serde::{Serialize, Deserialize};
+use rust_process_interface_library::Command;
 
 #[derive(Serialize, Deserialize, Debug)]
 struct Msg {
+  from: String,
+  token: String,
   to: String,
   subject: String,
   mime: String,
@@ -13,12 +16,8 @@ struct Msg {
 
 #[wasm_bindgen]
 pub fn send_email(s: &str) -> String {
-  // Access arguments from std env
-  let arguments: Vec<String> = env::args().collect();
-  let from: &str = &arguments[1];
-
   let msg: Msg = serde_json::from_str(s).unwrap();
-  let ret = json!(
+  let payload = json!(
     {
         "personalizations": [{
             "to": [{
@@ -26,7 +25,7 @@ pub fn send_email(s: &str) -> String {
             }]
         }],
         "from": {
-            "email": from
+            "email": &msg.from
         },
         "subject":&msg.subject,
         "content": [{
@@ -34,5 +33,23 @@ pub fn send_email(s: &str) -> String {
             "value": &msg.body
         }]
     });
-  return ret.to_string();
+  let auth_header: String = "{\"Content-Type\": \"application/json\",\"authorization\": \"Bearer ".to_owned() + &msg.token + "\"}";
+
+  let mut cmd = Command::new("http_proxy");
+  cmd.arg("post")
+      .arg("https://api.sendgrid.com/v3/mail/send")
+      .arg(auth_header);
+  for b in payload.to_string().as_bytes() {
+      cmd.stdin_u8(*b);
+  }
+
+  let out = cmd.output();
+  if out.status != 0 {
+      println!("Code: {}", out.status);
+      println!("STDERR: {}", str::from_utf8(&out.stderr).unwrap());
+      println!("STDOUT: {}", str::from_utf8(&out.stdout).unwrap());
+      return out.status.to_string();
+  }
+
+  return str::from_utf8(&out.stdout).unwrap().to_string();
 }

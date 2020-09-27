@@ -26,25 +26,16 @@ $ curl --location --request POST 'https://rpc.ssvm.secondstate.io:8081/api/execu
 Returns
 
 ```
-{"wasm_id":123,"wasm_sha256":"0xec9e4c7d01920f...644bed9bf7922","SSVM_Usage_Key":"00000000-0000-0000-0000-000000000000","SSVM_Admin_Key":"b425089...8bfa58e6"}
+{"wasm_id":151,"wasm_sha256":"0xec9e4c7d01920f...644bed9bf7922","SSVM_Usage_Key":"00000000-0000-0000-0000-000000000000","SSVM_Admin_Key":"b425089...8bfa58e6"}
 ```
 
-## Set from address
-
-Set the context state to the `from` address for functions in this wasm file.
+Note: You can update this binary with the `SSVM_Admin_Key`.
 
 ```
-$ curl --location --request PUT 'https://rpc.ssvm.secondstate.io:8081/api/state/123' --header 'Content-Type: text/plain' --data 'michael@secondstate.io'
-```
-
-## Redirect results to another service
-
-This is done by associating a callback object with the wasm file. The callback is a HTTP request object in JSON format. The function call's return value is submiited to the callback upon completion.
-
-```
-curl --location --request PUT 'https://rpc.ssvm.secondstate.io:8081/api/callback/123' \
---header 'Content-Type: application/json' \
---data-raw '{"hostname": "api.sendgrid.com","path": "/v3/mail/send","method": "POST","port": 443,"headers":{"Content-Type": "application/json","authorization": "Bearer SG.xxxx"}}'
+$ curl --location --request PUT 'https://rpc.ssvm.secondstate.io:8081/api/update_wasm_binary/151' \
+--header 'Content-Type: application/octet-stream' \
+--header 'SSVM_Admin_Key: 7dxxxxxx-xxxx-xxxx-xxxx-xxxxxxxx0c41' \
+--data-binary '@pkg/send_email_lib_bg.wasm'
 ```
 
 ## Test
@@ -52,10 +43,8 @@ curl --location --request PUT 'https://rpc.ssvm.secondstate.io:8081/api/callback
 Make a function call via the web.
 
 ```
-$ curl --location --request POST 'https://rpc.ssvm.secondstate.io:8081/api/run/123/send_email' \
+$ curl --location --request POST 'https://rpc.ssvm.secondstate.io:8081/api/run/151/send_email' \
 --header 'Content-Type: text/plain' \
---data '{"to":"michael@michaelyuan.com","subject":"Email from Joey","mime":"text/plain","body":"This email is sent from the Joey FaaS service."}'
+--data '{"from":"michael@secondstate.io", "token":"SG.xxx", "to":"juntao_yuan@yahoo.com", "subject":"This is a HTTP Proxy FaaS test", "mime":"text/plain", "body":"Hello Second State FaaS!"}'
 ```
-
-The `to/email` address in the Rust function will now receive an email message with the "hello Second State FaaS" subject line.
 
