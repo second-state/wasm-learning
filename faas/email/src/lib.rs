@@ -39,9 +39,7 @@ pub fn send_email(s: &str) -> String {
   cmd.arg("post")
       .arg("https://api.sendgrid.com/v3/mail/send")
       .arg(auth_header);
-  for b in payload.to_string().as_bytes() {
-      cmd.stdin_u8(*b);
-  }
+  cmd.stdin_u8vec(payload.to_string().as_bytes());
 
   let out = cmd.output();
   if out.status != 0 {
