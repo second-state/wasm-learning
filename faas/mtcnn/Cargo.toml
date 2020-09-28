@@ -11,7 +11,7 @@ crate-type = ["cdylib"]
 
 [dependencies]
 wasm-bindgen = "=0.2.61"
-rust_process_interface_library = "0.1.2"
+rust_process_interface_library = "0.1.3"
 image = { version = "0.23.0", default-features = false, features = ["jpeg", "png", "gif"] }
 imageproc = "0.21.0"
 serde = { version = "^1.0.59", features = ["derive"] }

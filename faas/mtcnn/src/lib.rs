@@ -23,9 +23,7 @@ pub fn infer(image_data: &[u8]) -> Vec<u8> {
         .arg(model_params) // Parameter tensor names and values
         .arg(img.width().to_string()) // Image width
         .arg(img.height().to_string()); // Image height
-    for m in model_data {
-        cmd.stdin_u8(*m);
-    }
+    cmd.stdin_u8vec(model_data);
     for (_x, _y, rgb) in img.pixels() {
         cmd.stdin_u8(rgb[2] as u8)
             .stdin_u8(rgb[1] as u8)
