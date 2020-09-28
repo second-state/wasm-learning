@@ -21,9 +21,7 @@ pub fn infer(image_data: &[u8]) -> String {
         .arg("MobilenetV2/Predictions/Softmax")
         .arg("224")
         .arg("224");
-    for m in model_data {
-        cmd.stdin_u8(*m);
-    }
+    cmd.stdin_u8vec(model_data);
     for rgb in resized.pixels() {
         cmd.stdin_u8(rgb[0] as u8)
             .stdin_u8(rgb[1] as u8)
