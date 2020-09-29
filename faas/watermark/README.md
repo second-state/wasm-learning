@@ -35,7 +35,7 @@ Add watermark to a local PNG image.
 
 ```
 $ curl --location --request POST 'https://rpc.ssvm.secondstate.io:8081/api/multipart/run/97/watermark/bytes' \
---header 'Content-Type: application/json' \
+--header 'Content-Type: multipart/form-data' \
 --form 'input_1=Howdy Second State' \
 --form 'input_2=@test/cat.png' \
 --output tmp.png
@@ -45,7 +45,7 @@ Make a pre-fetched FaaS call to add watermark to an Internet image.
 
 ```
 $ curl --location --request POST 'https://rpc.ssvm.secondstate.io:8081/api/multipart/run/97/watermark/bytes' \
---header 'Content-Type: application/json' \
+--header 'Content-Type: multipart/form-data' \
 --form 'input_1=Howdy Second State' \
 --form 'fetch_input_2=https://www.secondstate.io/demo/dog.png' \
 --output tmp.png
