@@ -35,6 +35,11 @@ jobs:
         npm i -g wasm-pack
         curl -fsSL https://deno.land/x/install/install.sh | sh
     
+    - name: Install Tensorflow
+      run: |
+        wget https://storage.googleapis.com/tensorflow/libtensorflow/libtensorflow-gpu-linux-x86_64-1.15.0.tar.gz
+        sudo tar -C /usr/ -xzf libtensorflow-gpu-linux-x86_64-1.15.0.tar.gz
+    
     - name: Functions
       run: |
         ssvmup build
@@ -63,14 +68,14 @@ jobs:
         ssvmup clean
       working-directory: nodejs/wasi
 
-    - name: kmeans example
-      run: |
-        ssvmup build
-        cd node/
-        node app.js
-        cd ../
-        ssvmup clean
-      working-directory: nodejs/kmeans
+#    - name: kmeans example
+#      run: |
+#        ssvmup build
+#        cd node/
+#        node app.js
+#        cd ../
+#        ssvmup clean
+#      working-directory: nodejs/kmeans
 
     - name: Deno example
       run: |
