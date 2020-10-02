@@ -53,4 +53,4 @@ $ curl --location --request POST 'https://rpc.ssvm.secondstate.io:8081/api/multi
 
 ## Serverless web app
 
-Open web page [html/index.html](html/index.html) in any browser. See a [static demo](https://www.secondstate.io/demo/2020-watermark.html).
+Open web page [html/index.html](html/index.html) in any browser. See a [static demo](https://www.secondstate.io/demo/2020-watermark-multipart.html).

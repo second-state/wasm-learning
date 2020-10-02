@@ -16,21 +16,20 @@ function callService() {
     $('#process').prop('disabled', true);
   },0);
 
-  var formData = new FormData();
-  formData.append('input_1', $('#input_1').val());
-  formData.append('input_2', $('#input_2')[0].files[0]);
-  // console.log($('#input_2')[0].files[0]);
-
   $.ajax({
-      url: "https://rpc.ssvm.secondstate.io:8081/api/multipart/run/148/watermark/bytes",
+      url: "https://rpc.ssvm.secondstate.io:8081/api/run/104/watermark/bytes",
       type: "post",
-      data : formData,
-      contentType: false,
-      processData: false,
+      beforeSend: function(xhr) {
+        xhr.setRequestHeader("SSVM_Fetch", $('#img_url').val());
+      },
       xhrFields:{
         responseType: 'blob'
       },
       success: function (data) {
+        // alert(JSON.stringify(data));
+        // var binaryData = [];
+        // binaryData.push(data);
+        // const img_url = window.URL.createObjectURL(new Blob(binaryData, {type: "image/png"}))
         const img_url = URL.createObjectURL(data);
         $('#wm_img').prop('src', img_url);
         $('#process').prop('disabled', false);
@@ -45,27 +44,22 @@ function callService() {
 }
     </script>
   </head>
-  
+
   <body>
     <div class="container">
 
       <h1>Watermark this</h1>
-      <p class="lead">Add a watermark to an image</p>
+      <p class="lead">Add a watermark to an Internet image</p>
 
-      <form id="draw" enctype="multipart/form-data">
-        <div class="form-group">
-          <label for="input_1">The watermark text</label>
-          <input type="text" class="form-control" id="input_1" name="input_1" value=""/>
-        </div>
-
-        <div class="form-group">
-          <label for="input_2">Please upload an image file (<a href="dog.png">example</a>)</label>
-          <input type="file" class="form-control-file" id="input_2" name="input_2">
+      <form id="draw">
+	<div class="form-group">
+          <label for="img_url">Put an image URL below (PNG image only)</label>
+          <input type="text" class="form-control" id="img_url" name="img_url" value="https://www.secondstate.io/demo/dog.png"/>
         </div>
 
         <button class="btn btn-primary mb-2" id="process" name="process" value="1" onclick="return callService();">Add Watermark</button>
       </form>
-      
+
       <div class="jumbotron">
         <img id="wm_img" class="rounded mx-auto d-block"/>
       </div>
