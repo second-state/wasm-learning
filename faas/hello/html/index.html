@@ -23,7 +23,8 @@ function callService() {
       contentType: "text/plain",
       processData: false,
       success: function (data) {
-        $('#result').val(data);
+        console.log(data);
+        $('#result').html(data);
         $('#process').prop('disabled', false);
       },
       error: function(){
