@@ -62,4 +62,4 @@ curl --location --request POST 'https://rpc.ssvm.secondstate.io:8081/api/run/161
 
 Load this [static web page](html/index.html) to interact with the function. Look, serverless!
 
-https://second-state.github.io/wasm-learning/faas/hello/index.html
+https://second-state.github.io/wasm-learning/faas/hello/html/index.html
