@@ -9,7 +9,7 @@ If you have not done so already, follow these simple instructions to install [Ru
 ## Build the WASM bytecode
 
 ```
-$ ssvmup build
+ssvmup build
 ```
 
 ## FaaS
@@ -17,7 +17,7 @@ $ ssvmup build
 Upload the wasm file in the `pkg` folder to the FaaS. Double check the `.wasm` file name before you upload.
 
 ```
-$ curl --location --request POST 'https://rpc.ssvm.secondstate.io:8081/api/executables' \
+curl --location --request POST 'https://rpc.ssvm.secondstate.io:8081/api/executables' \
 --header 'Content-Type: application/octet-stream' \
 --header 'SSVM-Description: watermark' \
 --data-binary '@pkg/watermark_lib_bg.wasm'
@@ -26,7 +26,7 @@ $ curl --location --request POST 'https://rpc.ssvm.secondstate.io:8081/api/execu
 Returns
 
 ```
-{"wasm_id":97,"wasm_sha256":"0xfb413547a8aba56d0349603a7989e269f3846245e51804932b3e02bc0be4b665","usage_key":"00000000-0000-0000-0000-000000000000","admin_key":"00xxxxxx-xxxx-xxxx-xxxx-4adc960fd2b8"}
+{"wasm_id":148,"wasm_sha256":"0x0a3227cd8d76c32f4788ca8d020091f89c41f4abc7a3c3b1c10490d439a22b1b","SSVM_Usage_Key":"00000000-0000-0000-0000-000000000000","SSVM_Admin_Key":"aaaa-bbbb-cccc-dddd-0000"}
 ```
 
 ## Setup the watermark text
