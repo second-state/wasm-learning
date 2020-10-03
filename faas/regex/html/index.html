@@ -45,25 +45,25 @@ function callService() {
   <body>
     <div class="container">
 
-      <h1>Hello world</h1>
-      <p class="lead">Say hello to ...</p>
+      <h1>Pattern matching</h1>
+      <p class="lead">Using regular expression</p>
 
       <form id="faas">
         <div class="form-group">
-          <label for="pattern">Regular expression</label>
-          <input type="text" class="form-control" id="pattern" name="pattern" value=""/>
+          <label for="pattern">Regular expression pattern</label>
+          <input type="text" class="form-control" id="pattern" name="pattern" value="\d{4}-\d{2}-\d{2}"/>
         </div>
 
         <div class="form-group">
           <label for="input">Input text</label>
-          <input type="text" class="form-control" id="input" name="input" value=""/>
+          <input type="text" class="form-control" id="input" name="input" value="On 2009-01-03, Satoshi Nakamoto launched the Bitcoin blockchain. The price reached a high of $19,783.06 on 2017-12-17 and dropped to a low of $3,300 on 2018-12-07."/>
         </div>
 
         <button class="btn btn-primary mb-2" id="process" name="process" value="1" onclick="return callService();">Match</button>
       </form>
       
       <div class="jumbotron">
-        <p id="result">Please enter a name and press Match</p>
+        <p id="result">Please enter a pattern, text, and press Match</p>
       </div>
 
     </div> <!-- /container -->
