@@ -71,6 +71,24 @@ jobs:
         ssvmup clean
       working-directory: nodejs/wasi
 
+    - name: MobileNet
+      run: |
+        ssvmup build
+        cd test/
+        node test.js
+        cd ..
+        ssvmup clean
+      working-directory: faas/mobilenet
+
+    - name: MTCNN
+      run: |
+        ssvmup build
+        cd test/
+        node test.js
+        cd ..
+        ssvmup clean
+      working-directory: faas/mtcnn
+
 #    - name: kmeans example
 #      run: |
 #        ssvmup build
