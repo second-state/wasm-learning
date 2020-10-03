@@ -26,7 +26,16 @@ $ curl --location --request POST 'https://rpc.ssvm.secondstate.io:8081/api/execu
 Returns
 
 ```
-{"wasm_id":118,"wasm_sha256":"0xfb413547a8aba56d0349603a7989e269f3846245e51804932b3e02bc0be4b665","usage_key":"00000000-0000-0000-0000-000000000000","admin_key":"00xxxxxx-xxxx-xxxx-xxxx-4adc960fd2b8"}
+{"wasm_id":149,"wasm_sha256":"0xfb413547a8aba56d0349603a7989e269f3846245e51804932b3e02bc0be4b665","usage_key":"00000000-0000-0000-0000-000000000000","admin_key":"00xxxxxx-xxxx-xxxx-xxxx-4adc960fd2b8"}
+```
+
+Note: You can update this binary with the `SSVM_Admin_Key`.
+
+```
+$ curl --location --request PUT 'https://rpc.ssvm.secondstate.io:8081/api/update_wasm_binary/149' \
+--header 'Content-Type: application/octet-stream' \
+--header 'SSVM_Admin_Key: 7dxxxxxx-xxxx-xxxx-xxxx-xxxxxxxx0c41' \
+--data-binary '@pkg/hello_watermark_lib_bg.wasm'
 ```
 
 ## Call the function
@@ -34,7 +43,7 @@ Returns
 Add watermark to a local PNG image.
 
 ```
-$ curl --location --request POST 'https://rpc.ssvm.secondstate.io:8081/api/run/118/watermark/bytes' \
+$ curl --location --request POST 'https://rpc.ssvm.secondstate.io:8081/api/run/149/watermark/bytes' \
 --header 'Content-Type: application/octet-stream' \
 --data-binary '@test/cat.png' --output tmp.png
 ```
@@ -44,10 +53,10 @@ $ curl --location --request POST 'https://rpc.ssvm.secondstate.io:8081/api/run/1
 Make a pre-fetched FaaS call to add watermark to an Internet image.
 
 ```
-$ curl --location --request POST 'https://rpc.ssvm.secondstate.io:8081/api/run/118/watermark/bytes' \
+$ curl --location --request POST 'https://rpc.ssvm.secondstate.io:8081/api/run/149/watermark/bytes' \
 --header 'SSVM_Fetch: https://www.secondstate.io/demo/dog.png' --output tmp.png
 ```
 
 ## Serverless web app
 
-Open web page [html/index.html](html/index.html) in any browser. See a [static demo](https://www.secondstate.io/demo/2020-watermark.html).
+Open web page [html/index.html](html/index.html) in any browser. See a [static demo](https://second-state.github.io/wasm-learning/faas/hello-watermark/html/index.html).
