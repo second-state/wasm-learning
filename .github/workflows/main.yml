@@ -89,14 +89,14 @@ jobs:
         ssvmup clean
       working-directory: faas/mtcnn
 
-#    - name: kmeans example
-#      run: |
-#        ssvmup build
-#        cd node/
-#        node app.js
-#        cd ../
-#        ssvmup clean
-#      working-directory: nodejs/kmeans
+    - name: kmeans example
+      run: |
+        ssvmup build
+        cd node/
+        node app.js
+        cd ../
+        ssvmup clean
+      working-directory: nodejs/kmeans
 
     - name: Deno example
       run: |
