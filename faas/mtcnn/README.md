@@ -2,6 +2,8 @@
 
 Run MTCNN tensorflow models as functions.
 
+[Live Demo](https://second-state.github.io/wasm-learning/faas/mtcnn/html/index.html) | [Code Tutorial](https://www.secondstate.io/articles/faas-face-detection/)
+
 ## Prerequisites
 
 If you have not done so already, follow these simple instructions to install [Rust](https://www.rust-lang.org/tools/install) and [ssvmup](https://www.secondstate.io/articles/ssvmup/).
