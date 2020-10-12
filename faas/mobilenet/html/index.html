@@ -17,21 +17,13 @@ function callService() {
   },0);
 
   $.ajax({
-      url: "https://rpc.ssvm.secondstate.io:8081/api/run/148/watermark/bytes",
+      url: "https://rpc.ssvm.secondstate.io:8081/api/run/146/infer",
       type: "post",
-      beforeSend: function(xhr) {
-        xhr.setRequestHeader("SSVM_Fetch", $('#img_url').val());
-      },
-      xhrFields:{
-        responseType: 'blob'
-      },
+      data : $('#input')[0].files[0],
+      contentType: "application/octet-stream",
+      processData: false,
       success: function (data) {
-        // alert(JSON.stringify(data));
-        // var binaryData = [];
-        // binaryData.push(data);
-        // const img_url = window.URL.createObjectURL(new Blob(binaryData, {type: "image/png"}))
-        const img_url = URL.createObjectURL(data);
-        $('#wm_img').prop('src', img_url);
+        $('#result').html(data);
         $('#process').prop('disabled', false);
       },
       error: function(){
@@ -44,7 +36,7 @@ function callService() {
 }
     </script>
   </head>
-
+  
   <body>
     <div class="container">
       <div style="text-align:center;margin:25px">
@@ -52,20 +44,20 @@ function callService() {
         <div style="font-size:90%;color:gray;margin:20px"><a href="https://www.secondstate.io/faas/">Fast, safe, portable and serverless Rust functions as services</a></div>
       </div>
 
-      <h1>Watermark</h1>
-      <p class="lead">Add a watermark to an Internet image</p>
+      <h1>Image classification</h1>
+      <p class="lead">Using the MobileNet Tensorflow model. <a href="https://www.secondstate.io/articles/faas-image-classification/">See code tutorial</a></p>
 
-      <form id="draw">
+      <form id="draw" enctype="multipart/form-data">
         <div class="form-group">
-          <label for="img_url">Put an image URL below</label>
-          <input type="text" class="form-control" id="img_url" name="img_url" value="https://www.secondstate.io/demo/dog.png"/>
+          <label for="input">Please upload an image file (<a href="grace_hopper.jpg">example</a>)</label>
+          <input type="file" class="form-control-file" id="input" name="input">
         </div>
 
-        <button class="btn btn-primary mb-2" id="process" name="process" value="1" onclick="return callService();">Add Watermark</button>
+        <button class="btn btn-primary mb-2" id="process" name="process" value="1" onclick="return callService();">Classify</button>
       </form>
-
+      
       <div class="jumbotron">
-        <img id="wm_img" class="rounded mx-auto d-block"/>
+        <p id="result">Please upload an image and press Classify</p>
       </div>
 
     </div> <!-- /container -->

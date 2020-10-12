@@ -47,14 +47,19 @@ $ curl --location --request POST 'https://rpc.ssvm.secondstate.io:8081/api/execu
 Returns
 
 ```
-{"wasm_id":123,"wasm_sha256":"0xfb413547a8aba56d0349603a7989e269f3846245e51804932b3e02bc0be4b665","usage_key":"00000000-0000-0000-0000-000000000000","admin_key":"00xxxxxx-xxxx-xxxx-xxxx-4adc960fd2b8"}
+{"wasm_id":161,"wasm_sha256":"0xfb413547a8aba56d0349603a7989e269f3846245e51804932b3e02bc0be4b665","usage_key":"00000000-0000-0000-0000-000000000000","admin_key":"00xxxxxx-xxxx-xxxx-xxxx-4adc960fd2b8"}
 ```
 
 Make a function call via the web.
 
 ```
-curl --location --request POST 'https://rpc.ssvm.secondstate.io:8081/api/run/123/say' \
+curl --location --request POST 'https://rpc.ssvm.secondstate.io:8081/api/run/161/say' \
 --header 'Content-Type: text/plain' \
 --data-raw 'Second State FaaS'
 ```
 
+## Web test
+
+Load this [static web page](html/index.html) to interact with the function. Look, serverless!
+
+https://second-state.github.io/wasm-learning/faas/hello/html/index.html

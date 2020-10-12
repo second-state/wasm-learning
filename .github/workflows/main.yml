@@ -35,6 +35,14 @@ jobs:
         npm i -g wasm-pack
         curl -fsSL https://deno.land/x/install/install.sh | sh
     
+    - name: Install Tensorflow
+      run: |
+        wget https://storage.googleapis.com/tensorflow/libtensorflow/libtensorflow-gpu-linux-x86_64-1.15.0.tar.gz
+        sudo tar -C /usr/ -xzf libtensorflow-gpu-linux-x86_64-1.15.0.tar.gz
+        cargo install http_proxy
+        cargo install mtcnn
+        cargo install mobilenet_v2
+    
     - name: Functions
       run: |
         ssvmup build
@@ -62,6 +70,24 @@ jobs:
         node node/app.js
         ssvmup clean
       working-directory: nodejs/wasi
+
+    - name: MobileNet
+      run: |
+        ssvmup build
+        cd test/
+        node test.js
+        cd ..
+        ssvmup clean
+      working-directory: faas/mobilenet
+
+    - name: MTCNN
+      run: |
+        ssvmup build
+        cd test/
+        node test.js
+        cd ..
+        ssvmup clean
+      working-directory: faas/mtcnn
 
     - name: kmeans example
       run: |
