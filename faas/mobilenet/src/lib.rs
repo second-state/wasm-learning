@@ -7,7 +7,9 @@ use std::str;
 pub fn infer(image_data: &[u8]) -> String {
     println!("Loading image ...");
     let img = image::load_from_memory(image_data).unwrap().to_rgb();
-    let resized = image::imageops::resize(&img, 224, 224, ::image::imageops::FilterType::Triangle);
+    let resized = image::imageops::thumbnail(&img, 224, 224);
+    // let resized = image::imageops::resize(&img, 224, 224, ::image::imageops::FilterType::Triangle);
+    // let resized = image::imageops::resize(&img, 224, 224, ::image::imageops::FilterType::Nearest);
 
     println!("Loading model ...");
     let model_data: &[u8] = include_bytes!("mobilenet_v2_1.4_224_frozen.pb");
@@ -21,7 +23,9 @@ pub fn infer(image_data: &[u8]) -> String {
         .arg("MobilenetV2/Predictions/Softmax")
         .arg("224")
         .arg("224");
+    println!("Sending model ...");
     cmd.stdin_u8vec(model_data);
+    println!("Sending image ...");
     for rgb in resized.pixels() {
         cmd.stdin_u8(rgb[0] as u8)
             .stdin_u8(rgb[1] as u8)
