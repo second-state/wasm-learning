@@ -1,9 +1,10 @@
 const { infer } = require('../pkg/mtcnn_service_lib.js');
 const fs = require('fs');
 
+console.time("Face Detection");
 var img_src = fs.readFileSync("solvay.jpg");
-console.log("Done reading file");
+console.timeLog("Face Detection");
 var img_res = infer(img_src);
-console.log("Done inference");
+console.timeLog("Face Detection");
 fs.writeFileSync("res.png", img_res);
-console.log("Done writing file");
+console.timeEnd("Face Detection");
