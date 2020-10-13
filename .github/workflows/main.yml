@@ -43,23 +43,37 @@ jobs:
         cargo install mtcnn
         cargo install mobilenet_v2
     
-    - name: Functions
+    - name: Functions Interpreter
       run: |
         ssvmup build
         node node/app.js
         ssvmup clean
       working-directory: nodejs/functions
       
-    - name: JSON IO
+    - name: Functions AOT
+      run: |
+        ssvmup build --enable-aot
+        node node/app.js
+        ssvmup clean
+      working-directory: nodejs/functions
+      
+    - name: JSON IO Interpreter
       run: |
         ssvmup build
         node node/app.js
         ssvmup clean
       working-directory: nodejs/json_io
 
-    - name: RSA
+    - name: JSON IO AOT
       run: |
-        ssvmup build
+        ssvmup build --enable-aot
+        node node/app.js
+        ssvmup clean
+      working-directory: nodejs/json_io
+
+    - name: RSA AOT
+      run: |
+        ssvmup build --enable-aot
         node node/app.js
         ssvmup clean
       working-directory: nodejs/rsa_example
@@ -71,7 +85,7 @@ jobs:
         ssvmup clean
       working-directory: nodejs/wasi
 
-    - name: MobileNet
+    - name: MobileNet Interpreter
       run: |
         ssvmup build
         cd test/
@@ -80,7 +94,16 @@ jobs:
         ssvmup clean
       working-directory: faas/mobilenet
 
-    - name: MTCNN
+    - name: MobileNet AOT
+      run: |
+        ssvmup build --enable-aot
+        cd test/
+        node test.js
+        cd ..
+        ssvmup clean
+      working-directory: faas/mobilenet
+
+    - name: MTCNN Interpreter
       run: |
         ssvmup build
         cd test/
@@ -89,9 +112,18 @@ jobs:
         ssvmup clean
       working-directory: faas/mtcnn
 
-    - name: kmeans example
+    - name: MTCNN AOT
       run: |
-        ssvmup build
+        ssvmup build --enable-aot
+        cd test/
+        node test.js
+        cd ..
+        ssvmup clean
+      working-directory: faas/mtcnn
+
+    - name: kmeans example AOT
+      run: |
+        ssvmup build --enable-aot
         cd node/
         node app.js
         cd ../
