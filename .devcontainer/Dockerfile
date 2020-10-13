@@ -5,7 +5,7 @@ ENV RUSTUP_HOME=/usr/local/rustup \
     PATH=/usr/local/cargo/bin:$PATH
 RUN apt-get update \
     && apt-get -y upgrade \
-    && apt install -y build-essential libboost-all-dev \
+    && apt install -y build-essential libboost-all-dev llvm-dev liblld-10-dev \
     && apt install -y curl wget git vim pkg-config libssl-dev
 RUN curl -sL https://deb.nodesource.com/setup_14.x |  bash \
     && apt-get install -y nodejs \
