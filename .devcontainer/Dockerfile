@@ -12,6 +12,8 @@ RUN curl -sL https://deb.nodesource.com/setup_14.x |  bash \
     && npm install -y ssvm \
     && npm install express express-fileupload
 RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
+RUN wget https://storage.googleapis.com/tensorflow/libtensorflow/libtensorflow-gpu-linux-x86_64-1.15.0.tar.gz \
+    && tar -C /usr/ -xzf libtensorflow-gpu-linux-x86_64-1.15.0.tar.gz
 
 # Switch back to dialog for any ad-hoc use of apt-get
 ENV DEBIAN_FRONTEND=dialog
