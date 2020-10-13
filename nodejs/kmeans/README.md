@@ -24,7 +24,7 @@ The [src/lib.rs](src/lib.rs) file contains Rust functions to generate simulated 
 ## Build the WASM bytecode
 
 ```
-$ ssvmup build
+$ ssvmup build --enable-aot
 ```
 
 ## Node app

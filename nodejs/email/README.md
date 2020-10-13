@@ -15,7 +15,7 @@ $ cargo install http_proxy
 ## Build the WASM bytecode
 
 ```
-$ ssvmup build
+$ ssvmup build --enable-aot
 ```
 
 ## Test

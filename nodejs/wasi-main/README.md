@@ -9,7 +9,7 @@ If you have not done so already, follow these simple instructions to [install Ru
 ## Build the WASM bytecode
 
 ```
-$ ssvmup build
+$ ssvmup build --enable-aot
 ```
 
 ## Run the application from command line

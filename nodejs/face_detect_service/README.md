@@ -25,7 +25,7 @@ $ sudo cp target/release/build/tensorflow-sys-63b45638c873b8e2/out/libtensorflow
 ## Build the WASM bytecode
 
 ```
-$ ssvmup build
+$ ssvmup build --enable-aot
 ```
 
 ## Test

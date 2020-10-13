@@ -21,7 +21,7 @@ The [src/lib.rs](src/lib.rs) file contains three Rust functions to create a key 
 ## Build the WASM bytecode
 
 ```
-$ ssvmup build
+$ ssvmup build --enable-aot
 ```
 
 ## Node app
