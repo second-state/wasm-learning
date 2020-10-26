@@ -6,5 +6,5 @@ var img_src = fs.readFileSync("solvay.jpg");
 console.timeLog("Face Detection");
 var img_res = infer(img_src);
 console.timeLog("Face Detection");
-fs.writeFileSync("res.png", img_res);
+fs.writeFileSync("res.jpg", img_res);
 console.timeEnd("Face Detection");

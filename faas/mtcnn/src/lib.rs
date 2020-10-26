@@ -5,17 +5,17 @@ use imageproc::rect::Rect;
 use rust_process_interface_library::Command;
 use serde_json::{from_str, Value};
 use std::str;
+use std::time::{Instant};
 
 #[wasm_bindgen]
 pub fn infer(image_data: &[u8]) -> Vec<u8> {
-    println!("Loading image ...");
+    let start = Instant::now();
     let mut img = image::load_from_memory(image_data).unwrap();
+    println!("Loaded image in ... {:?}", start.elapsed());
 
-    println!("Loading model ...");
     let model_data: &[u8] = include_bytes!("mtcnn.pb");
     let model_params: &str = "{\"min_size\":[40],\"thresholds\":[0.6,0.7,0.7],\"factor\":[0.709]}";
 
-    println!("Preparing command ...");
     let mut cmd = Command::new("mtcnn");
     cmd.arg(model_data.len().to_string()) // model data length
         .arg("input") // Input tensor name
@@ -24,14 +24,15 @@ pub fn infer(image_data: &[u8]) -> Vec<u8> {
         .arg(img.width().to_string()) // Image width
         .arg(img.height().to_string()); // Image height
     cmd.stdin_u8vec(model_data);
+    println!("Sent model in ... {:?}", start.elapsed());
     for (_x, _y, rgb) in img.pixels() {
         cmd.stdin_u8(rgb[2] as u8)
             .stdin_u8(rgb[1] as u8)
             .stdin_u8(rgb[0] as u8);
     }
-    // Call command.
-    println!("Calling command ...");
+    println!("Sent image in ... {:?}", start.elapsed());
     let out = cmd.output();
+    println!("Executed command in ... {:?}", start.elapsed());
     if out.status != 0 {
         println!("ERROR CODE: {}", out.status);
         println!("STDERR: {}", str::from_utf8(&out.stderr).unwrap());
@@ -51,6 +52,7 @@ pub fn infer(image_data: &[u8]) -> Vec<u8> {
         ]);
         iter += 1;
     }
+    println!("Parsed results in ... {:?}", start.elapsed());
 
     println!("Drawing box: {} results ...", box_vec.len());
     let line = Pixel::from_slice(&[0, 255, 0, 0]);
@@ -65,8 +67,8 @@ pub fn infer(image_data: &[u8]) -> Vec<u8> {
     }
     
     let mut buf = Vec::new();
-    img.write_to(&mut buf, image::ImageOutputFormat::Png).expect("Unable to write");
-    println!("Done.");
+    img.write_to(&mut buf, image::ImageOutputFormat::Jpeg(80u8)).expect("Unable to write");
+    println!("Drawn on image in ... {:?}", start.elapsed());
 
     return buf;
 }
