@@ -37,9 +37,10 @@ See [face_detect](https://github.com/second-state/wasm-learning/tree/master/rust
 ```bash
 # Copy face_condition binary to /usr/bin/
 (docker)$ cp face_detect /usr/bin/
-# Copy tensorflow shared library to /usr/lib/
-(docker)$ cp libtensorflow.so.1 /usr/lib/
-(docker)$ cp libtensorflow_framework.so.1 /usr/lib/
+# Install the tensorflow library
+(docker)$ wget https://storage.googleapis.com/tensorflow/libtensorflow/libtensorflow-gpu-linux-x86_64-1.15.0.tar.gz
+(docker)$ tar -C /usr/local -xzf libtensorflow-gpu-linux-x86_64-1.15.0.tar.gz
+(docker)$ ldconfig
 ```
 
 ## Run

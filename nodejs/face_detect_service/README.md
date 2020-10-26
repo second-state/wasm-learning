@@ -11,15 +11,15 @@ $ npm i express-fileupload
 $ npm i uuid
 ```
 
-Finally, you need to install the [face_detect]() dependency for the face detection Tensorflow model library.
+Finally, you need to install the [face_detect](https://github.com/second-state/wasm-learning/tree/master/rust/face_detect) dependency for the face detection Tensorflow model library.
 
 ```
 $ cd face_detect/
 $ cargo build --release
-... ...
-$ sudo cp target/release/face_detect /usr/bin/
-$ sudo cp target/release/build/tensorflow-sys-63b45638c873b8e2/out/libtensorflow.so.1 /usr/lib/
-$ sudo cp target/release/build/tensorflow-sys-63b45638c873b8e2/out/libtensorflow_framework.so.1 /usr/lib/
+# Install the tensorflow library
+$ wget https://storage.googleapis.com/tensorflow/libtensorflow/libtensorflow-gpu-linux-x86_64-1.15.0.tar.gz
+$ sudo tar -C /usr/local -xzf libtensorflow-gpu-linux-x86_64-1.15.0.tar.gz
+$ sudo ldconfig
 ```
 
 ## Build the WASM bytecode
