@@ -57,20 +57,25 @@ pub fn infer(image_data: &[u8]) -> String {
     }
     println!("{} : {}", max_index, max_value);
 
-    let mut confidence = "low";
+    let mut confidence = "could be";
     if max_value > 0.75 {
-        confidence = "very high";
+        confidence = "is very likely";
     } else if max_value > 0.5 {
-        confidence = "high";
+        confidence = "is likely";
     } else if max_value > 0.2 {
-        confidence = "medium";
+        confidence = "could be";
+    } else {
+        return "It does not appears to be a bird in the picture.".to_string();
     }
 
     let mut label_lines = labels.lines();
     for _i in 0..max_index {
       label_lines.next();
     }
-    let ret: (String, String) = (label_lines.next().unwrap().to_string(), confidence.to_string());
-    println!("Finished post-processing in ... {:?}", start.elapsed());
-    return serde_json::to_string(&ret).unwrap();
+
+    let bird_name = label_lines.next().unwrap().to_string();
+    return format!("It {} a <a href='https://www.google.com/search?q={}'>{}</a> in the picture", confidence.to_string(), bird_name, bird_name);
+    // let ret: (String, String) = (label_lines.next().unwrap().to_string(), confidence.to_string());
+    // println!("Finished post-processing in ... {:?}", start.elapsed());
+    // return serde_json::to_string(&ret).unwrap();
 }

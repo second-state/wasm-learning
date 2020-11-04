@@ -26,15 +26,15 @@ $ curl --location --request POST 'https://rpc.ssvm.secondstate.io:8081/api/execu
 Returns
 
 ```
-{"wasm_id":146,"wasm_sha256":"0x469c28daae7aba392076b4bc5ee3b43ec6d667083d8ae63207bf74b1da03fc26","SSVM_Usage_Key":"00000000-0000-0000-0000-000000000000","SSVM_Admin_Key":"7dxxxxxx-xxxx-xxxx-xxxx-xxxxxxxx0c41"}
+{"wasm_id":205,"wasm_sha256":"0x469c28daae7aba392076b4bc5ee3b43ec6d667083d8ae63207bf74b1da03fc26","SSVM_Usage_Key":"00000000-0000-0000-0000-000000000000","SSVM_Admin_Key":"7dxxxxxx-xxxx-xxxx-xxxx-xxxxxxxx0c41"}
 ```
 
 Note: You can update this binary with the `SSVM_Admin_Key`.
 
 ```
-$ curl --location --request PUT 'https://rpc.ssvm.secondstate.io:8081/api/update_wasm_binary/146' \
+$ curl --location --request PUT 'https://rpc.ssvm.secondstate.io:8081/api/update_wasm_binary/205' \
 --header 'Content-Type: application/octet-stream' \
---header 'SSVM_Admin_Key: 7dxxxxxx-xxxx-xxxx-xxxx-xxxxxxxx0c41' \
+--header 'SSVM_Admin_Key: 3axxxxxx-xxxx-xxxx-xxxx-xxxxxxxx463e' \
 --data-binary '@pkg/mobilenet_service_lib_bg.wasm'
 ```
 
@@ -43,9 +43,9 @@ $ curl --location --request PUT 'https://rpc.ssvm.secondstate.io:8081/api/update
 Make a function call via the web.
 
 ```
-$ curl --location --request POST 'https://rpc.ssvm.secondstate.io:8081/api/run/146/infer' \
+$ curl --location --request POST 'https://rpc.ssvm.secondstate.io:8081/api/run/205/infer' \
 --header 'Content-Type: application/octet-stream' \
---data-binary '@test/grace_hopper.jpg'
+--data-binary '@test/PurpleGallinule.jpg'
 ```
 
 
