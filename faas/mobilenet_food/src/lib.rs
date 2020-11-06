@@ -65,7 +65,7 @@ pub fn infer(image_data: &[u8]) -> String {
     } else if max_value > 0.2 {
         confidence = "could be";
     } else {
-        return "It does not appears to be a bird in the picture.".to_string();
+        return "It does not appears to be a food item in the picture.".to_string();
     }
 
     let mut label_lines = labels.lines();
