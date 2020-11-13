@@ -30,8 +30,8 @@ $ docker run -it --rm \
 # Install the JPEG and PNG library
 (docker)$ apt-get update && apt-get install -y libjpeg-dev libpng-dev
 # Install the tensorflow library
-(docker)$ wget https://storage.googleapis.com/tensorflow/libtensorflow/libtensorflow-cpu-linux-x86_64-2.3.0.tar.gz
-(docker)$ tar -C /usr/local -xzf libtensorflow-cpu-linux-x86_64-2.3.0.tar.gz
+(docker)$ wget https://storage.googleapis.com/tensorflow/libtensorflow/libtensorflow-cpu-linux-x86_64-1.5.0.tar.gz
+(docker)$ tar -C /usr/local -xzf libtensorflow-cpu-linux-x86_64-1.5.0.tar.gz
 (docker)$ ldconfig
 # Build ssvm-tensorflow
 (docker)$ cmake -DCMAKE_BUILD_TYPE=Release .. && make -j
