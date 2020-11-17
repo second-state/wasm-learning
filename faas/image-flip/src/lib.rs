@@ -1,5 +1,5 @@
 use wasm_bindgen::prelude::*;
-use image::{GenericImageView};
+use image::{ImageOutputFormat, GenericImageView, ImageFormat};
 
 #[wasm_bindgen]
 pub fn flip(img_buf: &[u8]) -> Vec<u8> {
@@ -11,6 +11,15 @@ pub fn flip(img_buf: &[u8]) -> Vec<u8> {
     let filtered = img.fliph();
     println!("Returning ...");
     let mut buf = vec![];
-    filtered.write_to(&mut buf, image::ImageOutputFormat::Png).unwrap();
-    return buf; 
+    let image_format_detected: ImageFormat = image::guess_format(img_buf).unwrap();
+    match image_format_detected {
+        ImageFormat::Gif => {
+            filtered.write_to(&mut buf, ImageOutputFormat::Gif).unwrap();
+
+        },
+        _ => {
+            filtered.write_to(&mut buf, ImageOutputFormat::Png).unwrap();
+        },
+    }
+    return buf;
 }
