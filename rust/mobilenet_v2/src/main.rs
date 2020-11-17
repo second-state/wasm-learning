@@ -1,4 +1,3 @@
-use serde_json::{from_str, Value};
 use ssvm_tensorflow_interface;
 use std::env;
 use std::fs::File;
@@ -31,29 +30,27 @@ fn main() {
     image = { version = "0.23.0", default-features = false, features = ["jpeg", "png", "gif"] }
     imageproc = "0.21.0"
     */
-    let res_str = ssvm_tensorflow_interface::run_tensorflow_vision(
+    let res = ssvm_tensorflow_interface::run_tensorflow_vision(
         &mod_buf,
         &flat_img,
+        &[1, 224, 224, 3],
         224,
         224,
         "input",
         &["MobilenetV2/Predictions/Softmax"],
     );
 
-    let res_json: Value = from_str(&res_str).unwrap();
-    let res_vec = res_json.as_array().unwrap();
-    let out_tensor = res_vec[0].as_array().unwrap();
-
+    let res_vec: Vec<f32> = res.convert_to_vec(0);
     let mut i = 0;
     let mut max_index: i32 = -1;
-    let mut max_value: f64 = -1.0;
-    while i < out_tensor.len() {
-        let cur = out_tensor[i].as_f64().unwrap();
+    let mut max_value: f32 = -1.0;
+    while i < res_vec.len() {
+        let cur = res_vec[i];
         if cur > max_value {
             max_value = cur;
             max_index = i as i32;
         }
         i += 1;
     }
-    println!("{} : {}", max_index, max_value);
+    println!("{} : {}", max_index, max_value as f64);
 }
