@@ -27,7 +27,7 @@ Returns
 
 ```
 {"wasm_id":222,"wasm_sha256":"0x84d8eeb1a9ca3fc4898c99a2e61b4a2329a83a3d4f907ae5e96155457e595342","SSVM_Usage_Key":"00000000-0000-0000-0000-000000000000","SSVM_Admin_Key":"xxxxxxxx-55b7-4227-a847-255fd26a0cfc"}```
-
+```
 Note: You can update this binary with the `SSVM_Admin_Key`.
 
 ```
