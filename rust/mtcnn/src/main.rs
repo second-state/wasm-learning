@@ -34,7 +34,7 @@ fn main() {
         img.height(),
         img.width(),
         "input",
-        &["box"],
+        &["box"]
     );
     let res_vec: Vec<f32> = res.convert_to_vec(0);
 
