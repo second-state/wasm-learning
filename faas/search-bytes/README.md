@@ -57,4 +57,5 @@ Absent
 ```
 
 ## Call the function using Javascript byte array
-225
+
+Please click on [this HTML link](https://github.com/second-state/wasm-learning/blob/master/faas/search-bytes/html/index.html) which will take you to the demonstration.
