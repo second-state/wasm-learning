@@ -12,25 +12,88 @@
 
      <script type="text/javascript">
 function searchBytes() {
-  //setTimeout(function(){
-    //$('#process').prop('disabled', true);
-  //},0);
+    var buffer_1 = new ArrayBuffer(500000);
+    var buffer_2 = new ArrayBuffer(500000);
+    var needle = new Uint8Array(buffer_1);
+    var haystack = new Uint8Array(buffer_2);
+    needle.fill(111)
+    haystack.fill(111)
+    needle_length = needle.length;
+    haystack_length = haystack.length;
+    needle_length_string = needle_length.toString();
+    for (i = needle_length_string.length; i < 10; i++) {
+        needle_length_string = "0" + needle_length_string;
+    }
+    if (needle_length < 1 || needle_length > 9999999999 || needle_length > haystack_length) {
+        alert("The needle's length is not correct, must be between 1 and 9999999999");
+    } else {
+        var base_array = needle_length_string.split('');
+        for (i = 0; i < base_array.length; i++) base_array[i] = +base_array[i] | 0;
+        console.log(base_array);
+    }
+    var buffer_to_go = new ArrayBuffer(10 + needle_length + haystack_length);
+    var array_to_go = new Uint8Array(buffer_to_go);
+    array_to_go.set(base_array);
+    array_to_go.set(needle, 10);
+    array_to_go.set(haystack, 10 + needle_length);
 
-  var form = new FormData();
-  form.append("input_1", $('#input_haystack')[0].files[0]);
-  form.append("input_2", $('#input_needle')[0].files[0]);
-  var settings = {
-  "url": "https://rpc.ssvm.secondstate.io:8081/api/multipart/run/213/search_bytes",
-  "method": "POST",
-  "timeout": 0,
-  "processData": false,
-  "mimeType": "multipart/form-data",
-  "contentType": false,
-  "data": form
-};
-  $.ajax(settings).done(function (response) {
-    $('#result').html(data);
-  });
+    var url = "https://rpc.ssvm.secondstate.io:8081/api/run/226/search_bytes_single_input";
+
+    var xhr = new XMLHttpRequest();
+
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState === 4) {
+            console.log(xhr.response);
+            $('#result').html(xhr.response);
+        }
+    }
+
+    xhr.open('POST', url, true);
+    xhr.setRequestHeader("Content-Type", "application/octet-stream");
+    xhr.send(buffer_to_go);
+}
+</script>
+<script type="text/javascript">
+function searchBytesII() {
+    var buffer_1 = new ArrayBuffer(1000000);
+    var buffer_2 = new ArrayBuffer(1000000);
+    var needle = new Uint8Array(buffer_1);
+    var haystack = new Uint8Array(buffer_2);
+    needle.fill(111)
+    haystack.fill(222)
+    needle_length = needle.length;
+    haystack_length = haystack.length;
+    needle_length_string = needle_length.toString();
+    for (i = needle_length_string.length; i < 10; i++) {
+        needle_length_string = "0" + needle_length_string;
+    }
+    if (needle_length < 1 || needle_length > 9999999999 || needle_length > haystack_length) {
+        alert("The needle's length is not correct, must be between 1 and 9999999999");
+    } else {
+        var base_array = needle_length_string.split('');
+        for (i = 0; i < base_array.length; i++) base_array[i] = +base_array[i] | 0;
+        console.log(base_array);
+    }
+    var buffer_to_go = new ArrayBuffer(10 + needle_length + haystack_length);
+    var array_to_go = new Uint8Array(buffer_to_go);
+    array_to_go.set(base_array);
+    array_to_go.set(needle, 10);
+    array_to_go.set(haystack, 10 + needle_length);
+
+    var url = "https://rpc.ssvm.secondstate.io:8081/api/run/226/search_bytes_single_input";
+
+    var xhr = new XMLHttpRequest();
+
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState === 4) {
+            console.log(xhr.response);
+            $('#resultII').html(xhr.response);
+        }
+    }
+
+    xhr.open('POST', url, true);
+    xhr.setRequestHeader("Content-Type", "application/octet-stream");
+    xhr.send(buffer_to_go);
 }
 </script>
   </head>
@@ -43,30 +106,74 @@ function searchBytes() {
       </div>
 
       <h1>Search bytes</h1>
-      <p class="lead">Search bytes. <a href="https://www.secondstate.io/articles/use-binary-data-as-function-input-and-output/">See code tutorial</a></p>
 
-      <form id="draw" enctype="multipart/form-data">
-        <div class="form-group">
-          <div class="row">
-      <div class="col-sm-6">
-      
-          <label for="input_haystack">Please upload an image file (<a href="dog.png">example</a>)</label>
-          <input type="file" class="form-control-file" id="input_haystack" name="input">
-          </div>
-           <div class="col-sm-6">
-          <label for="input_needle">Please upload another image file (<a href="dog.png">example</a>)</label>
-          <input type="file" class="form-control-file" id="input_needle" name="input">
-          </div>
-           </div>
-        </div>
+      This example creates two ArrayBuffers using Javascript.<br />
+      <br />
+      <code>var buffer_1 = new ArrayBuffer(500000);<br />
+      var buffer_2 = new ArrayBuffer(500000);<br />
+      var needle = new Uint8Array(buffer_1);<br />
+      var haystack = new Uint8Array(buffer_2);<br />
+      needle.fill(111)<br />
+      haystack.fill(222)</code><br />
+      <br />
+      In this first example, both ArrayBuffers are 1 million bytes in size.<br />
+      Also, as you can see, they are both filled with the same data <code>[111, 111, 111 ... 111, 111]</code><br />
+      When you click this button, this page sends these two byte arrays away to a FaaS which will see if the needle is in the haystack<br />
+      If the sequence of bytes from the <code>needle</code> are present in the <code>haystack</code>, then the result below will be <code>Present</code>.
+      <br />
+      <br />
+      <button class="btn btn-primary mb-2" id="process" name="process" value="1" onclick="return searchBytes();">Compare bytes</button>
+<br />
+<br />
 
-        <button class="btn btn-primary mb-2" id="process" name="process" value="1" onclick="return searchBytes();">Compare bytes</button>
-      </form>
       
       <div class="jumbotron">
         <p id="result">Result ...</p>
       </div>
 
+      <hr />
+      <h1>Search bytes II</h1>
+
+      This example creates two much bigger ArrayBuffers using Javascript.<br />
+      <br />
+      <code>var buffer_1 = new ArrayBuffer(1000000);<br />
+      var buffer_2 = new ArrayBuffer(1000000);<br />
+      var needle = new Uint8Array(buffer_1);<br />
+      var haystack = new Uint8Array(buffer_2);<br />
+      needle.fill(111)<br />
+      haystack.fill(111)</code><br />
+      <br />
+      In this second example, both ArrayBuffers are 2 million bytes in size.<br />
+      To demonstrate a case where data is not present, as you can see, they are both filled with different data <code>[111, 111, 111 ... 111, 111]</code> vs <code>[222, 222, 222 ... 222, 222]</code><br />
+      When you click this button, this page sends these two byte arrays away to a FaaS which will see if the needle is in the haystack<br />
+      If the sequence of bytes from the <code>needle</code> are <b>NOT</b> present in the <code>haystack</code>, then the result below will be <code>Absent</code>.
+      <br />
+            <br />
+      <p style="color:red"><b>WARNING: You are about to upload 2Gb of data if you press this button</b></p>
+      <br />
+
+      <button class="btn btn-primary mb-2" id="process" name="process" value="1" onclick="return searchBytesII();">Compare bytes</button>
+<br />
+<br />
+
+      
+      <div class="jumbotron">
+        <p id="resultII">Result ...</p>
+      </div>
+
     </div> <!-- /container -->
   </body>
 </html>
+
+<!--
+NEEDLE ALWAYS COMES BEFORE HAYSTACK - The corresponding Rust which decodes the first 3 elements of the byte array is as follows
+
+let mut number_of_bytes_str = "".to_string();
+number_of_bytes_str.push_str(&byte_array[0].to_string());
+number_of_bytes_str.push_str(&byte_array[1].to_string());
+number_of_bytes_str.push_str(&byte_array[2].to_string());
+let number_of_bytes_usize: usize = number_of_bytes_str.parse().unwrap();
+let needle: &[u8] = &byte_array.get(2..2 + number_of_bytes_usize).unwrap();
+let haystack: &[u8] = &byte_array.get(2 + number_of_bytes_usize..).unwrap();
+
+-->
