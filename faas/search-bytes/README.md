@@ -38,6 +38,10 @@ $ curl --location --request PUT 'https://rpc.ssvm.secondstate.io:8081/api/update
 --data-binary '@pkg/search_bytes_lib_bg.wasm'
 ```
 
+## Call the function using Javascript byte array
+
+Please click on [this HTML link](https://second-state.github.io/wasm-learning/faas/search-bytes/html/index.html) which will take you to the live demonstration.
+
 ## Call the function using multipart formdata
 
 Comparing two images (to see if they are an exact match at the byte level)
@@ -55,7 +59,3 @@ If the bytes from the `needle.png` image are **NOT** present in the `haystack.pn
 ```
 Absent
 ```
-
-## Call the function using Javascript byte array
-
-Please click on [this HTML link](https://second-state.github.io/wasm-learning/faas/search-bytes/html/index.html) which will take you to the demonstration.
