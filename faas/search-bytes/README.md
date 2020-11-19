@@ -58,4 +58,4 @@ Absent
 
 ## Call the function using Javascript byte array
 
-Please click on [this HTML link](https://github.com/second-state/wasm-learning/blob/master/faas/search-bytes/html/index.html) which will take you to the demonstration.
+Please click on [this HTML link](https://second-state.github.io/wasm-learning/faas/search-bytes/html/index.html) which will take you to the demonstration.
