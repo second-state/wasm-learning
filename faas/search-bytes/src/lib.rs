@@ -30,10 +30,10 @@ pub fn search_bytes_single_input(byte_array: &[u8]) -> String {
 /*
 The equivalent Javascript which creates the single byte_array is as follows
 //
-const buffer_1 = new ArrayBuffer(2);
-const buffer_2 = new ArrayBuffer(4);
-const needle = new Uint8Array(buffer_1);
-const haystack = new Uint8Array(buffer_2);
+var buffer_1 = new ArrayBuffer(1000000);
+var buffer_2 = new ArrayBuffer(1000000);
+var needle = new Uint8Array(buffer_1);
+var haystack = new Uint8Array(buffer_2);
 needle.fill(111)
 haystack.fill(222)
 needle_length = needle.length;
@@ -42,30 +42,32 @@ needle_length_string = needle_length.toString();
 for (i = needle_length_string.length; i < 10; i++) {
     needle_length_string = "0" + needle_length_string;
 }
-if (needle_length < 1 || needle_length > 99999999 || needle_length > haystack_length) {
-    console.log("The needle's length is not correct, must be between 1 and 9999999999");
+if (needle_length < 1 || needle_length > 9999999999 || needle_length > haystack_length) {
+    alert("The needle's length is not correct, must be between 1 and 9999999999");
 } else {
     var base_array = needle_length_string.split('');
     for (i = 0; i < base_array.length; i++) base_array[i] = +base_array[i] | 0;
     console.log(base_array);
 }
-const buffer_to_go = new ArrayBuffer(10 + needle_length + haystack_length);
-const array_to_go = new Uint8Array(buffer_to_go);
+var buffer_to_go = new ArrayBuffer(10 + needle_length + haystack_length);
+var array_to_go = new Uint8Array(buffer_to_go);
 array_to_go.set(base_array);
 array_to_go.set(needle, 10);
 array_to_go.set(haystack, 10 + needle_length);
 
-var settings = {
-    "url": "https://rpc.ssvm.secondstate.io:8081/api/run/226/search_bytes_single_input",
-    "method": "POST",
-    "timeout": 0,
-    "headers": {
-        "Content-Type": "application/octet-stream"
-    },
-    "data": buffer_to_go,
-};
+var url = "https://rpc.ssvm.secondstate.io:8081/api/run/226/search_bytes_single_input";
 
-$.ajax(settings).done(function(response) {
-    console.log(response);
-});
+var xhr = new XMLHttpRequest();
+
+xhr.onreadystatechange = function() {
+    if (xhr.readyState === 4) {
+        console.log(xhr.response);
+        $('#resultII').html(xhr.response);
+    }
+}
+
+xhr.open('POST', url, true);
+xhr.setRequestHeader("Content-Type", "application/octet-stream");
+xhr.send(buffer_to_go);
+
 */
