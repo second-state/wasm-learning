@@ -15,27 +15,17 @@ fn main() {
     let mut img_buf = Vec::new();
     file_img.read_to_end(&mut img_buf).unwrap();
 
-    let img = image::load_from_memory(&img_buf).unwrap().to_rgb();
-    let resized = image::imageops::resize(&img, 640, 640, ::image::imageops::FilterType::Triangle);
-    let mut flat_img: Vec<u8> = Vec::new();
-    for rgb in resized.pixels() {
-        flat_img.push(rgb[0]);
-        flat_img.push(rgb[1]);
-        flat_img.push(rgb[2]);
-    }
+    let flat_img = ssvm_tensorflow_interface::load_jpg_image_to_rgb8(&img_buf, 640, 640);
+    let mut args = ssvm_tensorflow_interface::SessionArgs::new();
+    args.add_input("input_tensor", &flat_img, &[1, 640, 640, 3]);
+    args.add_output("StatefulPartitionedCall:1");
+    args.add_output("StatefulPartitionedCall:2");
+    args.add_output("StatefulPartitionedCall:4");
 
-    let res = ssvm_tensorflow_interface::run_tensorflow_vision(
-        &mod_buf,
-        &flat_img,
-        &[1, 640, 640, 3],
-        640,
-        640,
-        "input_tensor",
-        &["StatefulPartitionedCall:1","StatefulPartitionedCall:2","StatefulPartitionedCall:4"]
-    );
-    let detection_boxes: Vec<f32> = res.convert_to_vec(0);
-    let detection_classes: Vec<f32> = res.convert_to_vec(1);
-    let detection_scores: Vec<f32> = res.convert_to_vec(2);
+    let res = ssvm_tensorflow_interface::exec_model(&mod_buf, &args);
+    let detection_boxes: Vec<f32> = res.get_output("StatefulPartitionedCall:1");
+    let detection_classes: Vec<f32> = res.get_output("StatefulPartitionedCall:2");
+    let detection_scores: Vec<f32> = res.get_output("StatefulPartitionedCall:4");
 
     println!("Boxes : {:?}", detection_boxes);
     println!("Classes : {:?}", detection_classes);
