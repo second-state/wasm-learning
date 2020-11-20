@@ -44,7 +44,7 @@ Interpreter mode:
 ```bash
 (docker)$ cd /root/ssvm-tensorflow/build/tools
 # Copy input image, model, and wasm file to /root/ssvm-tensorflow/build/tools
-(docker)$ ./ssvm-tensorflow --dir .:. mtcnn.wasm mtcnn.pb  solvay.jpg
+(docker)$ ./ssvm-tensorflow --dir .:. mtcnn.wasm mtcnn.pb solvay.jpg tmp.jpg
 ```
 
 AOT mode:
@@ -53,5 +53,5 @@ AOT mode:
 (docker)$ cd /root/ssvm-tensorflow/build/tools
 # Copy input image, model, and wasm file to /root/ssvm-tensorflow/build/tools
 (docker)$ ./ssvmc-tensorflow mtcnn.wasm mtcnn.wasm.so
-(docker)$ ./ssvm-tensorflow --dir .:. mtcnn.wasm.so mtcnn.pb  solvay.jpg
+(docker)$ ./ssvm-tensorflow --dir .:. mtcnn.wasm.so mtcnn.pb solvay.jpg tmp.jpg
 ```
