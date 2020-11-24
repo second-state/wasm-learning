@@ -11,6 +11,7 @@ fn main() {
     let args: Vec<String> = env::args().collect();
     let model_name: &str = &args[1];
     let image_name: &str = &args[2];
+    let img_out_path: &str = &args[3];
 
     let mut file_mod = File::open(model_name).unwrap();
     let mut mod_buf = Vec::new();
@@ -27,16 +28,16 @@ fn main() {
         flat_img.push(rgb[0] as f32);
     }
 
-    let res = ssvm_tensorflow_interface::run_tensorflow_vision(
-        &mod_buf,
-        &flat_img,
-        &[img.height().into(), img.width().into(), 3],
-        img.height(),
-        img.width(),
-        "input",
-        &["box"]
-    );
-    let res_vec: Vec<f32> = res.convert_to_vec(0);
+    let mut args = ssvm_tensorflow_interface::SessionArgs::new();
+    args.add_input("min_size", &[20.0f32], &[]);
+    args.add_input("thresholds", &[0.6f32, 0.7f32, 0.7f32], &[3]);
+    args.add_input("factor", &[0.709f32], &[]);
+    args.add_input("input", &flat_img, &[img.height().into(), img.width().into(), 3]);
+    args.add_output("box");
+    args.add_output("prob");
+
+    let res = ssvm_tensorflow_interface::exec_model(&mod_buf, &args);
+    let res_vec: Vec<f32> = res.get_output("box");
 
     let mut iter = 0;
     let mut box_vec: Vec<[f32; 4]> = Vec::new();
@@ -51,6 +52,7 @@ fn main() {
     }
 
     println!("Drawing box: {} results ...", box_vec.len());
+
     let line = Pixel::from_slice(&[0, 255, 0, 0]);
     for i in 0..box_vec.len() {
         let xy = box_vec[i];
@@ -62,7 +64,5 @@ fn main() {
         draw_hollow_rect_mut(&mut img, rect, *line);
     }
     
-    let mut buf = Vec::new();
-    img.write_to(&mut buf, image::ImageOutputFormat::Jpeg(80u8)).expect("Unable to write");
-    println!("Image size ... {}", buf.len());
+    img.save(img_out_path).unwrap();
 }

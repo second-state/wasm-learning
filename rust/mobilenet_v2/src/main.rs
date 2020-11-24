@@ -30,17 +30,13 @@ fn main() {
     image = { version = "0.23.0", default-features = false, features = ["jpeg", "png", "gif"] }
     imageproc = "0.21.0"
     */
-    let res = ssvm_tensorflow_interface::run_tensorflow_vision(
-        &mod_buf,
-        &flat_img,
-        &[1, 224, 224, 3],
-        224,
-        224,
-        "input",
-        &["MobilenetV2/Predictions/Softmax"],
-    );
 
-    let res_vec: Vec<f32> = res.convert_to_vec(0);
+    let mut args = ssvm_tensorflow_interface::SessionArgs::new();
+    args.add_input("input", &flat_img, &[1, 224, 224, 3]);
+    args.add_output("MobilenetV2/Predictions/Softmax");
+
+    let res = ssvm_tensorflow_interface::exec_model(&mod_buf, &args);
+    let res_vec: Vec<f32> = res.get_output("MobilenetV2/Predictions/Softmax");
     let mut i = 0;
     let mut max_index: i32 = -1;
     let mut max_value: f32 = -1.0;
@@ -52,5 +48,5 @@ fn main() {
         }
         i += 1;
     }
-    println!("{} : {}", max_index, max_value as f64);
+    println!("{} : {}", max_index, max_value);
 }
