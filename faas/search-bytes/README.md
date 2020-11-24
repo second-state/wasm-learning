@@ -59,3 +59,9 @@ If the bytes from the `needle.png` image are **NOT** present in the `haystack.pn
 ```
 Absent
 ```
+
+## Articles
+This work is explained in more detail in an online article called [An easy way to boost your client-side Javascript using WebAssembly(Wasm)](https://medium.com/wasm/an-easy-way-to-boost-your-client-side-javascript-using-webassembly-wasm-de35c53cc2a2). 
+
+An additional follow-up article called [How to detect a sequence of bytes, in a byte array, using client-side Javascript](https://medium.com/wasm/how-to-detect-a-sequence-of-bytes-in-a-byte-array-using-client-side-javascript-859ed08611d3) also provides additional details about this work.
+
