@@ -1,0 +1,15 @@
+[package]
+name = "rotate"
+version = "0.1.0"
+authors = ["ubuntu"]
+edition = "2018"
+
+[lib]
+name = "rotate_lib"
+path = "src/lib.rs"
+crate-type =["cdylib"]
+
+[dependencies]
+image = { version = "0.23.0", default-features = false, features = ["jpeg", "png", "gif"] }
+imageproc = "0.22.0"
+wasm-bindgen = "=0.2.61"
