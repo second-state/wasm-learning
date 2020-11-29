@@ -24,7 +24,7 @@ pub fn rotate_an_image(img_buf: &[u8]) -> Vec<u8> {
     let image_bytes = DynamicImage::into_bytes(dyn_img);
     let image_buffer = ImageBuffer::<Rgba<u8>, Vec<u8>>::from_vec(w, h, image_bytes[..].to_vec()).unwrap();
     println!("Rotating image ...");
-    let rotated_image: ImageBuffer::<Rgba<u8>, Vec<u8>> = rotate_about_center(&image_buffer, 5.0, Interpolation::Nearest, Rgba([255, 0, 0, 0]));
+    let rotated_image: ImageBuffer::<Rgba<u8>, Vec<u8>> = rotate_about_center(&image_buffer, -0.095, Interpolation::Nearest, Rgba([255, 0, 0, 0]));
     println!("Image rotated!");
     let mut buf = vec![];
     println!("Creating byte array to return");
