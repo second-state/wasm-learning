@@ -21,7 +21,7 @@ function callService() {
   // console.log($('#input_2')[0].files[0]);
 
   $.ajax({
-      url: "https://rpc.ssvm.secondstate.io:8081/api/multipart/run/224/flip/bytes",
+      url: "https://rpc.ssvm.secondstate.io:8081/api/multipart/run/232/rotate_an_image/bytes",
       type: "post",
       data : formData,
       contentType: false,
@@ -52,7 +52,7 @@ function callService() {
         <div style="font-size:90%;color:gray;margin:20px"><a href="https://www.secondstate.io/faas/">Fast, safe, portable and serverless Rust functions as services</a></div>
       </div>
 
-      <h1>Rotate - Under Construction, please return soon ...</h1>
+      <h1>Rotate</h1>
       <form id="draw" enctype="multipart/form-data">
 
         <div class="form-group">
@@ -60,7 +60,7 @@ function callService() {
           <input type="file" class="form-control-file" id="input_1" name="input_1">
         </div>
 
-        <button class="btn btn-primary mb-2" id="process" name="process" value="1" onclick="return callService();">Flip horizontally</button>
+        <button class="btn btn-primary mb-2" id="process" name="process" value="1" onclick="return callService();">Rotate image</button>
       </form>
       
       <div class="jumbotron">
