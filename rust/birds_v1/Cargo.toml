@@ -1,5 +1,5 @@
 [package]
-name = "mobilenet_v2"
+name = "birds_v1"
 version = "0.1.0"
 authors = ["YiYing He <yiying@secondstate.io>"]
 edition = "2018"
