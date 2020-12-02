@@ -28,16 +28,16 @@ fn main() {
         flat_img.push(rgb[0] as f32);
     }
 
-    let mut args = ssvm_tensorflow_interface::SessionArgs::new();
-    args.add_input("min_size", &[20.0f32], &[]);
-    args.add_input("thresholds", &[0.6f32, 0.7f32, 0.7f32], &[3]);
-    args.add_input("factor", &[0.709f32], &[]);
-    args.add_input("input", &flat_img, &[img.height().into(), img.width().into(), 3]);
-    args.add_output("box");
-    args.add_output("prob");
+    let mut session = ssvm_tensorflow_interface::Session::new(&mod_buf, ssvm_tensorflow_interface::ModelType::TensorFlow);
+    session.add_input("min_size", &[20.0f32], &[])
+           .add_input("thresholds", &[0.6f32, 0.7f32, 0.7f32], &[3])
+           .add_input("factor", &[0.709f32], &[])
+           .add_input("input", &flat_img, &[img.height().into(), img.width().into(), 3])
+           .add_output("box")
+           .add_output("prob")
+           .run();
 
-    let res = ssvm_tensorflow_interface::exec_model(&mod_buf, &args);
-    let res_vec: Vec<f32> = res.get_output("box");
+    let res_vec: Vec<f32> = session.get_output("box");
 
     let mut iter = 0;
     let mut box_vec: Vec<[f32; 4]> = Vec::new();
