@@ -30,12 +30,11 @@ fn main() {
     image = { version = "0.23.0", default-features = false, features = ["jpeg", "png", "gif"] }
     imageproc = "0.21.0"
     */
-    let mut args = ssvm_tensorflow_interface::SessionArgs::new();
-    args.add_input("hub_input/images", &flat_img, &[1, 224, 224, 3]);
-    args.add_output("prediction");
-
-    let res = ssvm_tensorflow_interface::exec_model(&mod_buf, &args);
-    let res_vec: Vec<f32> = res.get_output("prediction");
+    let mut session = ssvm_tensorflow_interface::Session::new(&mod_buf, ssvm_tensorflow_interface::ModelType::TensorFlow);
+    session.add_input("hub_input/images", &flat_img, &[1, 224, 224, 3])
+           .add_output("prediction")
+           .run();
+    let res_vec: Vec<f32> = session.get_output("prediction");
 
     let mut i = 0;
     let mut max_index: i32 = -1;

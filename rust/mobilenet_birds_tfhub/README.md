@@ -44,7 +44,7 @@ Interpreter mode:
 ```bash
 (docker)$ cd /root/ssvm-tensorflow/build/tools
 # Copy input image, model, and wasm file to /root/ssvm-tensorflow/build/tools
-(docker)$ ./ssvm-tensorflow --dir .:. mobilenet_v2.wasm mobilenet_v2_1.4_224_frozen.pb grace_hopper.jpg
+(docker)$ ./ssvm-tensorflow --dir .:. mobilenet_v2.wasm frozen.pb PurpleGallinule.jpg
 ```
 
 AOT mode:
@@ -53,13 +53,12 @@ AOT mode:
 (docker)$ cd /root/ssvm-tensorflow/build/tools
 # Copy input image, model, and wasm file to /root/ssvm-tensorflow/build/tools
 (docker)$ ./ssvmc-tensorflow mobilenet_v2.wasm mobilenet_v2.wasm.so
-(docker)$ ./ssvm-tensorflow --dir .:. mobilenet_v2.wasm.so mobilenet_v2_1.4_224_frozen.pb grace_hopper.jpg
+(docker)$ ./ssvm-tensorflow --dir .:. mobilenet_v2.wasm.so frozen.pb PurpleGallinule.jpg
 ```
 
 The output will be:
 ```bash
-653 : 0.32277536392211914
+576 : 0.8523263
 ```
 
-Which is index 653 (0-based index) with rate 0.32277536392211914.
-The index 653 of label table (which is line 654 in `imagenet_slim_labels.txt`) is `military uniform`.
+Which is index 576 (0-based index) with rate 0.8523263
