@@ -9,7 +9,7 @@ If you have not done so already, follow these simple instructions to install [Ru
 ## Build the WASM bytecode
 
 ```
-$ ssvmup build --enable-aot
+$ ssvmup build --enable-aot --enable-ext
 ```
 
 ## Create FaaS function
@@ -48,4 +48,23 @@ $ curl --location --request POST 'https://rpc.ssvm.secondstate.io:8081/api/run/1
 --data-binary '@test/grace_hopper.jpg'
 ```
 
+## Local test
 
+You must have Node.js and NPM installed. Install SSVM extensions and dependencies.
+
+```
+$ sudo apt install -y libjpeg-dev libpng-dev
+$ wget https://storage.googleapis.com/tensorflow/libtensorflow/libtensorflow-cpu-linux-x86_64-2.3.0.tar.gz
+$ sudo tar -C /usr/local -xzf libtensorflow-cpu-linux-x86_64-2.3.0.tar.gz
+$ sudo ldconfig
+$ npm i ssvm-extensions
+```
+
+Run the local test on Node.js.
+
+```
+$ cd test
+$ node test.js
+653 : 0.43212867
+Finished post-processing in ... 320.089646ms
+```

@@ -1,9 +1,8 @@
 use wasm_bindgen::prelude::*;
+use ssvm_tensorflow_interface;
 use image::{GenericImageView, Pixel};
 use imageproc::drawing::draw_hollow_rect_mut;
 use imageproc::rect::Rect;
-use rust_process_interface_library::Command;
-use serde_json::{from_str, Value};
 use std::str;
 use std::time::{Instant};
 
@@ -11,44 +10,35 @@ use std::time::{Instant};
 pub fn infer(image_data: &[u8]) -> Vec<u8> {
     let start = Instant::now();
     let mut img = image::load_from_memory(image_data).unwrap();
+    let mut flat_img: Vec<f32> = Vec::new();
+    for (_x, _y, rgb) in img.pixels() {
+        flat_img.push(rgb[2] as f32);
+        flat_img.push(rgb[1] as f32);
+        flat_img.push(rgb[0] as f32);
+    }
     println!("Loaded image in ... {:?}", start.elapsed());
 
     let model_data: &[u8] = include_bytes!("mtcnn.pb");
-    let model_params: &str = "{\"min_size\":[40],\"thresholds\":[0.6,0.7,0.7],\"factor\":[0.709]}";
 
-    let mut cmd = Command::new("mtcnn");
-    cmd.arg(model_data.len().to_string()) // model data length
-        .arg("input") // Input tensor name
-        .arg("box") // Output tensor name
-        .arg(model_params) // Parameter tensor names and values
-        .arg(img.width().to_string()) // Image width
-        .arg(img.height().to_string()); // Image height
-    cmd.stdin_u8vec(model_data);
-    println!("Sent model in ... {:?}", start.elapsed());
-    for (_x, _y, rgb) in img.pixels() {
-        cmd.stdin_u8(rgb[2] as u8)
-            .stdin_u8(rgb[1] as u8)
-            .stdin_u8(rgb[0] as u8);
-    }
-    println!("Sent image in ... {:?}", start.elapsed());
-    let out = cmd.output();
-    println!("Executed command in ... {:?}", start.elapsed());
-    if out.status != 0 {
-        println!("ERROR CODE: {}", out.status);
-        println!("STDERR: {}", str::from_utf8(&out.stderr).unwrap());
-    }
-    
+    let mut session = ssvm_tensorflow_interface::Session::new(model_data, ssvm_tensorflow_interface::ModelType::TensorFlow);
+    session.add_input("min_size", &[20.0f32], &[])
+           .add_input("thresholds", &[0.6f32, 0.7f32, 0.7f32], &[3])
+           .add_input("factor", &[0.709f32], &[])
+           .add_input("input", &flat_img, &[img.height().into(), img.width().into(), 3])
+           .add_output("box")
+           .add_output("prob")
+           .run();
+    let res_vec: Vec<f32> = session.get_output("box");
+
     // Parse results.
-    let stdout_json: Value = from_str(str::from_utf8(&out.stdout).expect("[]")).unwrap();
-    let stdout_vec = stdout_json.as_array().unwrap();
     let mut iter = 0;
     let mut box_vec: Vec<[f32; 4]> = Vec::new();
-    while (iter * 4) < stdout_vec.len() {
+    while (iter * 4) < res_vec.len() {
         box_vec.push([
-            stdout_vec[4 * iter + 1].as_f64().unwrap() as f32, // x1
-            stdout_vec[4 * iter].as_f64().unwrap() as f32,     // y1
-            stdout_vec[4 * iter + 3].as_f64().unwrap() as f32, // x2
-            stdout_vec[4 * iter + 2].as_f64().unwrap() as f32, // y2
+            res_vec[4 * iter + 1], // x1
+            res_vec[4 * iter],     // y1
+            res_vec[4 * iter + 3], // x2
+            res_vec[4 * iter + 2], // y2
         ]);
         iter += 1;
     }
