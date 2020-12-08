@@ -80,7 +80,7 @@ function callService() {
             $.ajax(settings).done(function(response) {
                 var elapsed_time_vm_object = JSON.parse(response);
                 var elapsed_time_vm_seconds = parseFloat(elapsed_time_vm_object.latest_execution_time_in_nanoseconds) / 1000000000;
-                $('#elapsed_time_vm').html("VM executed in: " + elapsed_time_vm_seconds + "seconds!");
+                $('#elapsed_time_vm').html("VM executed in: " + elapsed_time_vm_seconds + " seconds!");
                 $('#process').prop('disabled', false);
             });
             return false;
