@@ -24,7 +24,7 @@ function callService() {
         processData: false,
         success: function(data) {
             var totalTime = new Date().getTime() - ajaxTime;
-            var time_to_display = "Request complete in: " + totalTime + " ms.";
+            var time_to_display = "Request complete in: " + totalTime/1000 + " seconds";
             $('#result_prod').html(data);
             $('#elapsed_time_prod').html(time_to_display);
             $('#process').prop('disabled', false);
@@ -46,7 +46,7 @@ function callService() {
         processData: false,
         success: function(data) {
             var totalTime = new Date().getTime() - ajaxTime;
-            var time_to_display = "Request complete in: " + totalTime + " ms.";
+            var time_to_display = "Request complete in: " + totalTime/1000 + " seconds!";
             $('#result_dev').html(data);
             $('#elapsed_time_dev').html(time_to_display);
             fetchVMStat();
@@ -69,7 +69,7 @@ function callService() {
                 $('#process').prop('disabled', true);
             }, 0);
             var settings = {
-                "url": "https://dev.rpc.ssvm.secondstate.io:8081/api/executables/244?filterBy=[\"latest_execution_time_microsecond\"]",
+                "url": "https://dev.rpc.ssvm.secondstate.io:8081/api/executables/244?filterBy=[\"latest_execution_time_in_nanoseconds\"]",
                 "method": "GET",
                 "timeout": 0,
                 "headers": {
@@ -78,8 +78,9 @@ function callService() {
             };
 
             $.ajax(settings).done(function(response) {
-                console.log(response);
-                $('#elapsed_time_vm').html(response);
+                var elapsed_time_vm_object = JSON.parse(response);
+                var elapsed_time_vm_seconds = parseFloat(elapsed_time_vm_object.latest_execution_time_in_nanoseconds) / 1000000000;
+                $('#elapsed_time_vm').html("VM executed in: " + elapsed_time_vm_seconds + "seconds!");
                 $('#process').prop('disabled', false);
             });
             return false;
