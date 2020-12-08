@@ -41,7 +41,7 @@ function callService() {
         $('#process').prop('disabled', false);
       },
       error: function(){
-        alert("Cannot get data");
+        alert("Rate limit exceeded");
         $('#process').prop('disabled', false);
       }
   });
