@@ -1,0 +1,15 @@
+component: scf
+name: ap-guangzhou_wasm_demo
+org: app
+app: WebAssemblyDemo
+stage: dev
+inputs:
+  name: WebAssemblyDemo
+  src: ./
+  description: Rust and WebAssembly template function 模板函数
+  handler: hello_bg.wasm
+  runtime: CustomRuntime
+  namespace: default
+  region: ap-guangzhou
+  memorySize: 128
+  timeout: 3
