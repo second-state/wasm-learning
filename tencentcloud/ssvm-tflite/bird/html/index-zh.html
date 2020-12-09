@@ -75,17 +75,17 @@ function callService() {
         <div style="font-size:90%;color:gray;margin:20px"><a href="https://www.secondstate.io/faas/">快速、安全、可移植、Rust 函数即服务</a></div>
       </div>
 
-      <h1>识别鸟类</h1>
+      <h1>这是什么鸟？</h1>
       <p class="lead">这个 demo 的 Tensorflow Lite 推理函数是用 Rust 写的，并作为一个 WebAssembly 函数部署在腾讯云的 FaaS 架构上。</p> 
       <p>Powered by <a href="https://www.secondstate.io/ssvm/">the SSVM</a>.</p>
 
       <form id="draw" enctype="multipart/form-data">
         <div class="form-group">
-          <label for="input">请上传一张鸟类图片 (<a href="PurpleGallinule.jpg">example</a>)</label>
+          <label for="input">请上传一张鸟的图片 (<a href="PurpleGallinule.jpg">example</a>)</label>
           <input type="file" class="form-control-file" id="input" name="input">
         </div>
 
-        <button class="btn btn-primary mb-2" id="process" name="process" value="1" onclick="return callService();">图片里是什么鸟?</button>
+        <button class="btn btn-primary mb-2" id="process" name="process" value="1" onclick="return callService();">看看图片里是什么鸟?</button>
       </form>
       
       <div class="jumbotron">
