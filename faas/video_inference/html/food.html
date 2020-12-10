@@ -40,12 +40,12 @@
     <script>
         let video,c1,ctx1,c_tmp,ctx_tmp; 
         function init() {
-            console.log("Processing ..");
+            console.log("Processing ...");
             const video = document.getElementById('video');
             const canvas = document.getElementById('canvas');
             //console.log("Canvas:");
             //console.log(canvas);
-            //const ctx = canvas.getContext('2d');
+            const ctx = canvas.getContext('2d');
             setTimeout(function(){  
             ctx.drawImage(video, 0, 0, 800, 450);
             //console.log("CTX:");
