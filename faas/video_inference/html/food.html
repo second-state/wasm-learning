@@ -45,7 +45,7 @@
             const canvas = document.getElementById('canvas');
             //console.log("Canvas:");
             //console.log(canvas);
-            const ctx = canvas.getContext('2d');
+            //const ctx = canvas.getContext('2d');
             setTimeout(function(){  
             ctx.drawImage(video, 0, 0, 800, 450);
             //console.log("CTX:");
@@ -57,9 +57,17 @@
             //console.log(frame.data);
             // Suggestion
             //myimg = new ImageData(new Uint8ClampedArray([255, 0, 0, 1])
-            const myimg = new ImageData(frame.data, 800, 450)
-            console.log("Image as byte array:" + JSON.stringify(myimg));
-            callService(ctx.putImageData(myimg, 800, 450));
+            var dataurl = canvas.toDataURL('image/png');
+            
+            var arr = dataurl.split(','), mime = arr[0].match(/:(.*?);/)[1],
+            bstr = atob(arr[1]), n = bstr.length, u8arr = new Uint8Array(n);
+            while(n--){
+                u8arr[n] = bstr.charCodeAt(n);
+            }
+            a = new File([u8arr])
+            //const myimg = new ImageData(frame.data, 800, 450)
+            //console.log("Image as byte array:" + JSON.stringify(myimg));
+            callService(a);
             }, 1000);
         }
 </script>
