@@ -42,10 +42,16 @@
         function init() {
             const video = document.getElementById('video');
             const canvas = document.getElementById('canvas');
+            console.log("Canvas:");
+            console.log(canvas);
             const ctx = canvas.getContext('2d');
             setTimeout(function(){  
             ctx.drawImage(video, 0, 0, 800, 400);
             let frame = ctx.getImageData(0, 0, 800, 400);
+            console.log("Frame:");
+            console.log(frame);
+            console.log("Frame Data:");
+            console.log(frame.data);
             callService(frame.data);
             }, 1000);
         }
