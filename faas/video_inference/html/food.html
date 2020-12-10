@@ -47,15 +47,16 @@
             //console.log(canvas);
             const ctx = canvas.getContext('2d');
             setTimeout(function(){  
-            ctx.drawImage(video, 0, 0, 800, 400);
+            ctx.drawImage(video, 0, 0, 800, 450);
             //console.log("CTX:");
             //console.log(ctx);
-            let frame = ctx.getImageData(0, 0, 800, 400);
+            let frame = ctx.getImageData(0, 0, 800, 450);
             //console.log("Frame:");
             //console.log(frame);
             //console.log("Frame Data:");
             //console.log(frame.data);
-            callService(ctx.putImageData(frame.data, 800, 400));
+            const myimg = new ImageData(frame.data, 800, 450)
+            callService(ctx.putImageData(myimg, 800, 450));
             }, 1000);
         }
 </script>
