@@ -40,7 +40,7 @@
     <script>
         let video,c1,ctx1,c_tmp,ctx_tmp; 
         function init() {
-            console.log("Processing ");
+            console.log("Processing ..");
             const video = document.getElementById('video');
             const canvas = document.getElementById('canvas');
             //console.log("Canvas:");
@@ -58,7 +58,7 @@
             // Suggestion
             //myimg = new ImageData(new Uint8ClampedArray([255, 0, 0, 1])
             const myimg = new ImageData(frame.data, 800, 450)
-            console.log("Image as byte array:" + myimg);
+            console.log("Image as byte array:" + JSON.stringify(myimg));
             callService(ctx.putImageData(myimg, 800, 450));
             }, 1000);
         }
