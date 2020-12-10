@@ -47,3 +47,6 @@ $ curl --location --request POST 'https://rpc.ssvm.secondstate.io:8081/api/run/2
 --header 'Content-Type: application/octet-stream' \
 --data-binary '@test/food.jpg'
 ```
+
+## Live demo
+You can also try [this live demo](https://second-state.github.io/wasm-learning/faas/video_inference/html/food.html)
