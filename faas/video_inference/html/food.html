@@ -58,6 +58,7 @@
             // Suggestion
             //myimg = new ImageData(new Uint8ClampedArray([255, 0, 0, 1])
             const myimg = new ImageData(frame.data, 800, 450)
+            console.log("Image as byte array:" + myimg);
             callService(ctx.putImageData(myimg, 800, 450));
             }, 1000);
         }
