@@ -45,8 +45,8 @@
             const canvas = document.getElementById('canvas');
             const ctx = canvas.getContext('2d');
             setTimeout(function(){  
-            ctx.drawImage(video, 0, 0, 540, 1024);
-            let frame = ctx.getImageData(0, 0, 540, 1024);
+            ctx.drawImage(video, 0, 0, 800, 450);
+            let frame = ctx.getImageData(0, 0, 800, 450);
             var dataurl = canvas.toDataURL('image/png');
             var arr = dataurl.split(','), mime = arr[0].match(/:(.*?);/)[1],
             bstr = atob(arr[1]), n = bstr.length, u8arr = new Uint8Array(n);
@@ -71,8 +71,8 @@
       <h1>Video inference</h1>
       <p>Push play on the video controls and the FaaS will detect the food in real time.</p>
 
-      <video id="video" width="540" height="1024" src="pizza.mp4" muted></video>
-      <canvas style="display: none" id="canvas" width="540" height="1024"></canvas>
+      <video id="video" width="800" height="450" src="pizza.mp4" muted></video>
+      <canvas style="display: none" id="canvas" width="800" height="450"></canvas>
       <br />
         <button class="btn btn-primary mb-2" id="process" name="process" value="1" onclick="return init();">Play</button>
       <br />
