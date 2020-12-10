@@ -37,51 +37,27 @@
         }
     </script>
 
-
-    <script>
-        function fetchVMStat() {
-            setTimeout(function() {
-                $('#process').prop('disabled', true);
-            }, 0);
-            var settings = {
-                "url": "https://dev.rpc.ssvm.secondstate.io:8081/api/executables/244?filterBy=[\"latest_execution_time_in_nanoseconds\"]",
-                "method": "GET",
-                "timeout": 0,
-                "headers": {
-                    "SSVM_Admin_Key": "78e44a7d-6ec7-4db0-b36e-9e89b0546e9a"
-                },
-            };
-
-            $.ajax(settings).done(function(response) {
-                var elapsed_time_vm_object = JSON.parse(response);
-                var elapsed_time_vm_seconds = parseFloat(elapsed_time_vm_object.latest_execution_time_in_nanoseconds) / 1000000000;
-                $('#elapsed_time_vm').html("VM executed in: " + elapsed_time_vm_seconds + " seconds!");
-                $('#process').prop('disabled', false);
-            });
-            return false;
-        }
-    </script>
-
     <script>
         let video,c1,ctx1,c_tmp,ctx_tmp; 
         function init() {
+            console.log("Processing ... ");
             const video = document.getElementById('video');
             const canvas = document.getElementById('canvas');
+            console.log("Canvas:");
+            console.log(canvas);
             const ctx = canvas.getContext('2d');
             setTimeout(function(){  
             ctx.drawImage(video, 0, 0, 800, 400);
             let frame = ctx.getImageData(0, 0, 800, 400);
+            console.log("Frame:");
+            console.log(frame);
+            console.log("Frame Data:");
+            console.log(frame.data);
             callService(frame.data);
             }, 1000);
         }
 </script>
-<!--
-<script>
-    document.addEventListener("DOMContentLoaded", () => {
-      init();
-    });
-</script>
--->
+
   </head>
   
   <body>
@@ -102,14 +78,6 @@
       <div class="jumbotron">
         <p id="result_prod"></p>
         <br />
-        <!--
-        <b>Dev</b>
-         <p id="result_dev">Result</p>
-        <p id="elapsed_time_vm">VM executed in: </p>
-        <p id="elapsed_time_dev">"Request complete in:</p>
-      </div>
-      -->
     </div> <!-- /container -->
   </body>
 </html>
-
