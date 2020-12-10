@@ -15,6 +15,8 @@ function callService() {
     setTimeout(function() {
         $('#process').prop('disabled', true);
     }, 0);
+  console.log("Data example printed to console: ");
+  console.log($('#input')[0].files[0]);
     var ajaxTime = new Date().getTime();
     $.ajax({
         url: "https://rpc.ssvm.secondstate.io:8081/api/run/206/infer",
