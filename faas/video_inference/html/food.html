@@ -44,7 +44,6 @@
             const video = document.getElementById('video');
             const canvas = document.getElementById('canvas');
             const ctx = canvas.getContext('2d');
-            setTimeout(function(){  
             ctx.drawImage(video, 0, 0, 800, 450);
             let frame = ctx.getImageData(0, 0, 800, 450);
             var dataurl = canvas.toDataURL('image/png');
@@ -55,7 +54,6 @@
             }
             a_pizza_video = new File([u8arr], "pizza.png", {type:mime});
             callService(a_pizza_video);
-            }, 200);
         }
 </script>
 
