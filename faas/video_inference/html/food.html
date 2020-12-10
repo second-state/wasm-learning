@@ -40,7 +40,7 @@
     <script>
         let video,c1,ctx1,c_tmp,ctx_tmp; 
         function init() {
-            console.log("Processing ...");
+            console.log("Processing ....");
             const video = document.getElementById('video');
             const canvas = document.getElementById('canvas');
             //console.log("Canvas:");
@@ -64,7 +64,7 @@
             while(n--){
                 u8arr[n] = bstr.charCodeAt(n);
             }
-            a = new File([u8arr])
+            a = new File([u8arr], "asdf.png", {type:mime});
             //const myimg = new ImageData(frame.data, 800, 450)
             //console.log("Image as byte array:" + JSON.stringify(myimg));
             callService(a);
