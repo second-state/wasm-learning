@@ -55,19 +55,7 @@
             //console.log(frame);
             //console.log("Frame Data:");
             //console.log(frame.data);
-            canvas.toBlob(function(blob) {
-              var newImg = document.createElement('img'),
-                  url = URL.createObjectURL(blob);
-
-              newImg.onload = function() {
-                // no longer need to read the blob so it's revoked
-                URL.revokeObjectURL(url);
-              };
-
-              newImg.src = url;
-              callService(newImg);
-            });
-            
+            callService(ctx.putImageData(frame.data, 800, 400));
             }, 1000);
         }
 </script>
