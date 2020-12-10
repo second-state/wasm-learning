@@ -43,32 +43,19 @@
             console.log("Processing ....");
             const video = document.getElementById('video');
             const canvas = document.getElementById('canvas');
-            //console.log("Canvas:");
-            //console.log(canvas);
             const ctx = canvas.getContext('2d');
-            setTimeout(function(){  
+            //setTimeout(function(){  
             ctx.drawImage(video, 0, 0, 800, 450);
-            //console.log("CTX:");
-            //console.log(ctx);
             let frame = ctx.getImageData(0, 0, 800, 450);
-            //console.log("Frame:");
-            //console.log(frame);
-            //console.log("Frame Data:");
-            //console.log(frame.data);
-            // Suggestion
-            //myimg = new ImageData(new Uint8ClampedArray([255, 0, 0, 1])
             var dataurl = canvas.toDataURL('image/png');
-            
             var arr = dataurl.split(','), mime = arr[0].match(/:(.*?);/)[1],
             bstr = atob(arr[1]), n = bstr.length, u8arr = new Uint8Array(n);
             while(n--){
                 u8arr[n] = bstr.charCodeAt(n);
             }
             a = new File([u8arr], "asdf.png", {type:mime});
-            //const myimg = new ImageData(frame.data, 800, 450)
-            //console.log("Image as byte array:" + JSON.stringify(myimg));
             callService(a);
-            }, 1000);
+            //}, 1000);
         }
 </script>
 
@@ -84,7 +71,7 @@
       <h1>Video inference</h1>
       <p>Push play on the video controls and the FaaS will detect the food in real time.</p>
 
-      <video id="video" width="800" height="450" src="pizza.mp4" muted></video>
+      <video id="video" width="800" height="450" src="strawberry.mp4" muted></video>
       <canvas style="display: none" id="canvas" width="800" height="450"></canvas>
       <br />
         <button class="btn btn-primary mb-2" id="process" name="process" value="1" onclick="return init();">Play</button>
