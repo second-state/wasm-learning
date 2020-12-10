@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Bird Classification</title>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+    <script>
+function callService() {
+  var fileExtension = ['jpeg', 'jpg'];
+  if ($.inArray($('#input').val().split('.').pop().toLowerCase(), fileExtension) == -1) {
+      alert("Only formats are allowed : "+fileExtension.join(', '));
+      return false;
+  }
+  if ($('#input')[0].files[0].size > 1048576) {
+      alert("Your image is too large. Max upload image size is 1MB");
+      return false;
+  }
+  
+  setTimeout(function(){
+    $('#process').prop('disabled', true);
+  },0);
+
+  var reader = new FileReader();
+  reader.readAsDataURL($('#input')[0].files[0]);
+
+  reader.onloadend = function () {
+    // console.log(reader.result);
+    $.ajax({
+      url: "https://service-r7cv20mk-1302315972.hk.apigw.tencentcs.com/release/tflite_bird",
+      type: "post",
+      data : reader.result.split("base64,")[1],
+      dataType: "text",
+      success: function (data) {
+        $('#result').html(data);
+        $('#process').prop('disabled', false);
+      },
+      error: function(jqXHR, exception){
+        var msg = 'Generic error';
+        if (jqXHR.status === 0) {
+            msg = 'Not connect.\n Verify Network.';
+        } else if (jqXHR.status == 404) {
+            msg = 'Requested page not found. [404]';
+        } else if (jqXHR.status == 500) {
+            msg = 'Internal Server Error [500].';
+        } else if (exception === 'parsererror') {
+            msg = 'Requested JSON parse failed.';
+        } else if (exception === 'timeout') {
+            msg = 'Time out error.';
+        } else if (exception === 'abort') {
+            msg = 'Ajax request aborted.';
+        } else {
+            msg = 'Uncaught Error.\n' + jqXHR.responseText;
+        }
+        $('#result').html(msg);
+        $('#process').prop('disabled', false);
+      }
+    });
+  };
+
+  return false;
+}
+    </script>
+  </head>
+  
+  <body>
+    <div class="container">
+      <div style="text-align:center;margin:25px">
+        <a href="https://www.secondstate.io/"><img style="border:0;" src="https://www.secondstate.io/assets/img/logo.png"></a>
+        <div style="font-size:90%;color:gray;margin:20px"><a href="https://www.secondstate.io/faas/">快速、安全、可移植、Rust 函数即服务</a></div>
+      </div>
+
+      <h1>这是什么鸟？</h1>
+      <p class="lead">这个 demo 的 Tensorflow Lite 推理函数是用 Rust 写的，并作为一个 WebAssembly 函数部署在腾讯云的 FaaS 架构上。</p> 
+      <p>Powered by <a href="https://www.secondstate.io/ssvm/">the SSVM</a>.</p>
+
+      <form id="draw" enctype="multipart/form-data">
+        <div class="form-group">
+          <label for="input">请上传一张鸟的图片 (<a href="PurpleGallinule.jpg">example</a>)</label>
+          <input type="file" class="form-control-file" id="input" name="input">
+        </div>
+
+        <button class="btn btn-primary mb-2" id="process" name="process" value="1" onclick="return callService();">看看图片里是什么鸟?</button>
+      </form>
+      
+      <div class="jumbotron">
+        <p id="result">请上传一张图片并进行识别</p>
+      </div>
+
+    </div> <!-- /container -->
+  </body>
+</html>
