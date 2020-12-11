@@ -88,6 +88,7 @@ jobs:
 
     - name: MobileNet Interpreter
       run: |
+        npm i ssvm@npm:ssvm-extensions
         ssvmup build
         cd test/
         node test.js
@@ -97,6 +98,7 @@ jobs:
 
     - name: MobileNet AOT
       run: |
+        npm i ssvm@npm:ssvm-extensions
         ssvmup build --enable-aot
         cd test/
         node test.js
@@ -106,6 +108,7 @@ jobs:
 
     - name: MTCNN Interpreter
       run: |
+        npm i ssvm@npm:ssvm-extensions
         ssvmup build
         cd test/
         node test.js
@@ -115,6 +118,7 @@ jobs:
 
     - name: MTCNN AOT
       run: |
+        npm i ssvm@npm:ssvm-extensions
         ssvmup build --enable-aot
         cd test/
         node test.js
