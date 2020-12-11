@@ -70,7 +70,11 @@
       <h1>Video inference</h1>
       <p>Push play on the video controls and the FaaS will detect the pizza topping in real time.</p>
 
-      <video id="video" width="800" height="450" src="pizza.mp4" muted></video>
+        <video id="video" width="800" height="450">
+        <source src="pizza.mp4" type="video/mp4">
+        <source src="pizza.ogg" type="video/ogg">
+        </video>
+
       <canvas style="display: none" id="canvas" width="800" height="450"></canvas>
       <br />
         <button class="btn btn-primary mb-2" id="process" name="process" value="1" onclick="return init();">Play</button>
