@@ -29,13 +29,6 @@ jobs:
         sudo apt-get install build-essential curl wget git vim libboost-all-dev
         sudo apt-get install llvm-dev liblld-10-dev libboost-all-dev
     
-    - name: Install npm packages and Deno
-      run: |
-        npm i ssvm ssvm-extensions sync-request better-sqlite3
-        npm i -g ssvmup
-        npm i -g wasm-pack
-        curl -fsSL https://deno.land/x/install/install.sh | sh
-    
     - name: Install Tensorflow
       run: |
         wget https://storage.googleapis.com/tensorflow/libtensorflow/libtensorflow-gpu-linux-x86_64-2.3.0.tar.gz
@@ -43,6 +36,13 @@ jobs:
         cargo install http_proxy
         cargo install mtcnn
         cargo install mobilenet_v2
+        
+    - name: Install npm packages and Deno
+      run: |
+        npm i ssvm ssvm-extensions sync-request better-sqlite3
+        npm i -g ssvmup
+        npm i -g wasm-pack
+        curl -fsSL https://deno.land/x/install/install.sh | sh
     
     - name: Functions Interpreter
       run: |
