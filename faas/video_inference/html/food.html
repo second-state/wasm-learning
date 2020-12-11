@@ -36,35 +36,31 @@
       </script>
       <script>
             let video, c1, ctx1, c_tmp, ctx_tmp;
-            document.addEventListener("DOMContentLoaded", function() {
-                var x = document.getElementById("process");
-                x.style.display = "block";
-
-            });
-
             function init() {
                 console.log("Processing ....");
                 var vid = document.getElementById("video");
                 vid.play();
                 $('#result_prod').html("Processing ...");
-                const video = document.getElementById('video');
-                const canvas = document.getElementById('canvas');
-                const ctx = canvas.getContext('2d');
-                ctx.drawImage(video, 0, 0, 800, 450);
-                let frame = ctx.getImageData(0, 0, 800, 450);
-                var dataurl = canvas.toDataURL('image/png');
-                var arr = dataurl.split(','),
-                    mime = arr[0].match(/:(.*?);/)[1],
-                    bstr = atob(arr[1]),
-                    n = bstr.length,
-                    u8arr = new Uint8Array(n);
-                while (n--) {
-                    u8arr[n] = bstr.charCodeAt(n);
-                }
-                a_pizza_video = new File([u8arr], "pizza.png", {
-                    type: mime
-                });
-                callService(a_pizza_video);
+                setTimeout(function() {
+                    const video = document.getElementById('video');
+                    const canvas = document.getElementById('canvas');
+                    const ctx = canvas.getContext('2d');
+                    ctx.drawImage(video, 0, 0, 800, 450);
+                    let frame = ctx.getImageData(0, 0, 800, 450);
+                    var dataurl = canvas.toDataURL('image/png');
+                    var arr = dataurl.split(','),
+                        mime = arr[0].match(/:(.*?);/)[1],
+                        bstr = atob(arr[1]),
+                        n = bstr.length,
+                        u8arr = new Uint8Array(n);
+                    while (n--) {
+                        u8arr[n] = bstr.charCodeAt(n);
+                    }
+                    a_pizza_video = new File([u8arr], "pizza.png", {
+                        type: mime
+                    });
+                    callService(a_pizza_video);
+                }, 1000);
                 setTimeout(function() {
                     $('#result_prod').html("");
                 }, 10000);
