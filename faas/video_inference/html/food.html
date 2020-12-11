@@ -37,7 +37,6 @@
       <script>
             let video, c1, ctx1, c_tmp, ctx_tmp;
             document.addEventListener("DOMContentLoaded", function() {
-                var vid = document.getElementById("video");
                 var x = document.getElementById("process");
                 x.style.display = "block";
 
@@ -45,7 +44,9 @@
 
             function init() {
                 console.log("Processing ....");
+                var vid = document.getElementById("video");
                 vid.play();
+                $('#result_prod').html("Processing ...");
                 const video = document.getElementById('video');
                 const canvas = document.getElementById('canvas');
                 const ctx = canvas.getContext('2d');
