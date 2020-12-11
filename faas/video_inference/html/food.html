@@ -35,10 +35,9 @@
             }
       </script>
       <script>
-            var x = document.getElementById("process");
-            x.style.display = "none";
             let video, c1, ctx1, c_tmp, ctx_tmp;
             document.addEventListener("DOMContentLoaded", function() {
+                var x = document.getElementById("process");
                 x.style.display = "block";
             });
 
@@ -81,7 +80,7 @@
       </video>
       <canvas style="display: none" id="canvas" width="800" height="450"></canvas>
       <br />
-      <button class="btn btn-primary mb-2" id="process" name="process" value="1" onclick="return init();">Play</button>
+      <button style="display: none" class="btn btn-primary mb-2" id="process" name="process" value="1" onclick="return init();">Play</button>
       <br />
       <div class="jumbotron">
          <p id="result_prod"></p>
