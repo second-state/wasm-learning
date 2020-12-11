@@ -39,6 +39,7 @@
             function init() {
                 console.log("Processing ....");
                 var vid = document.getElementById("video");
+                vid.currentTime = 0;
                 vid.play();
                 $('#result_prod').html("Processing ...");
                 setTimeout(function() {
