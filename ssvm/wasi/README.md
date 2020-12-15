@@ -14,8 +14,15 @@ $ ssvmup build --enable-aot
 
 ## Run the application from command line
 
-We will use the Node.js command line to bootstrap the SSVM.
+We will use the SSVM command to run the program.
 
 ```
-$ node pkg/wasi_example_main.js arg1 arg2
+$ ssvm pkg/wasi_example_main.wasm arg1 arg2
 ```
+
+The `ssvmr` command can run the AOT-compiled `.so` program.
+
+```
+$ ssvmr pkg/wasi_example_main.so arg1 arg2
+```
+
