@@ -12,26 +12,27 @@
 
      <script type="text/javascript">
       function searchAnagrams() {
-      setTimeout(function(){
-    $('#process').prop('disabled', true);
-  },0);
+          setTimeout(function() {
+              $('#process').prop('disabled', true);
+          }, 0);
 
-  $.ajax({
-      url: "https://rpc.ssvm.secondstate.io:8081/api/run/237/find_anagrams",
-      type: "post",
-      data : $('#input').val(),
-      contentType: "text/plain",
-      processData: false,
-      success: function (data) {
-        console.log(data);
-        $('#result').html(data);
-        $('#process').prop('disabled', false);
-      },
-      error: function(){
-        alert("Rate limit exceeded");
-        $('#process').prop('disabled', false);
+          $.ajax({
+              url: "https://rpc.ssvm.secondstate.io:8081/api/run/237/find_anagrams",
+              type: "post",
+              data: $('#input').val(),
+              contentType: "text/plain",
+              processData: false,
+              success: function(data) {
+                  console.log(data);
+                  $('#result').html(data);
+                  $('#process').prop('disabled', false);
+              },
+              error: function() {
+                  alert("Rate limit exceeded");
+                  $('#process').prop('disabled', false);
+              }
+          });
       }
-  });
 </script>
 
   </head>
