@@ -1,61 +1,68 @@
 <!doctype html>
 <html lang="en">
-   <head>
-      <meta charset="utf-8">
-      <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-      <title>Find anagrams</title>
-      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-      <script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
-      <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-      <script type="text/javascript">
-         function searchAnagrams() {
-           console.log("Input: " + $('#input').val());
-             setTimeout(function() {
-                 $('#process').prop('disabled', true);
-             }, 0);
-         
-             $.ajax({
-                 url: "https://rpc.ssvm.secondstate.io:8081/api/run/237/find_anagrams",
-                 type: "post",
-                 data: $('#input').val(),
-                 contentType: "text/plain",
-                 processData: false,
-                 success: function(data) {
-                     console.log(data);
-                     $('#result').html(data);
-                     $('#process').prop('disabled', false);
-                 },
-                 error: function() {
-                     alert("Rate limit exceeded");
-                     $('#process').prop('disabled', false);
-                 }
-             });
-         }
-      </script>
-   </head>
-   <body>
-      <div class="container">
-         <div style="text-align:center;margin:25px">
-            <a href="https://www.secondstate.io/"><img style="border:0;" src="https://www.secondstate.io/assets/img/logo.png"></a>
-            <div style="font-size:90%;color:gray;margin:20px"><a href="https://www.secondstate.io/faas/">Fast, safe, portable and serverless Rust functions as services</a></div>
-         </div>
-         <h1>Find anagram</h1>
-         This example will find an anagram for a set of random letters.<br />
-         <br />
-         <form id="faas">
-            <div class="form-group">
-               <label for="input">Letters i.e.  eortw will return the anagram tower.</label>
-               <input type="text" class="form-control" id="input" name="input" value="eortw"/>
-               <button class="btn btn-primary mb-2" id="process" name="process" value="1" onclick="return searchAnagrams();">Find anagram</button>
-               <p>Please note the 1 thousands word list to which this prototype refers to is available <a href="https://gist.githubusercontent.com/tpmccallum/51b0c064b928cb2f1e28a8b5585014a8/raw/08edc673c0325d9032bde1808c7433a70c83e05f/1%2520thousand%2520word%2520list%2520for%2520anagram%2520finder" target="_blank"> here </a></p>
-         </form>
-         </div>
-         <div class="jumbotron">
-            <p id="result">Result ...</p>
-         </div>
-         <p>This work is explained in more detail in an online article called <a href="https://medium.com/wasm/solving-anagrams-with-webassembly-as-a-service-bee4c4af7864" target="_blank">Solving anagrams with WebAssembly; as a Service</a>. </p>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Find anagrams</title>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+    <script>
+function callService() {
+  setTimeout(function(){
+    $('#process').prop('disabled', true);
+  },0);
+
+  $.ajax({
+      url: "https://rpc.ssvm.secondstate.io:8081/api/run/237/find_anagrams",
+      type: "post",
+      data : $('#input').val(),
+      contentType: "text/plain",
+      processData: false,
+      success: function (data) {
+        console.log(data);
+        $('#result').html(data);
+        $('#process').prop('disabled', false);
+      },
+      error: function(){
+        alert("Rate limit exceeded");
+        $('#process').prop('disabled', false);
+      }
+  });
+
+  return false;
+}
+    </script>
+  </head>
+  
+  <body>
+    <div class="container">
+      <div style="text-align:center;margin:25px">
+        <a href="https://www.secondstate.io/"><img style="border:0;" src="https://www.secondstate.io/assets/img/logo.png"></a>
+        <div style="font-size:90%;color:gray;margin:20px"><a href="https://www.secondstate.io/faas/">Fast, safe, portable and serverless Rust functions as services</a></div>
       </div>
-      <!-- /container -->
-   </body>
+
+      <h1>Find anagrams</h1>
+
+      <form id="faas">
+        <div class="form-group">
+          <label for="input">Random letters i.e.  eortw will return the anagram tower</label>
+          <input type="text" class="form-control" id="input" name="input" value="eortw"/>
+        </div>
+
+        <button class="btn btn-primary mb-2" id="process" name="process" value="1" onclick="return callService();">Find anagram</button>
+      </form>
+
+      <p>Please note, the 1 thousand word list of eligible anagrams can be found <a href="https://gist.githubusercontent.com/tpmccallum/51b0c064b928cb2f1e28a8b5585014a8/raw/08edc673c0325d9032bde1808c7433a70c83e05f/1%2520thousand%2520word%2520list%2520for%2520anagram%2520finder" target="_blank">here</a></p>
+      
+      <div class="jumbotron">
+        <p id="result">Result ...</p>
+      </div>
+       <p>This work is explained in more detail in an online article called <a href="https://medium.com/wasm/solving-anagrams-with-webassembly-as-a-service-bee4c4af7864" target="_blank">Solving anagrams with WebAssembly; as a Service</a>. </p>
+
+    </div> <!-- /container -->
+  </body>
 </html>
