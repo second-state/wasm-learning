@@ -49,20 +49,23 @@
       This example will find an anagram for a set of random letters.<br />
       <br />
       
-<form id="faas">
+      <form id="faas">
         <div class="form-group">
-          <label for="input">Letters i.e. please use eortw</label>
-          <input type="text" class="form-control" id="input" name="input" value=""/>
+          <label for="input">Letters i.e.  eortw</label>
+          <input type="text" class="form-control" id="input" name="input" value="eortw"/>
         </div>
 
         <button class="btn btn-primary mb-2" id="process" name="process" value="1" onclick="return searchAnagrams();">Find anagram</button>
+        <p>Please note the 1 thousands word list to which this prototype refers to is available <a href="https://gist.githubusercontent.com/tpmccallum/51b0c064b928cb2f1e28a8b5585014a8/raw/08edc673c0325d9032bde1808c7433a70c83e05f/1%2520thousand%2520word%2520list%2520for%2520anagram%2520finder" target="_blank"> here </a></p>
       </form>
 
 
       <div class="jumbotron">
         <p id="result">Result ...</p>
       </div>
-      <p>This work is explained in more detail in an online article called <a href="https://medium.com/wasm/an-easy-way-to-boost-your-client-side-javascript-using-webassembly-wasm-de35c53cc2a2" target="_blank">An easy way to boost your client-side Javascript using WebAssembly(Wasm)</a>. 
+      <p>This work is explained in more detail in an online article called <a href="https://medium.com/wasm/solving-anagrams-with-webassembly-as-a-service-bee4c4af7864" target="_blank">Solving anagrams with WebAssembly; as a Service</a>. </p>
+      <p>There is also a <a href="https://second-state.github.io/wasm-learning/faas/find-anagrams/html/index.html?input=asdf&process=1" target="_blank"> live demo</a> available.</p>
+
 
     </div> <!-- /container -->
   </body>
