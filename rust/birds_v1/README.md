@@ -16,7 +16,9 @@ $ cargo build --release --target=wasm32-wasi
 
 The result wasm file will be at `target/wasm32-wasi/release/birds_v1.wasm`.
 
-### Build ssvm-tensorflow
+### Get ssvm-tensorflow
+
+### Option 1. Build ssvm-tensorflow
 
 Get [ssvm-tensorflow](https://github.com/second-state/ssvm-tensorflow).
 
@@ -27,14 +29,16 @@ $ docker run -it --rm \
     secondstate/ssvm:latest
 (docker)$ cd /root/ssvm-tensorflow
 (docker)$ mkdir -p build && cd build
-# Install the JPEG and PNG library
-(docker)$ apt-get update && apt-get install -y libjpeg-dev libpng-dev
-# Install the tensorflow library
-(docker)$ wget https://storage.googleapis.com/tensorflow/libtensorflow/libtensorflow-cpu-linux-x86_64-1.5.0.tar.gz
-(docker)$ tar -C /usr/local -xzf libtensorflow-cpu-linux-x86_64-1.5.0.tar.gz
-(docker)$ ldconfig
 # Build ssvm-tensorflow
 (docker)$ cmake -DCMAKE_BUILD_TYPE=Release .. && make -j
+```
+
+### Option 2. Get ssvm-tensorflow release version
+
+```bash
+wget https://github.com/second-state/ssvm-tensorflow/releases/download/0.1.0/ssvm-tensorflow-0.1.0-linux-x64.tar.gz
+tar -zxvf ssvm-tensorflow-0.1.0-linux-x64.tar.gz
+./download_dependencies  # Download the required shared libraries and make symbolic links.
 ```
 
 ## Run
@@ -42,18 +46,16 @@ $ docker run -it --rm \
 Interpreter mode:
 
 ```bash
-(docker)$ cd /root/ssvm-tensorflow/build/tools
-# Copy input image, model, and wasm file to /root/ssvm-tensorflow/build/tools
-(docker)$ ./ssvm-tensorflow --dir .:. birds_v1.wasm lite-model_aiy_vision_classifier_birds_V1_3.tflite bird.jpg
+# Copy input image, model, and wasm file to the current directory.
+LD_LIBRARY_PATH=. ./ssvm-tensorflow --dir .:. birds_v1.wasm lite-model_aiy_vision_classifier_birds_V1_3.tflite bird.jpg
 ```
 
 AOT mode:
 
 ```bash
-(docker)$ cd /root/ssvm-tensorflow/build/tools
-# Copy input image, model, and wasm file to /root/ssvm-tensorflow/build/tools
-(docker)$ ./ssvmc-tensorflow birds_v1.wasm birds_v1.wasm.so
-(docker)$ ./ssvm-tensorflow --dir .:. birds_v1.wasm.so lite-model_aiy_vision_classifier_birds_V1_3.tflite bird.jpg
+# Copy input image, model, and wasm file to the current directory.
+./ssvmc-tensorflow birds_v1.wasm birds_v1.wasm.so
+LD_LIBRARY_PATH=. ./ssvm-tensorflow --dir .:. birds_v1.wasm.so lite-model_aiy_vision_classifier_birds_V1_3.tflite bird.jpg
 ```
 
 The output will be:
