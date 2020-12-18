@@ -48,6 +48,6 @@ $ base64 -w 0 html/food.jpg | curl -d @- -X POST https://service-lty62pd6-130231
 
 ## Jamstack test
 
-Upload the `html` files to a static file host. Example: https://tflite-food-demo-3fr6uzb9ddb58f3-1302315972.tcloudbaseapp.com/
+Upload the `html` files to a static file host. Example: https://tensorflow-demo-0gbniz1314770b82-1302315972.tcloudbaseapp.com/food/
 
 
