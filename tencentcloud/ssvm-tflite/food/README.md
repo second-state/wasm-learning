@@ -45,3 +45,9 @@ Create and connect an API gateway to the function and turn on CORS.
 ```
 $ base64 -w 0 html/food.jpg | curl -d @- -X POST https://service-lty62pd6-1302315972.hk.apigw.tencentcs.com/release/tflite_food
 ```
+
+## Jamstack test
+
+Upload the `html` files to a static file host. Example: https://tflite-food-demo-3fr6uzb9ddb58f3-1302315972.tcloudbaseapp.com/
+
+
