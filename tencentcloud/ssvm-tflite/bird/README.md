@@ -49,3 +49,9 @@ Live test
 $ base64 -w 0 html/bird.jpg | curl -d @- -X POST https://service-r7cv20mk-1302315972.hk.apigw.tencentcs.com/release/tflite_bird
 $ base64 -w 0 html/PurpleGallinule.jpg | curl -d @- -X POST https://service-r7cv20mk-1302315972.hk.apigw.tencentcs.com/release/tflite_bird
 ```
+
+## Jamstack test
+
+Upload the `html` files to a static file host. Example: https://tensorflow-demo-0gbniz1314770b82-1302315972.tcloudbaseapp.com/bird/
+
+
