@@ -9,19 +9,16 @@ fn main() {
     let mut buffer = String::new();
     io::stdin().read_to_string(&mut buffer).expect("Error reading from STDIN");
     let obj: FaasInput = serde_json::from_str(&buffer).unwrap();
-    println!("{} {}", &(obj.body)[..5], obj.body.len());
+    // println!("{} {}", &(obj.body)[..5], obj.body.len());
     let img_buf = base64::decode_config(&(obj.body), base64::STANDARD).unwrap();
-    println!("Image buf size is {}", img_buf.len());
+    // println!("Image buf size is {}", img_buf.len());
 
     let flat_img = ssvm_tensorflow_interface::load_jpg_image_to_rgb8(&img_buf, 192, 192);
-    println!("Resized");
 
     let mut session = ssvm_tensorflow_interface::Session::new(&model_data, ssvm_tensorflow_interface::ModelType::TensorFlowLite);
     session.add_input("input", &flat_img, &[1, 192, 192, 3])
            .run();
-    println!("Executed");
     let res_vec: Vec<u8> = session.get_output("MobilenetV1/Predictions/Softmax");
-    println!("Received results");
 
     let mut i = 0;
     let mut max_index: i32 = -1;
@@ -34,7 +31,7 @@ fn main() {
         }
         i += 1;
     }
-    println!("{} : {}", max_index, max_value as f32 / 255.0);
+    // println!("{} : {}", max_index, max_value as f32 / 255.0);
 
     let mut confidence = "could be";
     if max_value > 200 {

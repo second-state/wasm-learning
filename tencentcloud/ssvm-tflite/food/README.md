@@ -1,27 +1,46 @@
 
-Build
+## Build
 
 ```
-$ ssvmup build
+$ ssvmup build --enable-aot
 ```
 
-Test
+## Test
+
+Create the layer for tensorflow and SSVM binaries.
 
 ```
-$ cloud/ssvm-tensorflow-lite pkg/mobilenet_bg.wasm < html/food.json
+$ cd ../layer
+$ source download_dependencies.sh
 ```
 
-Deploy
+Run the wasm application.
+
+```
+$ LD_LIBRARY_PATH=../layer ../layer/ssvm-tensorflow pkg/mobilenet.wasm < html/food.json
+$ LD_LIBRARY_PATH=../layer ../layer/ssvm-tensorflow pkg/mobilenet.so < html/food.json
+```
+
+## Deploy
+
+Deploy the layer on TencentCloud SCF by uploading the `layer.zip` file via COS.
+
+```
+$ cd layer
+$ zip --symlinks -r layer.zip *
+```
+
+Deploy the function by uploading the `mobilenet.zip` file to the function service.
 
 ```
 $ cd cloud
-$ cp ../pkg/mobilenet_bg.wasm .
-$ zip mobilenet.zip *
+$ cp ../pkg/mobilenet.so .
+$ zip -r mobilenet.zip *
 ```
 
-Now you can upload the `mobilenet.zip` file to TencentCloud.
+Create and connect an API gateway to the function and turn on CORS.
 
-Live test
+## Live test
 
 ```
 $ base64 -w 0 html/food.jpg | curl -d @- -X POST https://service-lty62pd6-1302315972.hk.apigw.tencentcs.com/release/tflite_food
