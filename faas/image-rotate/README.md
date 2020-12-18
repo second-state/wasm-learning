@@ -45,7 +45,7 @@ Rotate the image and save result to a local PNG image.
 ```
 curl --location --request POST 'https://rpc.ssvm.secondstate.io:8081/api/multipart/run/232/rotate_an_image/bytes' \
 --header 'Content-Type: multipart/form-data' \
---form 'input_1=@test/lean.png' \
+--form 'input_1=@html/lean.png' \
 --output tmp.png
 ```
 
