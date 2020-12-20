@@ -43,9 +43,11 @@ function callService() {
         $('#process').prop('disabled', false);
       },
       error: function(jqXHR, exception){
+	console.log("Error Status" + jqXHR.statusText);
+	console.log("Error Resp" + jqXHR.responseText);
         var msg = 'Generic error';
         if (jqXHR.status === 0) {
-            msg = 'Not connect.\n Verify Network.';
+            msg = 'Network Error.';
         } else if (jqXHR.status == 404) {
             msg = 'Requested page not found. [404]';
         } else if (jqXHR.status == 500) {
