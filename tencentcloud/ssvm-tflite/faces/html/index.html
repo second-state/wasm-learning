@@ -58,6 +58,7 @@ function callService() {
             msg = 'Uncaught Error.\n' + jqXHR.responseText;
         }
 	const img_url = "data:image/jpeg;base64," + msg;
+	console.log(img_url);
         $('#wm_img').prop('src', img_url);
         $('#process').prop('disabled', false);
       }

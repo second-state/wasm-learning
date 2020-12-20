@@ -47,7 +47,7 @@ Create and connect an API gateway to the function and turn on CORS.
 ## Live test
 
 ```
-$ base64 -w 0 html/solvay.jpg | curl -d @- -X POST https://service-lty62pd6-1302315972.hk.apigw.tencentcs.com/release/tflite_food
+$ base64 -w 0 html/solvay.jpg | curl -d @- -X POST https://service-0cabnfnk-1302315972.hk.apigw.tencentcs.com/release/tf_mtcnn
 ```
 
 ## Jamstack test

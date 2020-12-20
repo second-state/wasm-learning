@@ -46,7 +46,7 @@ fn main() {
         iter += 1;
     }
 
-    println!("Drawing box: {} results ...", box_vec.len());
+    // println!("Drawing box: {} results ...", box_vec.len());
     let line = Pixel::from_slice(&[0, 255, 0, 0]);
     for i in 0..box_vec.len() {
         let xy = box_vec[i];
