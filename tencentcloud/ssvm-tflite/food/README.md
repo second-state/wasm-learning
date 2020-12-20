@@ -1,4 +1,8 @@
 
+## Prerequisite
+
+[Install the ssvmup tool](https://www.secondstate.io/articles/ssvmup/)
+
 ## Build
 
 ```
