@@ -1,0 +1,26 @@
+#!/bin/bash
+
+set -euo pipefail
+
+# Initialization - load function handler
+# source ./"$(echo $_HANDLER | cut -d. -f1).sh"
+
+# Info custom runtime ready
+curl -d " " -X POST -s "http://$SCF_RUNTIME_API:$SCF_RUNTIME_API_PORT/runtime/init/ready"
+
+# Processing
+while true
+do
+  HEADERS="$(mktemp)"
+  # Get an event. The HTTP request will block until one is received
+  EVENT_DATA=$(curl -sS -LD "$HEADERS" -X GET -s "http://$SCF_RUNTIME_API:$SCF_RUNTIME_API_PORT/runtime/invocation/next")
+
+  # Execute the handler function from the script
+  # RESPONSE=$($(echo "$_HANDLER" | cut -d. -f2) <<< "$EVENT_DATA")
+  RESPONSE=$(LD_LIBRARY_PATH=/opt /opt/ssvm-tensorflow "$_HANDLER" <<< "$EVENT_DATA")
+  TFILE=$(mktemp /tmp/resp.XXXXX)
+  echo $RESPONSE > $TFILE
+
+  # Send the response
+  curl -X POST -s "http://$SCF_RUNTIME_API:$SCF_RUNTIME_API_PORT/runtime/invocation/response"  -d @$TFILE
+done
