@@ -18,8 +18,9 @@ do
   # Execute the handler function from the script
   # RESPONSE=$($(echo "$_HANDLER" | cut -d. -f2) <<< "$EVENT_DATA")
   RESPONSE=$(LD_LIBRARY_PATH=/opt /opt/ssvm-tensorflow "$_HANDLER" <<< "$EVENT_DATA")
-  echo $RESPONSE > /tmp/resp.txt
+  TFILE=$(mktemp /tmp/resp.XXXXX)
+  echo $RESPONSE > $TFILE
 
   # Send the response
-  curl -X POST -s "http://$SCF_RUNTIME_API:$SCF_RUNTIME_API_PORT/runtime/invocation/response"  -d @/tmp/resp.txt
+  curl -X POST -s "http://$SCF_RUNTIME_API:$SCF_RUNTIME_API_PORT/runtime/invocation/response"  -d @$TFILE
 done
