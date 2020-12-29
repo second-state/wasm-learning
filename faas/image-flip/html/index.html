@@ -11,7 +11,7 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 
     <script>
-function callService() {
+function callService_h() {
   setTimeout(function(){
     $('#process').prop('disabled', true);
   },0);
@@ -21,7 +21,40 @@ function callService() {
   // console.log($('#input_2')[0].files[0]);
 
   $.ajax({
-      url: "https://rpc.ssvm.secondstate.io:8081/api/multipart/run/224/flip/bytes",
+      url: "https://rpc.ssvm.secondstate.io:8081/api/multipart/run/272/flip_h/bytes",
+      type: "post",
+      data : formData,
+      contentType: false,
+      processData: false,
+      xhrFields:{
+        responseType: 'blob'
+      },
+      success: function (data) {
+        const img_url = URL.createObjectURL(data);
+        $('#wm_img').prop('src', img_url);
+        $('#process').prop('disabled', false);
+      },
+      error: function(){
+        alert("Rate limit exceeded");
+        $('#process').prop('disabled', false);
+      }
+  });
+
+  return false;
+}
+    </script>
+    <script>
+function callService_v() {
+  setTimeout(function(){
+    $('#process').prop('disabled', true);
+  },0);
+
+  var formData = new FormData();
+  formData.append('input_1', $('#input_1')[0].files[0]);
+  // console.log($('#input_2')[0].files[0]);
+
+  $.ajax({
+      url: "https://rpc.ssvm.secondstate.io:8081/api/multipart/run/272/flip_v/bytes",
       type: "post",
       data : formData,
       contentType: false,
@@ -52,7 +85,7 @@ function callService() {
         <div style="font-size:90%;color:gray;margin:20px"><a href="https://www.secondstate.io/faas/">Fast, safe, portable and serverless Rust functions as services</a></div>
       </div>
 
-      <h1>Flip image horizontally</h1>
+      <h1>Flip image horizontally or vertically</h1>
       <form id="draw" enctype="multipart/form-data">
 
         <div class="form-group">
@@ -60,7 +93,8 @@ function callService() {
           <input type="file" class="form-control-file" id="input_1" name="input_1">
         </div>
 
-        <button class="btn btn-primary mb-2" id="process" name="process" value="1" onclick="return callService();">Flip horizontally</button>
+        <button class="btn btn-primary mb-2" id="process" name="process" value="1" onclick="return callService_h();">Flip horizontally</button>
+        <button class="btn btn-primary mb-2" id="process" name="process" value="1" onclick="return callService_v();">Flip vertically</button>
       </form>
       
       <div class="jumbotron">
