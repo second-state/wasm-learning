@@ -43,7 +43,7 @@ $ curl --location --request PUT 'https://rpc.ssvm.secondstate.io:8081/api/update
 ```
 curl --location --request POST 'https://rpc.ssvm.secondstate.io:8081/api/multipart/run/273/grayscale/bytes' \
 --header 'Content-Type: multipart/form-data' \
---form 'input_1=@html/grayscale.png' \
+--form 'input_1=@html/cowboy.png' \
 --output tmp.png
 ```
 
