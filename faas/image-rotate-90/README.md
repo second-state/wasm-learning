@@ -43,7 +43,7 @@ $ curl --location --request PUT 'https://rpc.ssvm.secondstate.io:8081/api/update
 ```
 curl --location --request POST 'https://rpc.ssvm.secondstate.io:8081/api/multipart/run/269/rotate_90/bytes' \
 --header 'Content-Type: multipart/form-data' \
---form 'input_1=@html/surf.png' \
+--form 'input_1=@html/rotate_90.png' \
 --output tmp.png
 ```
 
