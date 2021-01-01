@@ -1,0 +1,14 @@
+[package]
+name = "rotate_180"
+version = "0.1.0"
+authors = ["ubuntu"]
+edition = "2018"
+
+[lib]
+name = "rotate_180_lib"
+path = "src/lib.rs"
+crate-type =["cdylib"]
+
+[dependencies]
+image = { version = "0.23.0", default-features = false, features = ["jpeg", "png", "gif"] }
+wasm-bindgen = "=0.2.61"
