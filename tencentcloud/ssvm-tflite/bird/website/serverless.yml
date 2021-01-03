@@ -1,0 +1,15 @@
+org: secondstate
+app: AIaaS-bird
+stage: prod
+
+component: website
+name: tf-website
+
+inputs:
+  src:
+    src: ./content
+    index: index.html
+  region: ap-hongkong
+  protocol: https
+  env:
+      API_URL: https://${output:${stage}:${app}:tf-scf.triggers.0.subDomain}/${output:${stage}:${app}:tf-scf.triggers.0.environment}/
