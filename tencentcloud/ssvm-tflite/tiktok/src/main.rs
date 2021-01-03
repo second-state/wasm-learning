@@ -26,27 +26,20 @@ fn main() {
 
     // println!("{:?}", res_vec);
     let detected = 1.0 - res_vec[0];
-    let mut confidence = "几乎肯定没有";
+    let mut confidence_zh = "几乎肯定没有";
+    let mut confidence_en = "almost certainly does NOT";
     if detected > 0.75 {
-        confidence = "几乎肯定有";
+        confidence_zh = "几乎肯定有";
+        confidence_en = "almost certainly";
     } else if detected > 0.5 {
-        confidence = "可能有";
+        confidence_zh = "可能有";
+        confidence_en = "could";
     } else if detected > 0.25 {
-        confidence = "可能没有";
+        confidence_zh = "可能没有";
+        confidence_en = "probably does not";
     }
-    println!("图片中{} Tiktok 的商标与水印。", confidence.to_string());
-
-    /*
-    let mut confidence = "almost certainly does NOT";
-    if detected > 0.75 {
-        confidence = "almost certainly" {
-    } else if detected > 0.5 {
-        confidence = "could";
-    } else if detected > 0.25 {
-        confidence = "probably does not";
-    }
-    println!("The uploaded photo {} have a Tiktok logo and watermark.", confidence.to_string());
-    */
+    println!("The uploaded photo {} have a Tiktok logo and watermark.", confidence_en.to_string());
+    println!("图片中{} Tiktok 的商标与水印。", confidence_zh.to_string());
 }
 
 #[derive(Deserialize, Debug)]
