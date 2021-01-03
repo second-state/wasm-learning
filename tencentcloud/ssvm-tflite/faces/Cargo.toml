@@ -1,5 +1,5 @@
 [package]
-name = "mtcnn"
+name = "scf"
 version = "0.1.0"
 authors = ["Michael Yuan <michael@secondstate.io>"]
 edition = "2018"
