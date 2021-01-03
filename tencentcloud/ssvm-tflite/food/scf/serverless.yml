@@ -1,0 +1,34 @@
+org: secondstate
+app: AIaaS-food
+stage: prod
+
+component: scf
+name: tf-scf
+
+inputs:
+  namespace: default
+  enableRoleAuth: false
+  src: ./
+  handler: scf.so
+  runtime: CustomRuntime
+  region: ap-hongkong
+  memorySize: 512
+  timeout: 60
+  initTimeout: 10
+  publicAccess: true
+  layers:
+    - name: ${output:${stage}:${app}:tf-layer.name}
+      version: ${output:${stage}:${app}:tf-layer.version}
+  eip: false
+  events:
+    - apigw:
+        parameters:
+          serviceName: apigw_tf
+          protocols:
+            - https
+          environment: release
+          endpoints:
+            - path: /
+              method: POST
+              enableCORS: true
+              serviceTimeout: 60

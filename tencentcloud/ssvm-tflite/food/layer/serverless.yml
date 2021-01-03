@@ -1,0 +1,14 @@
+org: secondstate
+app: AIaaS-food
+stage: prod
+
+component: layer
+name: tf-layer
+
+inputs:
+  region: ap-hongkong
+  src:
+    bucket: tensorflow-dep
+    object: layer.zip
+  runtimes:
+    - CustomRuntime
