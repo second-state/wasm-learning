@@ -19,5 +19,4 @@ package-lock.json
 pkg
 
 # local computer
-.env
 .DS_Store

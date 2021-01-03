@@ -31,25 +31,18 @@ fn main() {
         }
         i += 1;
     }
-    // println!("{} : {}", max_index, max_value);
 
-    /*
-    let mut confidence = "could be";
-    if max_value > 200 {
-        confidence = "is very likely";
-    } else if max_value > 125 {
-        confidence = "is likely";
-    } else if max_value > 50 {
-        confidence = "could be";
-    }
-    */
-    let mut confidence = "可能有";
+    let mut confidence_zh = "可能有";
+    let mut confidence_en = "could be";
     if max_value > 0.8 {
-        confidence = "非常可能有";
+        confidence_zh = "非常可能有";
+        confidence_en = "is very likely";
     } else if max_value > 0.5 {
-        confidence = "很可能有";
+        confidence_zh = "很可能有";
+        confidence_en = "is likely";
     } else if max_value > 0.3 {
-        confidence = "可能有";
+        confidence_zh = "可能有";
+        confidence_en = "could be";
     }
 
     let mut label_lines = labels.lines();
@@ -59,13 +52,12 @@ fn main() {
 
     let class_name = label_lines.next().unwrap().to_string();
     if max_value > 0.3 {
-      // println!("It {} a <a href='https://www.google.com/search?q={}'>{}</a> in the picture", confidence.to_string(), class_name, class_name);
-      println!("上传的图片里面{} <a href='https://www.google.com/search?q={}'>{}</a>", confidence.to_string(), class_name, class_name);
+      println!("It {} a <a href='https://www.google.com/search?q={}'>{}</a> in the picture.", confidence_en.to_string(), class_name, class_name);
+      println!("上传的图片里面{} <a href='https://www.baidu.com/s?wd={}'>{}</a>。", confidence_zh.to_string(), class_name, class_name);
     } else {
-      // println!("It does not appears to be any food item in the picture.");
-      println!("上传的图片里面没有见到亚洲著名地标");
+      println!("I could not detect an Asian landmark in the picture.");
+      println!("上传的图片里面没有见到亚洲著名地标。");
     }
-    // println!("{} : {}", label_lines.next().unwrap().to_string(), confidence.to_string());
 }
 
 #[derive(Deserialize, Debug)]
