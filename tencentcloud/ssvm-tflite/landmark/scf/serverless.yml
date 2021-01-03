@@ -1,5 +1,5 @@
 org: secondstate
-app: AIaaS
+app: AIaaS-landmark
 stage: prod
 
 component: scf
