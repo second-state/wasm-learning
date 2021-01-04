@@ -1,5 +1,5 @@
 
-## Prerequisite 先决条件
+## Prerequisite 前期准备
 
 [Install the ssvmup tool](https://www.secondstate.io/articles/ssvmup/)
 and the Serverless Framework.
