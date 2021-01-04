@@ -28,11 +28,15 @@ jobs:
       run: |
         sudo apt-get install build-essential curl wget git vim libboost-all-dev
         sudo apt-get install llvm-dev liblld-10-dev libboost-all-dev
+        sudo apt-get install libjpeg-dev libpng-dev
     
     - name: Install Tensorflow
       run: |
-        wget https://storage.googleapis.com/tensorflow/libtensorflow/libtensorflow-gpu-linux-x86_64-2.3.0.tar.gz
-        sudo tar -C /usr/ -xzf libtensorflow-gpu-linux-x86_64-2.3.0.tar.gz
+        wget https://storage.googleapis.com/tensorflow/libtensorflow/libtensorflow-cpu-linux-x86_64-2.4.0.tar.gz
+        sudo tar -C /usr/local/ -xzf libtensorflow-cpu-linux-x86_64-2.4.0.tar.gz
+        wget https://github.com/second-state/ssvm-tensorflow-deps/releases/download/0.1.0/ssvm-tensorflow-deps-lite-0.1.0-linux-x64.tar.gz
+        sudo tar -C /usr/local/lib -zxvf ssvm-tensorflow-deps-lite-0.1.0-linux-x64.tar.gz libtensorflowlite_c.so
+        sudo ldconfig
         cargo install http_proxy
         cargo install mtcnn
         cargo install mobilenet_v2
