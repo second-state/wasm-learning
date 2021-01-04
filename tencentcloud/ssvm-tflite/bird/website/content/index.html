@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Bird Classification</title>
+    <title>Bird Classification 鸟类分类</title>
 
     <link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
@@ -76,20 +76,20 @@ function callService() {
         <div style="font-size:90%;color:gray;margin:20px"><a href="https://www.secondstate.io/faas/">Fast, safe, portable and serverless Rust functions as services</a></div>
       </div>
 
-      <h1>Bird classification</h1>
-      <p class="lead">This tensorflow lite inference function is written in Rust and deployed as a WebAssembly function on TencentCloud's Function as a Service infrastructure. Powered by <a href="https://www.secondstate.io/ssvm/">the Second State VM</a>.</p>
+      <h1>Bird classification 鸟类分类</h1>
+      <p class="lead">This tensorflow lite inference function is written in Rust and deployed as a WebAssembly function on TencentCloud's Function as a Service infrastructure. Powered by <a href="https://www.secondstate.io/ssvm/">the Second State VM. 这个 tensorflow lite 推理函数是用 Rust 编写的，并作为 WebAssembly 函数部署在腾讯云的函数即服务基础设施上。由 Second State 虚拟机赋能。</a>.</p>
 
       <form id="draw" enctype="multipart/form-data">
         <div class="form-group">
-          <label for="input">Please upload an image for a bird (<a href="PurpleGallinule.jpg">example</a>)</label>
+          <label for="input">Please upload an image for a bird 请上传一张鸟的图像(<a href="PurpleGallinule.jpg">example</a>)</label>
           <input type="file" class="form-control-file" id="input" name="input">
         </div>
 
-        <button class="btn btn-primary mb-2" id="process" name="process" value="1" onclick="return callService();">What is this bird?</button>
+        <button class="btn btn-primary mb-2" id="process" name="process" value="1" onclick="return callService();">What is this bird? 这只鸟是什么？</button>
       </form>
       
       <div class="jumbotron">
-        <p id="result">Please upload an image and press the button</p>
+        <p id="result">Please upload an image and press the button 请上传一张图像并点击该按钮</p>
       </div>
 
     </div> <!-- /container -->
