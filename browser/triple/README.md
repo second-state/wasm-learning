@@ -72,7 +72,7 @@ Below is the content of the [html/index.html](html/index.html) file.
 ```
 <html>
   <head>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous" />
     <script>
       if (!('WebAssembly' in window)) {
         alert('you need a browser with wasm support enabled :(');
@@ -121,7 +121,7 @@ Below is the content of the [html/index.html](html/index.html) file.
     </div>
   </body>
   <script
-    src="https://code.jquery.com/jquery-3.4.1.js"
+    src="https://cdn.bootcdn.net/ajax/libs/jquery/3.4.1/jquery.js"
     integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
     crossorigin="anonymous"></script>
 </html>
