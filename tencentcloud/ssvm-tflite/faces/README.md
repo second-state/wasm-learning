@@ -2,8 +2,6 @@
 
 ## 前期准备
 
-[Install the ssvmup tool](https://www.secondstate.io/articles/ssvmup/)
-and the Serverless Framework
 [安装 ssvmup 工具](https://www.secondstate.io/articles/ssvmup/)
 和 Serverless 框架。
 
@@ -15,7 +13,7 @@ $ ssvmup build --enable-aot
 
 ## 测试
 
-Create the layer for tensorflow and SSVM binaries.
+
 为 tensorflow 和 SSVM 二进制文件创建 layer。
 
 ```
