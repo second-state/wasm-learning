@@ -1,10 +1,9 @@
+[中文](README-CN.md) 
 
-## Prerequisite 前期准备
+## Prerequisite 
 
 [Install the ssvmup tool](https://www.secondstate.io/articles/ssvmup/)
 and the Serverless Framework.
-[安装 ssvmup 工具](https://www.secondstate.io/articles/ssvmup/)
-和 Serverless 框架。
 
 ## Build
 
@@ -15,14 +14,13 @@ $ ssvmup build --enable-aot
 ## Test
 
 Create the layer for tensorflow and SSVM binaries.
-为 tensorflow 和 SSVM 二进制文件创建 layer。
 
 ```
 $ cd ../layer
 $ source download_dependencies.sh
 ```
 
-运行 wasm 应用。
+Run the wasm app.
 
 ```
 $ LD_LIBRARY_PATH=../layer ../layer/ssvm-tensorflow pkg/scf.wasm < test/tiktok_logo.json
@@ -32,7 +30,7 @@ $ LD_LIBRARY_PATH=../layer ../layer/ssvm-tensorflow pkg/scf.wasm < test/no_logo.
 $ LD_LIBRARY_PATH=../layer ../layer/ssvm-tensorflow pkg/scf.so < test/no_logo.json
 ```
 
-## Deploy 部署
+## Deploy 
 
 ```
 $ cp pkg/scf.so scf/
@@ -40,5 +38,4 @@ $ sls deploy
 ```
 
 Test the Jamstack web app via the website URL created from the above step.
-通过以上步骤创建的网站 URL 测试 Jamstack web 应用。
 
