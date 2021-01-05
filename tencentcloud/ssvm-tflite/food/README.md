@@ -1,17 +1,17 @@
-[English](README.md)
+[English](README-en.md)
 
-## Prerequisite 前期准备
+## 前期准备
 
 [安装 ssvmup 工具](https://www.secondstate.io/articles/ssvmup/)
 和 Serverless 框架。
 
-## Build 创建
+## 创建
 
 ```
 $ ssvmup build --enable-aot
 ```
 
-## Test 测试
+## 测试
 
 为 tensorflow 和 SSVM 二进制文件创建 layer。
 
@@ -27,7 +27,7 @@ $ LD_LIBRARY_PATH=../layer ../layer/ssvm-tensorflow pkg/scf.wasm < test/food.jso
 $ LD_LIBRARY_PATH=../layer ../layer/ssvm-tensorflow pkg/scf.so < test/food.json
 ```
 
-## Deploy 部署
+## 部署
 
 ```
 $ cp pkg/scf.so scf/
