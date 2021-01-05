@@ -1,3 +1,5 @@
+[English](README.md) 
+
 
 ## 前期准备
 
@@ -12,7 +14,6 @@ $ ssvmup build --enable-aot
 
 ## 测试
 
-Create the layer for tensorflow and SSVM binaries.
 为 tensorflow 和 SSVM 二进制文件创建 layer。
 
 ```
