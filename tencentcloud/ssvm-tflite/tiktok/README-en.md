@@ -1,4 +1,4 @@
-[中文](README-CN.md) 
+[中文](README.md) 
 
 ## Prerequisite 
 
