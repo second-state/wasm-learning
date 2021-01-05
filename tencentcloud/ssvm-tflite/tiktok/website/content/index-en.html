@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Detect tiktok watermark 检测 Tiktok 商标</title>
+    <title>Detect tiktok watermark </title>
 
     <link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
@@ -19,7 +19,7 @@ function callService() {
       return false;
   }
   if ($('#input')[0].files[0].size > 1048576) {
-      alert("Your image is too large. Max upload image size is 1MB 你的图像过大。最大的上传图片大小是1MB。");
+      alert("Your image is too large. Max upload image size is 1MB ");
       return false;
   }
   
@@ -73,23 +73,23 @@ function callService() {
     <div class="container">
       <div style="text-align:center;margin:25px">
         <a href="https://www.secondstate.io/"><img style="border:0;" src="https://www.secondstate.io/assets/img/logo.png"></a>
-        <div style="font-size:90%;color:gray;margin:20px"><a href="https://www.secondstate.io/faas/">Fast, safe, portable and serverless Rust functions as services 快速、安全、可移植且 serverless 的 Rust 函数即服务</a></div>
+        <div style="font-size:90%;color:gray;margin:20px"><a href="https://www.secondstate.io/faas/">Fast, safe, portable and serverless Rust functions as services </a></div>
       </div>
 
-      <h1>Detect Tiktok logo 检测 Tiktok 商标</h1>
-      <p class="lead">This tensorflow lite inference function is written in Rust and deployed as a WebAssembly function on TencentCloud's Function as a Service infrastructure. Powered by <a href="https://www.secondstate.io/ssvm/">the Second State VM</a>. 这个 tensorflow lite 推理函数是用 Rust 编写的，并作为 WebAssembly 函数部署在腾讯云的函数即服务基础设施上。由 <a href="https://www.secondstate.io/ssvm/">Second State 虚拟机</a>赋能。</p>
+      <h1>Detect Tiktok logo </h1>
+      <p class="lead">This tensorflow lite inference function is written in Rust and deployed as a WebAssembly function on TencentCloud's Function as a Service infrastructure. Powered by <a href="https://www.secondstate.io/ssvm/">the Second State VM</a>.  </p>
 
       <form id="draw" enctype="multipart/form-data">
         <div class="form-group">
-          <label for="input">Please upload a still image from your video file. 请上传视频的截屏。 (Examples. <a href="tiktok_logo.jpg">with a Tiktok logo</a>, <a href="no_logo.jpg">without a logo</a>)</label>
+          <label for="input">Please upload a still image from your video file.  (Examples. <a href="tiktok_logo.jpg">with a Tiktok logo</a>, <a href="no_logo.jpg">without a logo</a>)</label>
           <input type="file" class="form-control-file" id="input" name="input">
         </div>
 
-        <button class="btn btn-primary mb-2" id="process" name="process" value="1" onclick="return callService();">Detect Tiktok logo 识别 Tiktok logo</button>
+        <button class="btn btn-primary mb-2" id="process" name="process" value="1" onclick="return callService();">Detect Tiktok logo </button>
       </form>
       
       <div class="jumbotron">
-        <p id="result">Please upload an image and press the button. 请上传一张图像并点击该按钮</p>
+        <p id="result">Please upload an image and press the button.</p>
       </div>
 
     </div> <!-- /container -->
