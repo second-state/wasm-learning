@@ -1,4 +1,7 @@
 
+[English](README.md)
+
+
 ## 前期准备
 
 [Install the ssvmup tool](https://www.secondstate.io/articles/ssvmup/)
