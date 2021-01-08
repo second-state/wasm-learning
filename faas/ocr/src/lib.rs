@@ -15,7 +15,7 @@ pub fn ocr(img_buf: &[u8]) -> String {
         Err(e) => println!("Error: {:?}", &e.to_string()),
     };
     let mut cmd = Command::new("tesseract");
-    cmd.arg("/temp.png").arg("/temp");
+    cmd.arg("/temp_input.png").arg("/temp_output");
     let mut f = File::open("/temp.txt").unwrap();
     let mut s = String::new();
     f.read_to_string(&mut s).unwrap();
