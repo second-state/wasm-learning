@@ -7,9 +7,10 @@ In this example, we will demonstrate how to detect characters from an image i.e.
 If you have not done so already, follow these simple instructions to install [Rust](https://www.rust-lang.org/tools/install) and [ssvmup](https://www.secondstate.io/articles/ssvmup/).
 
 ## Build the WASM bytecode
+Notice that we are using the `--enable-ext` flag which will use `ssvm-extensions` instead of `ssvm`.
 
 ```
-$ ssvmup build
+$ ssvmup build --enable-ext
 ```
 
 ## Create FaaS function
