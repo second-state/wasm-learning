@@ -32,6 +32,11 @@ $ LD_LIBRARY_PATH=../layer ../layer/ssvm-tensorflow pkg/scf.so < test/solvay.jso
 
 ```
 $ cp pkg/scf.so scf/
+
+$ cd cos
+$ wget https://tensorflow-dep-1302315972.cos.ap-hongkong.myqcloud.com/layer.zip
+$ cd ..
+
 $ sls deploy
 ```
 
