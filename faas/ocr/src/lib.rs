@@ -1,7 +1,6 @@
 use rust_process_interface_library::Command;
 use ssvm_wasi_helper::ssvm_wasi_helper::_initialize;
 use std::fs::File;
-use std::io::Read;
 use std::str;
 use std::io::prelude::*;
 use wasm_bindgen::prelude::*;
@@ -17,7 +16,7 @@ pub fn ocr(data: &[u8]) -> String {
         pos += bytes_written;
     }
     let mut cmd = Command::new("tesseract");
-    cmd.arg("/temp_input.png").arg("stdout");
+    cmd.arg("/tmp/temp_input.png").arg("stdout").arg("--dpi").arg("70");
     let out = cmd.output();
     println!("Code: {}", out.status);
     println!("STDERR: {}", str::from_utf8(&out.stderr).unwrap());
