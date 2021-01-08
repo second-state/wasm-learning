@@ -46,7 +46,7 @@ Make a function call via the web.
 ```
 curl --location --request POST 'https://rpc.ssvm.secondstate.io:8081/api/run/281/ocr' \
 --header 'Content-Type: application/octet-stream' \
---data-binary '@html/ocr.png'
+--data-binary '@html/ocr.jpg'
 ```
 
 ## Live demo
