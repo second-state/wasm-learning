@@ -1,4 +1,4 @@
-# The email example
+# The OCR example
 
 In this example, we will demonstrate how to detect characters from an image i.e. Optical Character Recognition (OCR).
 
@@ -10,7 +10,7 @@ If you have not done so already, follow these simple instructions to install [Ru
 Notice that we are using the `--enable-ext` flag which will use `ssvm-extensions` instead of `ssvm`.
 
 ```
-$ ssvmup build --enable-ext
+$ ssvmup build
 ```
 
 ## Create FaaS function
