@@ -47,3 +47,7 @@ curl --location --request POST 'https://rpc.ssvm.secondstate.io:8081/api/run/279
 --header 'Content-Type: application/octet-stream' \
 --data-binary '@html/ocr.png'
 ```
+
+## Live demo
+
+Please click on [this HTML link](https://second-state.github.io/wasm-learning/faas/ocr/html/index.html) which will take you to the live demonstration.
