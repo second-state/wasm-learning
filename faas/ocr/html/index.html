@@ -18,6 +18,7 @@ function callService() {
 
   var formData = new FormData();
   formData.append('input_1', $('#input_1')[0].files[0]);
+  formData.append('input_2', $('#input_2').val());
 
   $.ajax({
       url: "https://rpc.ssvm.secondstate.io:8081/api/multipart/run/281/ocr",
@@ -59,12 +60,40 @@ function callService() {
           <p style="font-size:0.5vw;">Attribution: Nohadrweesh, CC BY-SA 4.0 via Wikimedia Commons</p>
           <input type="file" class="form-control-file" id="input_1" name="input_1">
         </div>
+                <div class="form-group">
+                   <label for="input_1">Please select which language you would like to detect</label>
+               <fieldset>
+          <legend>Language options</legend>
+          <p>
+             <label>Language options</label>
+             <select id = "input_2">
+               <option value = "afr">Afrikaans</option>
+               <option value = "ara">Arabic</option>
+               <option value = "bel">Belarusian</option>
+               <option value = "ben">Bengali</option>
+               <option value = "bos">Bosnian</option>
+               <option value = "bul">Bulgarian</option>
+               <option value = "ces">Czech</option>
+               <option value = "chi_sim">Chinese simplified</option>
+               <option value = "chi_tra">Chinese traditional</option>
+               <option value = "eng" selected>English</option>
+               <option value = "fra">French</option>
+               <option value = "jpn">Japanese</option>
+               <option value = "kor">Korean</option>
+               <option value = "kor_vert">Korean vertical</option>
+               <option value = "rus">Russian</option>
+               <option value = "bod">Tibetan</option>
+               <option value = "ukr">Ukrainian</option>
+             </select>
+          </p>
+       </fieldset>
+     </div>
 
         <button class="btn btn-primary mb-2" id="process" name="process" value="1" onclick="return callService();">OCR</button>
       </form>
       
       <div class="jumbotron">
-        <pre id="result">Please upload image and press OCR button</pre>
+        <pre id="result">Please upload image, select a language, and then press OCR button</pre>
       </div>
 
     </div> <!-- /container -->
