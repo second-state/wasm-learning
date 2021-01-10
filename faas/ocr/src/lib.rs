@@ -1,4 +1,4 @@
-use rust_process_interface_library::Command;
+use ssvm_process_interface::Command;
 use ssvm_wasi_helper::ssvm_wasi_helper::_initialize;
 use std::fs;
 use std::fs::File;
@@ -8,7 +8,7 @@ use std::time::{SystemTime, UNIX_EPOCH};
 use wasm_bindgen::prelude::*;
 
 #[wasm_bindgen]
-pub fn ocr(data: &[u8], language: &str,) -> String {
+pub fn ocr(data: &[u8], language: &str, translation: &str) -> String {
     _initialize();
     let now = SystemTime::now().duration_since(UNIX_EPOCH).unwrap();
     let mut guest_temp_input_filename = String::from("/");
@@ -23,6 +23,7 @@ pub fn ocr(data: &[u8], language: &str,) -> String {
     let mut host_temp_input_filename = String::from("/tmp/");
     host_temp_input_filename.push_str(&now.as_millis().to_string());
     let copy_of_host_temp_input_filename = host_temp_input_filename.clone();
+
     let mut cmd = Command::new("tesseract");
     cmd.arg(&copy_of_host_temp_input_filename)
         .arg("stdout")
@@ -30,7 +31,14 @@ pub fn ocr(data: &[u8], language: &str,) -> String {
         .arg("70")
         .arg("-l")
         .arg(language);
+
     let out = cmd.output();
     fs::remove_file(&copy_of_guest_temp_input_filename).unwrap();
-    str::from_utf8(&out.stdout).unwrap().to_string()
+
+    let mut translation_param = String::from(":");
+    translation_param.push_str(translation);
+    let mut cmd2 = Command::new("trans");
+        cmd2.arg("-b").arg(translation_param).arg(str::from_utf8(&out.stdout).unwrap().to_string());
+    let out2 = cmd2.output();
+    str::from_utf8(&out2.stdout).unwrap().to_string()
 }
