@@ -8,7 +8,7 @@ use std::time::{SystemTime, UNIX_EPOCH};
 use wasm_bindgen::prelude::*;
 
 #[wasm_bindgen]
-pub fn ocr(data: &[u8], language: &str, translation: &str) -> String {
+pub fn ocr(data: &[u8], language: &str) -> String {
     _initialize();
     let now = SystemTime::now().duration_since(UNIX_EPOCH).unwrap();
     let mut guest_temp_input_filename = String::from("/");
@@ -34,11 +34,5 @@ pub fn ocr(data: &[u8], language: &str, translation: &str) -> String {
 
     let out = cmd.output();
     fs::remove_file(&copy_of_guest_temp_input_filename).unwrap();
-
-    let mut translation_param = String::from(":");
-    translation_param.push_str(translation);
-    let mut cmd2 = Command::new("trans");
-        cmd2.arg("-b").arg(translation_param).arg(str::from_utf8(&out.stdout).unwrap().to_string());
-    let out2 = cmd2.output();
-    str::from_utf8(&out2.stdout).unwrap().to_string()
+    str::from_utf8(&out.stdout).unwrap().to_string()
 }
