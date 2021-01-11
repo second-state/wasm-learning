@@ -36,3 +36,13 @@ pub fn ocr(data: &[u8], language: &str) -> String {
     fs::remove_file(&copy_of_guest_temp_input_filename).unwrap();
     str::from_utf8(&out.stdout).unwrap().to_string()
 }
+
+#[wasm_bindgen]
+pub fn translate(data: &str, translation: &str) -> String {
+    let mut translation_param = String::from(":");
+    translation_param.push_str(translation);
+    let mut cmd = Command::new("trans");
+    cmd.arg("-b").arg(translation_param).arg(data);
+    let out = cmd.output();
+    str::from_utf8(&out.stdout).unwrap().to_string()
+}
