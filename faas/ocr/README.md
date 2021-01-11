@@ -54,4 +54,4 @@ curl --location --request POST 'https://rpc.ssvm.secondstate.io:8081/api/multipa
 Please click on [this HTML link](https://second-state.github.io/wasm-learning/faas/ocr/html/index.html) which will take you to the live demonstration for OCR.
 
 ## Combining OCR with language translation
-Please click on [this HTML link](https://second-state.github.io/wasm-learning/faas/ocr/html/index_2.html) to try the OCR with added language translation.
+Please click on [this HTML link](https://second-state.github.io/wasm-learning/faas/ocr/html/index_3.html) to try the OCR with added language translation.
