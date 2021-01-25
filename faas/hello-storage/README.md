@@ -1,36 +1,4 @@
-# Cumulative storage example
-
-## In a hurry?
-
-**Here is one we prepared earlier.**
-
-If you want to see the Wasm incrementer in action, please just run the following curl command
-
-## Curl
-```bash
-curl --location --request POST 'https://rpc.ssvm.secondstate.io:8081/api/run/46/increment'
-```
-
-or, execute the following Javascript (in your web browser's console)
-## Javascript
-```Javascript
-var requestOptions = {
-  method: 'POST',
-  redirect: 'follow'
-};
-
-fetch("https://rpc.ssvm.secondstate.io:8081/api/run/46/increment", requestOptions)
-  .then(response => response.text())
-  .then(result => console.log(result))
-  .catch(error => console.log('error', error));
-```
-As you can see, these are just HTTP requests. So feel free to use any language you want i.e. Python, Go, Node.js, PHP etc.
-
-# Under the hood
-
-The code and demo for the above example can be found at the [cumulative-storage section of this wasm-learning repo](https://github.com/second-state/wasm-learning/blob/master/faas/cumulative-storage/README.md). 
-
-Please read on to take a peek under the hood, and perhaps create your own storage application.
+# Storage example
 
 ## Permanent storage example (immutable)
 
