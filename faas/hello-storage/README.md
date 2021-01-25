@@ -55,16 +55,16 @@ curl --location --request POST 'https://rpc.ssvm.secondstate.io:8081/api/executa
 The above command will return a JSON string. Inside the JSON will be the `wasm_id` that you need to execute the store and load functions.
 
 ```bash
-{"wasm_id":123, ...  }
+{"wasm_id":309,"wasm_sha256":"0x192faa7c2a38416a62fce8229471820c7572d3af7cc2e4426af288305032c50d","SSVM_Usage_Key":"00000000-0000-0000-0000-000000000000","SSVM_Admin_Key":"8c0b8448-5472-4180-bd0e-6d034eed0b7c"}
 ```
 
 ## Store
 The following command will execute the `store_a_string` function and store the text that we are passing into the command i.e. `String to store`.
 
-Be sure to use your own `wasm_id` from above (not `123`)
+Be sure to use your own `wasm_id` from above (not `309`)
 
 ```bash
-curl --location --request POST 'https://rpc.ssvm.secondstate.io:8081/api/run/123/store_a_string' \
+curl --location --request POST 'https://rpc.ssvm.secondstate.io:8081/api/run/309/store_a_string' \
 --header 'Content-Type: text/plain' \
 --data-raw 'String to store'
 ```
