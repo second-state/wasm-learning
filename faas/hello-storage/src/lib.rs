@@ -1,6 +1,6 @@
 use std::env;
 use wasm_bindgen::prelude::*;
-use rust_storage_interface_library::ssvm_storage;
+use ssvm_storage_interface::ssvm_storage;
 use ssvm_wasi_helper::ssvm_wasi_helper::_initialize;
 // This example lets you create and manage new keys for every new store operation
 #[wasm_bindgen]
