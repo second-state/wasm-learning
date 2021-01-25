@@ -35,7 +35,9 @@ Before compiling, make sure that your `Cargo.toml` file has declared the correct
 
 ```
 [lib]
-crate-type = ["cdylib", "rlib"]
+name = "hello_lib"
+path = "src/lib.rs"
+crate-type =["cdylib"]
 
 [dependencies]
 wasm-bindgen = "=0.2.61"
