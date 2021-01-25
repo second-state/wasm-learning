@@ -6,6 +6,17 @@ In this example, we demonstrate how to create and run a Rust function in the Sec
 
 If you have not done so already, follow these simple instructions to install [Rust](https://www.rust-lang.org/tools/install) and [ssvmup](https://www.secondstate.io/articles/ssvmup/).
 
+## Start a new project
+
+You can start a brand new project if you want. 
+```
+cargo new --lib your_project_name
+```
+**Or** you can just clone this wasm-learning repo and build and deploy our existing projects from your machine.
+```
+git clone https://github.com/second-state/wasm-learning
+```
+
 ## Write Rust code
 
 Below is the entire content of the [src/lib.rs](src/lib.rs) file.
@@ -20,9 +31,12 @@ pub fn say(s: &str) -> String {
 }
 ```
 
-Before compiling, make sure that your `Cargo.toml` file has declared the correct dependencies.
+Before compiling, make sure that your `Cargo.toml` file has declared the correct dependencies and a `[lib]` section which identifies the crate-type, as shown below.
 
 ```
+[lib]
+crate-type = ["cdylib", "rlib"]
+
 [dependencies]
 wasm-bindgen = "=0.2.61"
 ```
@@ -38,7 +52,7 @@ $ ssvmup build
 Upload the wasm file in the `pkg` folder to the FaaS. Double check the `.wasm` file name before you upload.
 
 ```
-$ curl --location --request POST 'https://rpc.ssvm.secondstate.io:8081/api/executables' \
+curl --location --request POST 'https://rpc.ssvm.secondstate.io:8081/api/executables' \
 --header 'Content-Type: application/octet-stream' \
 --header 'SSVM-Description: say hello' \
 --data-binary '@pkg/hello_lib_bg.wasm'
