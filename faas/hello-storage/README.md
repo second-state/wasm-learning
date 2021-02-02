@@ -65,7 +65,7 @@ Seeings how you have lauched the Wasm in this demo already, let's go ahead and c
 ## Store
 The following call will store the raw data at the mutable storage location for your wasm_id
 ```bash
-curl --location --request POST 'https://dev.rpc.ssvm.secondstate.io:8081/api/run/wasm_id/store_a_string_via_std_env' \
+curl --location --request POST 'https://rpc.ssvm.secondstate.io:8081/api/run/wasm_id/store_a_string_via_std_env' \
 --header 'Content-Type: text/plain' \
 --data-raw 'This is a string to store'
 ```
@@ -73,7 +73,7 @@ curl --location --request POST 'https://dev.rpc.ssvm.secondstate.io:8081/api/run
 ## Load
 The following call will load the raw data at the mutable storage location for your wasm_id
 ```bash
-curl --location --request POST 'https://dev.rpc.ssvm.secondstate.io:8081/api/run/wasm_id/load_a_string_via_std_env'
+curl --location --request POST 'https://rpc.ssvm.secondstate.io:8081/api/run/wasm_id/load_a_string_via_std_env'
 ```
 ## How it actually works
 
