@@ -1,35 +1,39 @@
 use ssvm_process_interface::Command;
 //use ssvm_wasi_helper::ssvm_wasi_helper::_initialize;
 //use std::fs;
-use std::fs::File;
-use std::io::prelude::*;
+//use std::fs::File;
+//use std::io::prelude::*;
 use std::str;
 //use std::time::{SystemTime, UNIX_EPOCH};
 use wasm_bindgen::prelude::*;
 
 #[wasm_bindgen]
-pub fn text(data: &[u8]) -> String {
+pub fn text(data: &str) -> String {
 
 //    let now = SystemTime::now().duration_since(UNIX_EPOCH).unwrap();
-    let mut guest_temp_input_filename = String::from("/");
-    let filename:&str="demo.jpg";
+    //let mut guest_temp_input_filename = String::from("/");
+    //let filename:&str="demo10.jpg";
+/*
     guest_temp_input_filename.push_str(filename);
     let copy_of_guest_temp_input_filename = guest_temp_input_filename.clone();
+
     let mut pos = 0;
-    let mut buffer = File::create(guest_temp_input_filename).unwrap();
+    let mut buffer = File::create(copy_of_guest_temp_input_filename).unwrap();
     while pos < data.len() {
-        let bytes_written = buffer.write(&data[pos..]).unwrap();
+        let bytes_written = fs::write(filename,&data[pos..]).unwrap();
         pos += bytes_written;
     }
     let mut host_temp_input_filename = String::from("/tmp/");
     host_temp_input_filename.push_str(filename);
     let copy_of_host_temp_input_filename = host_temp_input_filename.clone();
 //    println!("{:?}",copy_of_host_temp_input_filename);
-   
-    
+*/   
+    //let mut f=File::create("/demo10.jpg").expect("Unable to create file");
+    //fs::write("./test/demo10.jpg",data).expect("Unable to write file");
+    //f.write_all(data).expect("Unable to write data");
     let mut cmd = Command::new("paddleocr");
     cmd.arg("--image_dir")
-        .arg(copy_of_host_temp_input_filename);
+        .arg(data);
     let out = cmd.output();
 
     //let mut items=Vec::<&str>::new();
@@ -65,12 +69,15 @@ pub fn text(data: &[u8]) -> String {
         println!("{:?}",itemsf);
         itemsd=itemsf;
     }
+    
+    //println!("{:?}",str::from_utf8(&(itemsd.join(",").as_bytes())).unwrap().to_string());
     str::from_utf8(&(itemsd.join(",").as_bytes())).unwrap().to_string()
     //itemsd
 
 }
 #[wasm_bindgen]
-pub fn bounding_box(data:&[u8])->String{
+pub fn bounding_box(data:&str)->String{
+/*    
     let mut guest_temp_input_filename = String::from("/");
     let filename:&str="demo.jpg";
     guest_temp_input_filename.push_str(filename);
@@ -83,10 +90,12 @@ pub fn bounding_box(data:&[u8])->String{
     }
     let mut host_temp_input_filename = String::from("/tmp/");
     host_temp_input_filename.push_str(filename);
-    let copy_of_host_temp_input_filename = host_temp_input_filename.clone();                                    //                                        b:&str=str::from_utf8(&out.stdout).unwrap();
+    let copy_of_host_temp_input_filename = host_temp_input_filename.clone();
+*/
     let mut cmd = Command::new("paddleocr");
     cmd.arg("--image_dir")
-        .arg(copy_of_host_temp_input_filename);
+        .arg(data);
     let out = cmd.output();
+    println!("{:?}\n",str::from_utf8(&out.stdout).unwrap().to_string());
     str::from_utf8(&out.stdout).unwrap().to_string()
 }
