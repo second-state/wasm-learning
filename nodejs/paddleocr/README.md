@@ -38,10 +38,10 @@ sudo unlink /usr/lib64/libstdc++.so.6
 sudo cp /usr/local/lib64/libstdc++.so.6 /usr/lib64
 sudo pip3 install paddlepaddle && sudo pip3 install paddleocr
 ```
-and if you OS is ubuntu20.04,you must install
+and if you OS is ubuntu20.04,you must #first# install
 ```
 pip3 install python3.7
-pip3 install numpy==1.14
+pip3 install numpy==1.14.6
 pip3 install paddleocr
 ```
 Notes:If you don't use the version mentioned above, error comes.
