@@ -70,8 +70,7 @@ $ npm i ssvm-extensions
 Run the local test on Node.js.
 
 ```
-$ cd test
-$ node test.js
+$ node test/test.js
 text() function returns
 ["(\'We would like to thank all the designers and"]
 ["contributors who have been involved in the"]
@@ -86,20 +85,16 @@ text() function returns
 
 
 obtained by function call # bounding_box()
-root INFO: dt_boxes num : 11, elapse : 2.5862977504730225
-root INFO: cls num  : 11, elapse : 0.11584687232971191
-root INFO: rec_res num  : 11, elapse : 0.684161901473999
-root INFO: [[[437.0, 170.0], [1170.0, 173.0], [1170.0, 227.0], [437.0, 224.0]], (\'ACKNOWLEDGEMENTS\', 0.95431674)]
-root INFO: [[[396.0, 342.0], [1209.0, 344.0], [1208.0, 390.0], [396.0, 388.0]], (\'We would like to thank all the designers and\', 0.97767454)] 
-root INFO: [[[398.0, 394.0], [1207.0, 393.0], [1208.0, 439.0], [398.0, 440.0]], (\'contributors who have been involved in the\', 0.97794926)]
-root INFO: [[[396.0, 442.0], [1212.0, 440.0], [1213.0, 491.0], [396.0, 493.0]], (\'production of this bookj their contributions\', 0.9809355)]
-root INFO: [[[397.0, 495.0], [1210.0, 495.0], [1210.0, 537.0], [397.0, 537.0]], (\'have been indispensable to its creation We\', 0.97727674)]
-root INFO: [[[396.0, 543.0], [1214.0, 542.0], [1214.0, 590.0], [396.0, 592.0]], (\'would also like to express our gratitude to all\', 0.9904165)]
-root INFO: [[[393.0, 594.0], [1214.0, 588.0], [1215.0, 639.0], [393.0, 644.0]], (\'the producers for their invaluable opinions\', 0.9899933)]
-root INFO: [[[395.0, 643.0], [1213.0, 642.0], [1213.0, 691.0], [395.0, 692.0]], (\'and assistance throughout this project And to\', 0.9652537)]
-root INFO: [[[394.0, 698.0], [1213.0, 692.0], [1214.0, 737.0], [394.0, 743.0]], (\'the many others whose names are not credited\', 0.99038166)]
-root INFO: [[[394.0, 748.0], [1212.0, 746.0], [1213.0, 789.0], [394.0, 791.0]], (\'but have made specific input in this book we\', 0.96071094)]
-root INFO: [[[394.0, 798.0], [1091.0, 800.0], [1091.0, 846.0], [394.0, 844.0]], (\'thank you for your continuous support\', 0.9937853)]
+"[[[396.0, 342.0], [1209.0, 344.0], [1208.0, 390.0], [396.0, 388.0]], (\'We would like to thank all the designers and\', 0.9835537)"
+"[[[398.0, 394.0], [1207.0, 393.0], [1208.0, 439.0], [398.0, 440.0]], (\'contributors who have been involved in the\', 0.9981667)"
+"[[[396.0, 442.0], [1212.0, 440.0], [1213.0, 491.0], [396.0, 493.0]], (\'production of this book; their contributions\', 0.9827413)"
+"[[[397.0, 495.0], [1210.0, 495.0], [1210.0, 537.0], [397.0, 537.0]], (\'have been indispensable to its creation. We\', 0.9911613)"
+"[[[396.0, 543.0], [1214.0, 542.0], [1214.0, 590.0], [396.0, 592.0]], (\'would also like to express our gratitude to all\', 0.99669415)"
+"[[[393.0, 594.0], [1214.0, 588.0], [1215.0, 639.0], [393.0, 644.0]], (\'the producers for their invaluable opinions\', 0.99060416)"
+"[[[395.0, 643.0], [1213.0, 642.0], [1213.0, 691.0], [395.0, 692.0]], (\'and assistance throughout this project.And to\', 0.9734121)"
+"[[[394.0, 698.0], [1213.0, 692.0], [1214.0, 737.0], [394.0, 743.0]], (\'the many others whose names are not credited\', 0.99539125)"
+"[[[394.0, 748.0], [1212.0, 746.0], [1213.0, 789.0], [394.0, 791.0]], (\'but have made specific input in this book， we\', 0.9578631)"
+"[[[394.0, 798.0], [1091.0, 800.0], [1091.0, 846.0], [394.0, 844.0]], (\'thank you for your continuous support.\', 0.97568494)]"
 
 
 ```
