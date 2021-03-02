@@ -9,28 +9,31 @@ use wasm_bindgen::prelude::*;
 
 #[wasm_bindgen]
 pub fn text(data: &str) -> String {
-
-//    let now = SystemTime::now().duration_since(UNIX_EPOCH).unwrap();
-    //let mut guest_temp_input_filename = String::from("/");
-    //let filename:&str="demo10.jpg";
 /*
+    _initialize();
+    let mut guest_temp_input_filename = String::from("/");
+    let filename:&str="/demo10.jpg";
+
     guest_temp_input_filename.push_str(filename);
     let copy_of_guest_temp_input_filename = guest_temp_input_filename.clone();
 
     let mut pos = 0;
-    let mut buffer = File::create(copy_of_guest_temp_input_filename).unwrap();
+    let mut buffer = File::create(filename).unwrap();
     while pos < data.len() {
-        let bytes_written = fs::write(filename,&data[pos..]).unwrap();
+
+    
+        let bytes_written = buffer.write(&data[pos..]).unwrap();
         pos += bytes_written;
     }
+    //buffer.write_all(data).unwrap();
+    //let f= File::open(filename).unwrap();
+    //println!("{:?}",f);
     let mut host_temp_input_filename = String::from("/tmp/");
     host_temp_input_filename.push_str(filename);
     let copy_of_host_temp_input_filename = host_temp_input_filename.clone();
-//    println!("{:?}",copy_of_host_temp_input_filename);
-*/   
-    //let mut f=File::create("/demo10.jpg").expect("Unable to create file");
-    //fs::write("./test/demo10.jpg",data).expect("Unable to write file");
-    //f.write_all(data).expect("Unable to write data");
+//  
+//  println!("{:?}",copy_of_host_temp_input_filename);
+*/    
     let mut cmd = Command::new("paddleocr");
     cmd.arg("--image_dir")
         .arg(data);
@@ -96,6 +99,28 @@ pub fn bounding_box(data:&str)->String{
     cmd.arg("--image_dir")
         .arg(data);
     let out = cmd.output();
-    println!("{:?}\n",str::from_utf8(&out.stdout).unwrap().to_string());
+    let init_result:&str=str::from_utf8(&out.stdout).unwrap();
+    let init_result_iter:Vec<&str>=init_result.split("\n").collect();
+    let mut itemsa=Vec::<&str>::new();
+    for (i,item) in init_result_iter.iter().enumerate(){
+        if i>=5{
+            itemsa.push(item);
+        }
+    }
+    let mut itemsb=Vec::<&str>::new();
+    for item in itemsa.iter(){
+        let itemsb_slice:Vec<&str>=item.split(" ").collect();
+        for (i,item) in itemsb_slice.iter().enumerate(){
+            item.to_string().pop();
+            if i>=4{
+                itemsb.push(item);
+            }
+        }
+    }
+    let str_sd:String=itemsb.join(" ");
+    let c_iter:Vec<&str>=str_sd.split("] ").collect();
+    for line in c_iter.iter(){
+        println!("{:?}",line);
+    }
     str::from_utf8(&out.stdout).unwrap().to_string()
 }
