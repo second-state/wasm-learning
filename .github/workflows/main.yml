@@ -26,6 +26,8 @@ jobs:
 
     - name: Install apt-get packages
       run: |
+        sudo apt-get update
+        sudo apt-get upgrade
         sudo apt-get install build-essential curl wget git vim libboost-all-dev
         sudo apt-get install llvm-dev liblld-10-dev libboost-all-dev
         sudo apt-get install libjpeg-dev libpng-dev
