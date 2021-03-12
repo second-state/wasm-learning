@@ -45,7 +45,7 @@ Add watermark to a local PNG image.
 ```
 $ curl --location --request POST 'https://rpc.ssvm.secondstate.io:8081/api/multipart/run/148/watermark/bytes' \
 --header 'Content-Type: multipart/form-data' \
---form 'input_1=Meow Human!' \
+--form 'input_1=Second State Functions' \
 --output tmp.png
 ```
 
