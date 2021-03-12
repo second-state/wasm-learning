@@ -1,6 +1,6 @@
-# The image watermark example
+# The poster watermark example
 
-In this example, we demonstrate how to create and run a Rust function in the Second State Rust FaaS.
+In this example, we demonstrate how to create and run a Rust function in the Second State Rust Functions.
 
 ## Prerequisites
 
@@ -38,28 +38,20 @@ $ curl --location --request PUT 'https://rpc.ssvm.secondstate.io:8081/api/update
 --data-binary '@pkg/watermark_lib_bg.wasm'
 ```
 
-## Setup the watermark text
+## Insert your name
 
 Add watermark to a local PNG image.
 
 ```
 $ curl --location --request POST 'https://rpc.ssvm.secondstate.io:8081/api/multipart/run/148/watermark/bytes' \
 --header 'Content-Type: multipart/form-data' \
---form 'input_1=Meow Human!' \
---form 'input_2=@test/cat.png' \
+--form 'input_1=Second State Functions!' \
+--form 'input_2=@test/template.png' \
 --output tmp.png
 ```
 
-Make a pre-fetched FaaS call to add watermark to an Internet image.
 
-```
-$ curl --location --request POST 'https://rpc.ssvm.secondstate.io:8081/api/multipart/run/148/watermark/bytes' \
---header 'Content-Type: multipart/form-data' \
---form 'input_1=Woof Human!' \
---form 'fetch_input_2=https://www.secondstate.io/demo/dog.png' \
---output tmp.png
-```
 
 ## Serverless web app
 
-Open web page [html/index.html](html/index.html) in any browser. See a [static demo](https://second-state.github.io/wasm-learning/faas/watermark/html/index.html).
+Open web page [html/index.html](html/index.html) in any browser. See a [static demo](https://sls-website-ap-hongkong-ge3c73q-1302315972.cos-website.ap-hongkong.myqcloud.com/index-en.html).
