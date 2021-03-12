@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Watermark</title>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+    <script>
+function callService() {
+  setTimeout(function(){
+    $('#process').prop('disabled', true);
+  },0);
+
+  var formData = new FormData();
+  formData.append('input_1', $('#input_1').val());
+  formData.append('input_2', $('#input_2')[0].files[0]);
+  // console.log($('#input_2')[0].files[0]);
+
+  $.ajax({
+      url: "https://rpc.ssvm.secondstate.io:8081/api/multipart/run/148/watermark/bytes",
+      type: "post",
+      data : formData,
+      contentType: false,
+      processData: false,
+      xhrFields:{
+        responseType: 'blob'
+      },
+      success: function (data) {
+        const img_url = URL.createObjectURL(data);
+        $('#wm_img').prop('src', img_url);
+        $('#process').prop('disabled', false);
+      },
+      error: function(){
+        alert("Cannot get data");
+        $('#process').prop('disabled', false);
+      }
+  });
+
+  return false;
+}
+    </script>
+  </head>
+  
+  <body>
+    <div class="container">
+      <div style="text-align:center;margin:25px">
+        <a href="https://www.secondstate.io/"><img style="border:0;" src="https://www.secondstate.io/assets/img/logo.png"></a>
+        <div style="font-size:90%;color:gray;margin:20px"><a href="https://www.secondstate.io/faas/">Fast, safe, portable and serverless Rust functions as services</a></div>
+      </div>
+
+      <h1>Watermark</h1>
+      <p class="lead">Add a custom watermark to an image. <a href="https://www.secondstate.io/articles/mixing-text-and-binary-data-in-call-arguments/">See code tutorial</a></p>
+
+      <form id="draw" enctype="multipart/form-data">
+        <div class="form-group">
+          <label for="input_1">The watermark text</label>
+          <input type="text" class="form-control" id="input_1" name="input_1" value=""/>
+        </div>
+
+        <div class="form-group">
+          <label for="input_2">Please upload an image file (<a href="dog.png">example</a>)</label>
+          <input type="file" class="form-control-file" id="input_2" name="input_2">
+        </div>
+
+        <button class="btn btn-primary mb-2" id="process" name="process" value="1" onclick="return callService();">Add Watermark</button>
+      </form>
+      
+      <div class="jumbotron">
+        <img id="wm_img" class="rounded mx-auto d-block"/>
+      </div>
+
+    </div> <!-- /container -->
+  </body>
+</html>
