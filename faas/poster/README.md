@@ -26,13 +26,13 @@ curl --location --request POST 'https://rpc.ssvm.secondstate.io:8081/api/executa
 Returns
 
 ```
-{"wasm_id":148,"wasm_sha256":"0x0a3227cd8d76c32f4788ca8d020091f89c41f4abc7a3c3b1c10490d439a22b1b","SSVM_Usage_Key":"00000000-0000-0000-0000-000000000000","SSVM_Admin_Key":"aaaa-bbbb-cccc-dddd-0000"}
+{"wasm_id":349,"wasm_sha256":"0x778fae35baf1d461b1e931d3c41964908947a2b3fbde02166b50d573f1e15959","SSVM_Usage_Key":"00000000-0000-0000-0000-000000000000","SSVM_Admin_Key":"50378009-bbbe-4043-8d7e-af80d0af531a"}
 ```
 
 Note: You can update this binary with the `SSVM_Admin_Key`.
 
 ```
-$ curl --location --request PUT 'https://rpc.ssvm.secondstate.io:8081/api/update_wasm_binary/148' \
+$ curl --location --request PUT 'https://rpc.ssvm.secondstate.io:8081/api/update_wasm_binary/349' \
 --header 'Content-Type: application/octet-stream' \
 --header 'SSVM_Admin_Key: 7dxxxxxx-xxxx-xxxx-xxxx-xxxxxxxx0c41' \
 --data-binary '@pkg/watermark_lib_bg.wasm'
@@ -46,20 +46,28 @@ Add watermark to a local PNG image.
 $ curl --location --request POST 'https://rpc.ssvm.secondstate.io:8081/api/multipart/run/148/watermark/bytes' \
 --header 'Content-Type: multipart/form-data' \
 --form 'input_1=Meow Human!' \
---form 'input_2=@test/cat.png' \
 --output tmp.png
 ```
 
-Make a pre-fetched FaaS call to add watermark to an Internet image.
-
-```
-$ curl --location --request POST 'https://rpc.ssvm.secondstate.io:8081/api/multipart/run/148/watermark/bytes' \
---header 'Content-Type: multipart/form-data' \
---form 'input_1=Woof Human!' \
---form 'fetch_input_2=https://www.secondstate.io/demo/dog.png' \
---output tmp.png
-```
 
 ## Serverless web app
 
-Open web page [html/index.html](html/index.html) in any browser. See a [static demo](https://second-state.github.io/wasm-learning/faas/watermark/html/index.html).
+Open web page [html/index.html](html/index.html) in any browser. See a [static demo](https://sls-website-ap-hongkong-ge3c73q-1302315972.cos-website.ap-hongkong.myqcloud.com/index-en.html).
+
+## Local Test
+
+When you changed the parameters in `lib.rs`, you may need to test your poster. For better local tests, we added `main.rs`.
+
+If you want to change the input text, you need to open the `main.rs`.
+
+```
+vi src/main.rs
+```
+
+Run the following commland to see the tested result.
+
+```
+cargo run
+```
+
+If everything goes well, follow the aboving instrcutions to publish your web application.
