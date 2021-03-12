@@ -7,7 +7,7 @@ edition = "2018"
 [lib]
 name = "watermark_lib"
 path = "src/lib.rs"
-crate-type =["cdylib"]
+crate-type =["cdylib", "lib"]
 
 [dependencies]
 image = { version = "0.23.0", default-features = false, features = ["jpeg", "png", "gif"] }
