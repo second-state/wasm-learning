@@ -1,0 +1,31 @@
+org: secondstate
+app: poster-template
+stage: prod
+
+component: scf
+name: tf-scf
+
+inputs:
+  namespace: default
+  enableRoleAuth: false
+  src: ./
+  handler: scf.so
+  runtime: CustomRuntime
+  region: ${env:region}
+  memorySize: 512
+  timeout: 60
+  initTimeout: 10
+  publicAccess: true
+  eip: false
+  events:
+    - apigw:
+        parameters:
+          serviceName: apigw_tf
+          protocols:
+            - https
+          environment: release
+          endpoints:
+            - path: /
+              method: POST
+              enableCORS: true
+              serviceTimeout: 60
