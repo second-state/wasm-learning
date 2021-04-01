@@ -55,8 +55,8 @@ function searchBytes() {
 </script>
 <script type="text/javascript">
 function searchBytesII() {
-    var buffer_1 = new ArrayBuffer(1000000);
-    var buffer_2 = new ArrayBuffer(1000000);
+    var buffer_1 = new ArrayBuffer(500);
+    var buffer_2 = new ArrayBuffer(100000000);
     var needle = new Uint8Array(buffer_1);
     var haystack = new Uint8Array(buffer_2);
     needle.fill(111)
