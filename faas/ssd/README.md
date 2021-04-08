@@ -13,4 +13,4 @@ If you have not done so already, follow these simple instructions to install [Ru
 ```
 $ ssvmup build --enable-aot --enable-ext
 ```
-until now, we don't have a high ACC model, the just leave the code for now.
+until now, we don't have a high ACC model, so just leave the code for now.
