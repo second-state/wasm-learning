@@ -1,6 +1,6 @@
 # The SSD example
 
-Run MTCNN tensorflow models as functions.
+Run SSD tensorflow models as functions.
 
 
 
