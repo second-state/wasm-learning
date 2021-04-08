@@ -1,4 +1,4 @@
-# The MTCNN example
+# The SSD example
 
 Run MTCNN tensorflow models as functions.
 
