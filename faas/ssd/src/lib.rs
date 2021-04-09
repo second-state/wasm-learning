@@ -15,7 +15,7 @@ pub fn infer(image_data: &[u8]) -> Vec<u8> {
         flat_img.push(rgb[0] as f32);
     }
 
-    let model_data: &[u8] = include_bytes!("");
+    let model_data: &[u8] = include_bytes!("detect.tflite");
 
     let mut session = ssvm_tensorflow_interface::Session::new(&model_data, ssvm_tensorflow_interface::ModelType::TensorFlowLite);
     session
@@ -23,7 +23,7 @@ pub fn infer(image_data: &[u8]) -> Vec<u8> {
            .run();
     let res_vec: Vec<f32> = session.get_output("TFLite_Detection_PostProcess");
     //let num_class:Vec<f32>=session.get_output("TFLite_Detection_PostProcess:2");
-    let res_score:Vec<f32>=session.get_output("TFLite_Detection_PostProcess:1");
+    let res_score:Vec<f32>=session.get_output("TFLite_Detection_PostProcess:2");
     //let num:Vec<f32>=session.get_output("TFLite_Detection_PostProcess:3");
     // Parse results.
     let mut iter = 0;
