@@ -36,7 +36,12 @@ anyhow = "1.0"
 torch-sys = {version="0.4.0", path="your_code_directory/torch-sys"}
 ```
 ## Model Inference
-
+In src/main.rs file, line 128    
+```bash
+let original_image = image::load("ride.png")?;
+```
+is your own image path, so if you want to change this, just put your image into the current directory,and change the path of load("").
+then exec the following code
 ```bash
 cargo run 
 ```
