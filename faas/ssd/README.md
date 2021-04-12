@@ -47,7 +47,7 @@ Make a function call via the web.
 ```
 $ curl --location --request POST 'https://rpc.ssvm.secondstate.io:8081/api/run/your_wasmid/infer/bytes' \
 --header 'Content-Type: application/octet-stream' \
---data-binary '@image.jpg' \
+--data-binary '@src/ride.png' \
 --output result.jpg
 ```
 image.jpg is your own custom image, not upload here.
