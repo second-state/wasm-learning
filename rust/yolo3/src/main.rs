@@ -125,7 +125,7 @@ pub fn main() -> Result<()> {
     
     let model = darknet.build_model(&vs.root())?;
     
-    let original_image = image::load("plane.jpg")?;
+    let original_image = image::load("ride.png")?;
     
     let image = image::resize(&original_image, 300, 300)?;
     
