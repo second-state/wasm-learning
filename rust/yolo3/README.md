@@ -20,6 +20,7 @@ torch-sys	v0.4.0
 
 first, Download LibTorch from Source
 https://pytorch.org/get-started/locally/ with litorch c++ version(only cpu).
+then unzip the zip file.
 second, Set environment variables
 Linux:
 ```bash
