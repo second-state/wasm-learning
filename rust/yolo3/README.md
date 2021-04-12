@@ -31,7 +31,7 @@ third, Set your Cargo.toml
 ```bash
 [dependencies]
 libc = "0.2.0"
-tch = { version = "0.4.0", path = "your_code_directory/tch-rs" }
+tch = { version = "0.4.0", path = "your_code_directory/tch" }
 anyhow = "1.0"
 [dev-dependencies]
 torch-sys = {version="0.4.0", path="your_code_directory/torch-sys"}
