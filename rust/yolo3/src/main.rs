@@ -9,7 +9,7 @@ use anyhow::{ensure, Result};
 use tch::nn::ModuleT;
 use tch::vision::image;
 use tch::Tensor;
-const CONFIG_NAME: &'static str = "examples/yolo/yolo-v3.cfg";
+const CONFIG_NAME: &'static str = "yolo-v3.cfg";
 const CONFIDENCE_THRESHOLD: f64 = 0.5;
 const NMS_THRESHOLD: f64 = 0.4;
 
@@ -116,26 +116,27 @@ pub fn report(pred: &Tensor, img: &Tensor, w: i64, h: i64) -> Result<Tensor> {
 }
 
 pub fn main() -> Result<()> {
-    let args: Vec<_> = std::env::args().collect();
-    ensure!(args.len() >= 3, "usage: main yolo-v3.ot img.jpg ...");
 
-    // Create the model and load the weights from the file.
+
+    let index:i32=1;
     let mut vs = tch::nn::VarStore::new(tch::Device::Cpu);
+    
     let darknet = darknet::parse_config(CONFIG_NAME)?;
+    
     let model = darknet.build_model(&vs.root())?;
-    vs.load(&args[1])?;
-
-    for (index, image) in args.iter().skip(2).enumerate() {
-        // Load the image file and resize it.
-        let original_image = image::load(image)?;
-        let net_width = darknet.width()?;
-        let net_height = darknet.height()?;
-        let image = image::resize(&original_image, net_width, net_height)?;
-        let image = image.unsqueeze(0).to_kind(tch::Kind::Float) / 255.;
-        let predictions = model.forward_t(&image, false).squeeze();
-        let image = report(&predictions, &original_image, net_width, net_height)?;
-        image::save(&image, format!("output-{:05}.jpg", index))?;
-        println!("Converted {}", index);
-    }
+    
+    let original_image = image::load("plane.jpg")?;
+    
+    let image = image::resize(&original_image, 300, 300)?;
+    
+    let image = image.unsqueeze(0).to_kind(tch::Kind::Float) / 255.;
+    
+    let predictions = model.forward_t(&image, false).squeeze();
+    
+    let image = report(&predictions, &original_image, 300, 300)?;
+    
+    image::save(&image, format!("output-{:05}.jpg", index))?;
+    println!("Converted {}", index);
+    
     Ok(())
 }
