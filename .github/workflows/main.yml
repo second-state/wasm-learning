@@ -42,7 +42,10 @@ jobs:
         cargo install http_proxy
         cargo install mtcnn
         cargo install mobilenet_v2
-        
+    
+    - name: Set Rust to required version
+      run: rustup override set 1.50.0
+    
     - name: Install npm packages and Deno
       run: |
         npm i ssvm ssvm-extensions sync-request better-sqlite3
