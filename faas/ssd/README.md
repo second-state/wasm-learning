@@ -7,6 +7,7 @@ Run SSD tensorflow models as functions.
 ## Prerequisites
 
 If you have not done so already, follow these simple instructions to install [Rust](https://www.rust-lang.org/tools/install) and [ssvmup](https://www.secondstate.io/articles/ssvmup/).
+new model here https://drive.google.com/file/d/1YN4nYVbA0hMtPZDZlIlN5M9Z8qllHVM-/view?usp=sharing download through this link. 
 
 
 ## Build the WASM bytecode
