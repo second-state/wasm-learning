@@ -15,7 +15,7 @@ pub fn infer(image_data: &[u8]) -> Vec<u8> {
         flat_img.push(rgb[0] as f32);
     }
 
-    let model_data: &[u8] = include_bytes!("detect.tflite");
+    let model_data: &[u8] = include_bytes!("detect_fast_nms.tflite");
 
     let mut session = ssvm_tensorflow_interface::Session::new(&model_data, ssvm_tensorflow_interface::ModelType::TensorFlowLite);
     session
