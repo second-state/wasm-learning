@@ -79,7 +79,7 @@ In order to make Slack call SecondState's FaaS infrastructure, we need to allow 
 
 Thankfully we can create a [Slack App](https://api.slack.com/apps) which will allow us to define any behaviour and therefore interact with SecondState's FaaS infrastructure.
 
-![slack apps]("../../images/slack_apps.png")
+![slack apps]("https://github.com/second-state/wasm-learning/blob/master/faas/slack/images/slack_apps.png?raw=true")
 
 
 
