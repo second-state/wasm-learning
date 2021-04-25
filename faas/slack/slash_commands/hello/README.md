@@ -1,6 +1,6 @@
 # The hello example
 
-In this example, we demonstrate how to create and run a Rust function in the Second State Rust FaaS.
+In this example, we demonstrate how to create a Slack App which can take content from a channel, execute some logic as Rust/Wasm on SSVM, and then return the result (in a Bot-like fashion) to the original messenger/user (as a response in that same channel)
 
 ## Prerequisites
 
@@ -23,11 +23,15 @@ Below is the entire content of the [src/lib.rs](src/lib.rs) file.
 
 ```
 use wasm_bindgen::prelude::*;
+use serde_json::{Value};
+
 
 #[wasm_bindgen]
-pub fn say(s: &str) -> String {
-  let r = String::from("hello ");
-  return r + s;
+pub fn say(slack_object_as_string: &str) -> String {
+  let hello_prefix = String::from("Hello ");
+  let json_object_from_slack: Value = serde_json::from_str(&slack_object_as_string).unwrap();
+  let hello_suffix: String = json_object_from_slack["text"].to_string();
+  return hello_prefix + &hello_suffix;
 }
 ```
 
@@ -39,8 +43,11 @@ name = "hello_lib"
 path = "src/lib.rs"
 crate-type =["cdylib"]
 
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
 [dependencies]
 wasm-bindgen = "=0.2.61"
+serde_json = "1.0"
 ```
 
 ## Build the WASM bytecode
@@ -66,16 +73,16 @@ Returns
 {"wasm_id":161,"wasm_sha256":"0xfb413547a8aba56d0349603a7989e269f3846245e51804932b3e02bc0be4b665","usage_key":"00000000-0000-0000-0000-000000000000","admin_key":"00xxxxxx-xxxx-xxxx-xxxx-4adc960fd2b8"}
 ```
 
-Make a function call via the web.
+## Slack
 
-```
-curl --location --request POST 'https://rpc.ssvm.secondstate.io:8081/api/run/161/say' \
---header 'Content-Type: text/plain' \
---data-raw 'Second State FaaS'
-```
+In order to make Slack call SecondState's FaaS infrastructure, we need to allow Slack to make outgoing calls (an outgoing callback to a specific custom URL endpoint i.e. the term webhook). Unfortuately, outgoing webhooks are a legacy feature of Slack. Slack strongly recommends that users do not use legacy custom integrations anymore [1]
 
-## Web test
+Thankfully we can create a [Slack App](https://api.slack.com/apps) which will allow us to define any behaviour and therefore interact with SecondState's FaaS infrastructure.
 
-Load this [static web page](html/index.html) to interact with the function. Look, serverless!
+![slack apps]("../../images/slack_apps.png")
 
-https://second-state.github.io/wasm-learning/faas/hello/html/index.html
+
+
+
+[1] https://api.slack.com/legacy/custom-integrations/outgoing-webhooks
+[2] https://api.slack.com/apis/connections/events-api
