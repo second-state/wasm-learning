@@ -4,7 +4,7 @@ use ssvm_storage_interface::ssvm_storage;
 use ssvm_wasi_helper::ssvm_wasi_helper::_initialize;
 // This example lets you create and manage new keys for every new store operation
 #[wasm_bindgen]
-pub fn store_a_string(_string_to_store: String) -> String {
+pub fn store_a_string(_string_to_store: &str) -> String {
     let storage_key: String = ssvm_storage::store::store(_string_to_store);
     storage_key
 }
