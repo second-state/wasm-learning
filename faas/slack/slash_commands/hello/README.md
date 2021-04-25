@@ -105,4 +105,5 @@ We will see that the Slack App sends the webhook to SecondState's Faas (runs the
 ![slack apps](../../images/hw_response.png)
 
 [1] https://api.slack.com/legacy/custom-integrations/outgoing-webhooks
+
 [2] https://api.slack.com/apis/connections/events-api
