@@ -1,10 +1,13 @@
 use wasm_bindgen::prelude::*;
 use ssvm_tensorflow_interface;
+use image::{GenericImageView, Pixel};
+use imageproc::drawing::draw_hollow_rect_mut;
+use imageproc::rect::Rect;
 use std::str;
 use std::time::{Instant};
 
 #[wasm_bindgen]
-pub fn infer(image_data: &[u8]) -> String {
+pub fn infer(image_data: &[u8]) -> Vec<u8> {
     let start = Instant::now();
     let img = image::load_from_memory(image_data).unwrap().to_rgb();
     println!("Loaded image in ... {:?}", start.elapsed());
@@ -22,39 +25,44 @@ pub fn infer(image_data: &[u8]) -> String {
     let labels = include_str!("labelmap.txt");
 
     let mut session = ssvm_tensorflow_interface::Session::new(model_data, ssvm_tensorflow_interface::ModelType::TensorFlowLite);
-    session.add_input("input", &flat_img, &[1, 300, 300, 3])
-           .add_output("MobilenetV2/Predictions/Softmax")
+    session.add_input("min_size", &[20.0f32], &[])
+           .add_input("thresholds", &[0.6f32, 0.7f32, 0.7f32], &[3])
+           .add_input("factor", &[0.709f32], &[])
+           .add_input("input", &flat_img, &[img.height().into(), img.width().into(), 3])
+           .add_output("box")
+           .add_output("prob")
            .run();
-    let res_vec: Vec<f32> = session.get_output("MobilenetV2/Predictions/Softmax");
-    println!("Parsed output in ... {:?}", start.elapsed());
+    let res_vec: Vec<f32> = session.get_output("box");
 
-    let mut i = 0;
-    let mut max_index: i32 = -1;
-    let mut max_value: f32 = -1.0;
-    while i < res_vec.len() {
-        let cur = res_vec[i];
-        if cur > max_value {
-            max_value = cur;
-            max_index = i as i32;
-        }
-        i += 1;
+    // Parse results.
+    let mut iter = 0;
+    let mut box_vec: Vec<[f32; 4]> = Vec::new();
+    while (iter * 4) < res_vec.len() {
+        box_vec.push([
+            res_vec[4 * iter + 1], // x1
+            res_vec[4 * iter],     // y1
+            res_vec[4 * iter + 3], // x2
+            res_vec[4 * iter + 2], // y2
+        ]);
+        iter += 1;
     }
-    println!("{} : {}", max_index, max_value);
+    println!("Parsed results in ... {:?}", start.elapsed());
 
-    let mut confidence = "low";
-    if max_value > 0.75 {
-        confidence = "very high";
-    } else if max_value > 0.5 {
-        confidence = "high";
-    } else if max_value > 0.2 {
-        confidence = "medium";
+    println!("Drawing box: {} results ...", box_vec.len());
+    let line = Pixel::from_slice(&[0, 255, 0, 0]);
+    for i in 0..box_vec.len() {
+        let xy = box_vec[i];
+        let x1: i32 = xy[0] as i32;
+        let y1: i32 = xy[1] as i32;
+        let x2: i32 = xy[2] as i32;
+        let y2: i32 = xy[3] as i32;
+        let rect = Rect::at(x1, y1).of_size((x2 - x1) as u32, (y2 - y1) as u32);
+        draw_hollow_rect_mut(&mut img, rect, *line);
     }
+    
+    let mut buf = Vec::new();
+    img.write_to(&mut buf, image::ImageOutputFormat::Jpeg(80u8)).expect("Unable to write");
+    println!("Drawn on image in ... {:?}", start.elapsed());
 
-    let mut label_lines = labels.lines();
-    for _i in 0..max_index {
-      label_lines.next();
-    }
-    let ret: (String, String) = (label_lines.next().unwrap().to_string(), confidence.to_string());
-    println!("Finished post-processing in ... {:?}", start.elapsed());
-    return serde_json::to_string(&ret).unwrap();
+    return buf;
 }
