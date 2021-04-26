@@ -21,7 +21,7 @@ pub fn infer(image_data: &[u8]) -> String {
     let model_data: &[u8] = include_bytes!("ssd_mobilenet_v1_1_default_1.tflite");
     let labels = include_str!("imagenet_slim_labels.txt");
 
-    let mut session = ssvm_tensorflow_interface::Session::new(model_data, ssvm_tensorflow_interface::ModelType::TensorFlow);
+    let mut session = ssvm_tensorflow_interface::Session::new(model_data, ssvm_tensorflow_interface::ModelType::TensorFlowLite);
     session.add_input("input", &flat_img, &[1, 224, 224, 3])
            .add_output("MobilenetV2/Predictions/Softmax")
            .run();
