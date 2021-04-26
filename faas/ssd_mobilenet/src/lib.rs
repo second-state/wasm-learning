@@ -29,6 +29,7 @@ pub fn infer(image_data: &[u8]) -> Vec<u8> {
            .add_output("box")
            .add_output("prob")
            .run();
+    println!("Output: {:?}",session.get_output());
     let res_vec: Vec<f32> = session.get_output("box");
 
     // Parse results.
