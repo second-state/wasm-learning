@@ -22,7 +22,7 @@ pub fn infer(image_data: &[u8]) -> String {
     let labels = include_str!("labelmap.txt");
 
     let mut session = ssvm_tensorflow_interface::Session::new(model_data, ssvm_tensorflow_interface::ModelType::TensorFlowLite);
-    session.add_input("input", &flat_img, &[1, 224, 224, 3])
+    session.add_input("input", &flat_img, &[1, 300, 300, 3])
            .add_output("MobilenetV2/Predictions/Softmax")
            .run();
     let res_vec: Vec<f32> = session.get_output("MobilenetV2/Predictions/Softmax");
