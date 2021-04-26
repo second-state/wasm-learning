@@ -17,7 +17,7 @@ function callService() {
   },0);
 
   $.ajax({
-      url: "https://rpc.ssvm.secondstate.io:8081/api/run/146/infer",
+      url: "https://rpc.ssvm.secondstate.io:8081/api/run/370/infer",
       type: "post",
       data : $('#input')[0].files[0],
       contentType: "application/octet-stream",
@@ -44,16 +44,14 @@ function callService() {
         <div style="font-size:90%;color:gray;margin:20px"><a href="https://www.secondstate.io/faas/">Fast, safe, portable and serverless Rust functions as services</a></div>
       </div>
 
-      <h1>Image classification</h1>
-      <p class="lead">Using the MobileNet Tensorflow model. <a href="https://www.secondstate.io/articles/faas-image-classification/">See code tutorial</a>. You can also try specialized image recognition models that can recognize the specific kind of <a href="../../mobilenet_birds/html/index.html">bird</a>, <a href="../../mobilenet_plants/html/index.html">plant</a>, <a href="../../mobilenet_insects/html/index.html">insect</a> or <a href="../../mobilenet_food/html/index.html">food</a> on your picture.</p>
-
+      <h1>Object detection</h1>
       <form id="draw" enctype="multipart/form-data">
         <div class="form-group">
-          <label for="input">Please upload an image file (<a href="grace_hopper.jpg">example</a>)</label>
+          <label for="input">Please upload an image file (<a href="android_apple_banana.png">like this example</a>)</label>
           <input type="file" class="form-control-file" id="input" name="input">
         </div>
 
-        <button class="btn btn-primary mb-2" id="process" name="process" value="1" onclick="return callService();">Classify</button>
+        <button class="btn btn-primary mb-2" id="process" name="process" value="1" onclick="return callService();">Detect Objects</button>
       </form>
       
       <div class="jumbotron">
