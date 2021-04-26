@@ -1,6 +1,6 @@
-# The MobileNet example
+# TensorFlow Object Detection 
 
-Run MobileNet tensorflow models as functions.
+This tutorial demonstrates how to create a a Function as a Service (FaaS), using TensorFlow Object Detection, which is able to detect and identify multiple objects (in a single image). This tutorial uses [a pre-trained model](https://tfhub.dev/tensorflow/lite-model/ssd_mobilenet_v1/1/default/1) optimized to work with TensorFlow Lite for Object detection.
 
 ## Prerequisites
 
