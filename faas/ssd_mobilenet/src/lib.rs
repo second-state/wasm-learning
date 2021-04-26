@@ -9,17 +9,14 @@ use std::time::{Instant};
 #[wasm_bindgen]
 pub fn infer(image_data: &[u8]) -> Vec<u8> {
     let start = Instant::now();
-    let img = image::load_from_memory(image_data).unwrap().to_rgb();
-    println!("Loaded image in ... {:?}", start.elapsed());
-    // Resize to 300px x 300px
-    let resized = image::imageops::thumbnail(&img, 300, 300);
-    println!("Resized image in ... {:?}", start.elapsed());
+    let mut img = image::load_from_memory(image_data).unwrap();
     let mut flat_img: Vec<f32> = Vec::new();
-    for rgb in resized.pixels() {
-        flat_img.push(rgb[0] as f32 / 255.);
-        flat_img.push(rgb[1] as f32 / 255.);
-        flat_img.push(rgb[2] as f32 / 255.);
+    for (_x, _y, rgb) in img.pixels() {
+        flat_img.push(rgb[2] as f32);
+        flat_img.push(rgb[1] as f32);
+        flat_img.push(rgb[0] as f32);
     }
+    println!("Loaded image in ... {:?}", start.elapsed());
     // Load TFLite model data
     let model_data: &[u8] = include_bytes!("ssd_mobilenet_v1_1_default_1.tflite");
     let labels = include_str!("labelmap.txt");
