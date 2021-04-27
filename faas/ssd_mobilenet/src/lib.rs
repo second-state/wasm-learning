@@ -1,6 +1,7 @@
 use wasm_bindgen::prelude::*;
 use ssvm_tensorflow_interface;
 use image::{GenericImageView, Pixel};
+//use image::{GenericImageView, Pixel, FilterType};
 use imageproc::drawing::draw_hollow_rect_mut;
 use imageproc::rect::Rect;
 use std::str;
@@ -9,24 +10,26 @@ use std::time::{Instant};
 #[wasm_bindgen]
 pub fn infer(image_data: &[u8]) -> Vec<u8> {
     let start = Instant::now();
-    let mut img = image::load_from_memory(image_data).unwrap();
+    let mut img_pre = image::load_from_memory(image_data).unwrap();
+    let mut img = img_pre.resize(300, 300, image::imageops::FilterType::Gaussian);
     let mut flat_img: Vec<f32> = Vec::new();
     for (_x, _y, rgb) in img.pixels() {
         flat_img.push(rgb[2] as f32);
         flat_img.push(rgb[1] as f32);
         flat_img.push(rgb[0] as f32);
     }
+    //println!("{:?}", flat_img);
     println!("Loaded image in ... {:?}", start.elapsed());
     // Load TFLite model data
     let model_data: &[u8] = include_bytes!("ssd_mobilenet_v1_1_default_1.tflite");
     let labels = include_str!("labelmap.txt");
 
     let mut session = ssvm_tensorflow_interface::Session::new(model_data, ssvm_tensorflow_interface::ModelType::TensorFlowLite);
-    session.add_input("input", &flat_img, &[1, 224, 224, 3]);
+    session.add_input("input", &flat_img);
     session.add_output("MobilenetV2/Predictions/Softmax");
     session.run();
     let res_vec: Vec<f32> = session.get_output("MobilenetV2/Predictions/Softmax");
-
+    println!("{:?}", res_vec);
     // Parse results.
     let mut iter = 0;
     let mut box_vec: Vec<[f32; 4]> = Vec::new();
@@ -52,7 +55,7 @@ pub fn infer(image_data: &[u8]) -> Vec<u8> {
         let rect = Rect::at(x1, y1).of_size((x2 - x1) as u32, (y2 - y1) as u32);
         draw_hollow_rect_mut(&mut img, rect, *line);
     }
-    
+
     let mut buf = Vec::new();
     img.write_to(&mut buf, image::ImageOutputFormat::Jpeg(80u8)).expect("Unable to write");
     println!("Drawn on image in ... {:?}", start.elapsed());
