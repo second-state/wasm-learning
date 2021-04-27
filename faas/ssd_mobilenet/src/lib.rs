@@ -10,28 +10,25 @@ use std::time::{Instant};
 pub fn infer(image_data: &[u8]) -> Vec<u8> {
     let start = Instant::now();
     let mut img = image::load_from_memory(image_data).unwrap();
-    let mut flat_img: Vec<f32> = Vec::new();
-    for (_x, _y, rgb) in img.pixels() {
-        flat_img.push(rgb[2] as f32);
-        flat_img.push(rgb[1] as f32);
-        flat_img.push(rgb[0] as f32);
-    }
+    //let mut flat_img: Vec<f32> = Vec::new();
+    //for (_x, _y, rgb) in img.pixels() {
+    //    flat_img.push(rgb[2] as f32);
+    //    flat_img.push(rgb[1] as f32);
+    //    flat_img.push(rgb[0] as f32);
+    //}
+    let mut img_buf = Vec::new();
+    file_img.read_to_end(&mut img_buf).unwrap();
+    let flat_img = ssvm_tensorflow_interface::load_jpg_image_to_rgb32f(&img_buf, 224, 224);
     println!("Loaded image in ... {:?}", start.elapsed());
     // Load TFLite model data
     let model_data: &[u8] = include_bytes!("ssd_mobilenet_v1_1_default_1.tflite");
     let labels = include_str!("labelmap.txt");
 
     let mut session = ssvm_tensorflow_interface::Session::new(model_data, ssvm_tensorflow_interface::ModelType::TensorFlowLite);
-    //session.add_input("min_size", &[20.0f32], &[])
-    //       .add_input("thresholds", &[0.6f32, 0.7f32, 0.7f32], &[3])
-    //       .add_input("factor", &[0.709f32], &[])
-    //       .add_input("input", &flat_img, &[img.height().into(), img.width().into(), 3])
-    //       .add_output("box")
-    //       .add_output("prob")
-    //       .run();
+    session.add_input("input", &flat_img, &[1, 224, 224, 3]);
+    session.add_output("MobilenetV2/Predictions/Softmax");
     session.run();
-    println!("{}", session);
-    let res_vec: Vec<f32> = session.get_output("box");
+    let res_vec: Vec<f32> = session.get_output("MobilenetV2/Predictions/Softmax");
 
     // Parse results.
     let mut iter = 0;
