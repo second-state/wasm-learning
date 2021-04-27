@@ -22,14 +22,15 @@ pub fn infer(image_data: &[u8]) -> Vec<u8> {
     let labels = include_str!("labelmap.txt");
 
     let mut session = ssvm_tensorflow_interface::Session::new(model_data, ssvm_tensorflow_interface::ModelType::TensorFlowLite);
-    session.add_input("min_size", &[20.0f32], &[])
-           .add_input("thresholds", &[0.6f32, 0.7f32, 0.7f32], &[3])
-           .add_input("factor", &[0.709f32], &[])
-           .add_input("input", &flat_img, &[img.height().into(), img.width().into(), 3])
-           .add_output("box")
-           .add_output("prob")
-           .run();
-    println!("Output: {:?}",session.get_output());
+    //session.add_input("min_size", &[20.0f32], &[])
+    //       .add_input("thresholds", &[0.6f32, 0.7f32, 0.7f32], &[3])
+    //       .add_input("factor", &[0.709f32], &[])
+    //       .add_input("input", &flat_img, &[img.height().into(), img.width().into(), 3])
+    //       .add_output("box")
+    //       .add_output("prob")
+    //       .run();
+    session.run();
+    println!("Output: {:?}",session);
     let res_vec: Vec<f32> = session.get_output("box");
 
     // Parse results.
