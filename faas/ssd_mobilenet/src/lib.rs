@@ -10,15 +10,12 @@ use std::time::{Instant};
 pub fn infer(image_data: &[u8]) -> Vec<u8> {
     let start = Instant::now();
     let mut img = image::load_from_memory(image_data).unwrap();
-    //let mut flat_img: Vec<f32> = Vec::new();
-    //for (_x, _y, rgb) in img.pixels() {
-    //    flat_img.push(rgb[2] as f32);
-    //    flat_img.push(rgb[1] as f32);
-    //    flat_img.push(rgb[0] as f32);
-    //}
-    let mut img_buf = Vec::new();
-    img.read_to_end(&mut img_buf).unwrap();
-    let flat_img = ssvm_tensorflow_interface::load_jpg_image_to_rgb32f(&img_buf, 224, 224);
+    let mut flat_img: Vec<f32> = Vec::new();
+    for (_x, _y, rgb) in img.pixels() {
+        flat_img.push(rgb[2] as f32);
+        flat_img.push(rgb[1] as f32);
+        flat_img.push(rgb[0] as f32);
+    }
     println!("Loaded image in ... {:?}", start.elapsed());
     // Load TFLite model data
     let model_data: &[u8] = include_bytes!("ssd_mobilenet_v1_1_default_1.tflite");
