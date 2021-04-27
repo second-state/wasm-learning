@@ -17,7 +17,7 @@ pub fn infer(image_data: &[u8]) -> Vec<u8> {
     //    flat_img.push(rgb[0] as f32);
     //}
     let mut img_buf = Vec::new();
-    file_img.read_to_end(&mut img_buf).unwrap();
+    img.read_to_end(&mut img_buf).unwrap();
     let flat_img = ssvm_tensorflow_interface::load_jpg_image_to_rgb32f(&img_buf, 224, 224);
     println!("Loaded image in ... {:?}", start.elapsed());
     // Load TFLite model data
