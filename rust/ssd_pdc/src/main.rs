@@ -30,14 +30,18 @@ fn main() {
     image = { version = "0.23.0", default-features = false, features = ["jpeg", "png", "gif"] }
     imageproc = "0.21.0"
     */
-    let mut args = ssvm_tensorflow_interface::SessionArgs::new();
-    args.add_input("Preprocessor/sub", &flat_img, &[1, 256, 256, 3]);
-    args.add_output("concat");
-    args.add_output("concat_1");
+    let mut session = ssvm_tensorflow_interface::Session::new(
+        &mod_buf,
+        ssvm_tensorflow_interface::ModelType::TensorFlow,
+    );
+    session
+        .add_input("Preprocessor/sub", &flat_img, &[1, 256, 256, 3])
+        .add_output("concat")
+        .add_output("concat_1")
+        .run();
 
-    let res = ssvm_tensorflow_interface::exec_model(&mod_buf, &args);
-    let concat_vec: Vec<f32> = res.get_output("concat");
-    let concat_1_vec: Vec<f32> = res.get_output("concat_1");
+    let concat_vec: Vec<f32> = session.get_output("concat");
+    let concat_1_vec: Vec<f32> = session.get_output("concat_1");
 
     println!("Output concat : {:?}", concat_vec);
     println!("Output concat_1 : {:?}", concat_1_vec);
