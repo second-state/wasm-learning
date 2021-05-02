@@ -40,9 +40,9 @@ pub fn infer(image_data: &[u8]) -> Vec<u8> {
         if i != 0 {
             if line.unwrap() != "???" {
                 let mut a = HashMap::new();
-                a.insert("id", i);
+                a.insert("id", i.to_string());
                 a.insert("name", line.unwrap());
-                map.insert(a);
+                map.insert(i.to_string(), a);
                 a.clear();
                 i = i + 1;
             }
