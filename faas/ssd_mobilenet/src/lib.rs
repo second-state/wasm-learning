@@ -35,7 +35,7 @@ pub fn infer(image_data: &[u8]) -> Vec<u8> {
     // Create dict/map from the label data
     let mut map = HashMap::new();
     // Process the lines of labelmap.txt
-    let i: u32 = 0;
+    let mut i: u32 = 0;
     for line in reader.lines() {
         if i != 0 {
             if line.unwrap() != "???" {
