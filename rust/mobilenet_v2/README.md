@@ -20,25 +20,25 @@ The result wasm file will be at `target/wasm32-wasi/release/mobilenet_v2.wasm`.
 
 ### Option 1. Build ssvm-tensorflow
 
-Get [ssvm-tensorflow](https://github.com/second-state/ssvm-tensorflow).
+Get [ssvm-tensorflow-tools](https://github.com/second-state/ssvm-tensorflow-tools).
 
 ```bash
 $ docker pull secondstate/ssvm
 $ docker run -it --rm \
-    -v <path/to/your/ssvm-tensorflow/source/folder>:/root/ssvm-tensorflow \
+    -v <path/to/your/ssvm-tensorflow/source/folder>:/root/ssvm-tensorflow-tools \
     secondstate/ssvm:latest
-(docker)$ cd /root/ssvm-tensorflow
+(docker)$ cd /root/ssvm-tensorflow-tools
 (docker)$ mkdir -p build && cd build
-# Build ssvm-tensorflow
+# Build ssvm-tensorflow-tools
 (docker)$ cmake -DCMAKE_BUILD_TYPE=Release .. && make -j
 ```
 
-### Option 2. Get ssvm-tensorflow release version
+### Option 2. Get ssvm-tensorflow-tools release version
 
 ```bash
-wget https://github.com/second-state/ssvm-tensorflow/releases/download/0.1.0/ssvm-tensorflow-0.1.0-linux-x64.tar.gz
-tar -zxvf ssvm-tensorflow-0.1.0-linux-x64.tar.gz
-./download_dependencies  # Download the required shared libraries and make symbolic links.
+wget https://github.com/second-state/ssvm-tensorflow-tools/releases/download/0.8.0-rc1/ssvm-tensorflow-tools-0.8.0-rc1-manylinux2014_x86_64.tar.gz
+tar -zxvf ssvm-tensorflow-tools-0.8.0-rc1-manylinux2014_x86_64.tar.gz
+./download_dependencies_all.sh  # Download the required shared libraries and make symbolic links.
 ```
 
 ## Run
@@ -60,8 +60,8 @@ LD_LIBRARY_PATH=. ./ssvm-tensorflow --dir .:. mobilenet_v2.wasm.so mobilenet_v2_
 
 The output will be:
 ```bash
-653 : 0.32277536392211914
+653 : 0.33690106868743896
 ```
 
-Which is index 653 (0-based index) with rate 0.32277536392211914.
+Which is index 653 (0-based index) with rate 0.33690106868743896.
 The index 653 of label table (which is line 654 in `imagenet_slim_labels.txt`) is `military uniform`.
