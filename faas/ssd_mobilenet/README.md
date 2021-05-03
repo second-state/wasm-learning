@@ -111,13 +111,26 @@ session.get_output("TFLite_Detection_PostProcess:3")
 
 We get the following when we execute our Rust/Wasm at id 370.
 
+**TFLite_Detection_PostProcess** - 4 coordinates per identified object (which will allow us to draw a box around each of the identified objects).
+
 ```
-[-0.010260969, 0.0011624098, 0.98118556, 0.9926089, 0.004220102, 0.53638095, 0.02292574, 0.57048565, 0.69399744, 0.466397, 0.7042571, 0.47229737, 0.004780039, 0.42075238, 0.019305974, 0.44682124, 0.0065962216, 0.5777225, 0.023609452, 0.6063846, 0.004057551, 0.36513472, 0.020028463, 0.39766008, 0.004306032, 0.30938902, 0.019779982, 0.3440371, 0.00783987, 0.63086903, 0.022365805, 0.65495706, 0.6049054, 0.51887727, 0.6189794, 0.52526283, 0.0045467815, 0.7417675, 0.019539231, 0.76585555]
+[0.20577799, 0.89496857, 0.22279121, 0.90776914, 0.00009596348, -0.00836879, 0.94869584, 1.00214, 0.0064776447, 0.3151228, 0.022198115, 0.34289303, 0.007487188, 0.36946553, 0.022718485, 0.4009788, 0.0061942455, 0.58185196, 0.020951597, 0.6114346, -0.014416538, 0.007115066, 0.2539058, 0.972989, 0.6276478, 0.6714385, 0.64287907, 0.6809185, 0.006754921, 0.73659295, 0.02039092, 0.76185066, 0.005957272, 0.79260004, 0.02118857, 0.81521225, 0.007606612, 0.41760683, 0.022599062, 0.44537705]
+```
 
-[4.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+**TFLite_Detection_PostProcess:1** - classes of objects detected i.e. which item in the `labelmap_v2.txt` does each result match i.e. table etc.
+```
+[37.0, 4.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+```
 
-[0.34375, 0.28125, 0.25, 0.234375, 0.234375, 0.234375, 0.22265625, 0.21484375, 0.20703125, 0.19140625]
+**TFLite_Detection_PostProcess:2** - the score which shows how certain the object detection for the particular items is
 
+```
+[0.26953125, 0.26953125, 0.234375, 0.21484375, 0.20703125, 0.20703125, 0.19921875, 0.19140625, 0.19140625, 0.19140625]
+```
+
+**session.get_output("TFLite_Detection_PostProcess:3** - the number of object detection items returned from the execution of the Wasm, in this case `10` (this makes sense because there are 40 coordinates i.e. 4 sides to each of the 10 boxes we can potentially draw)
+
+```
 [10.0]
 ```
 
