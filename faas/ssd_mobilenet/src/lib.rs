@@ -12,7 +12,7 @@ use std::str;
 use std::time::{Instant};
 
 #[wasm_bindgen]
-pub fn infer(image_data: &[u8]) -> Vec<u8> {
+pub fn detect(image_data: &[u8]) -> Vec<u8> {
     // Set start on the timer
     let start = Instant::now();
     // Process the input image data
@@ -29,38 +29,28 @@ pub fn infer(image_data: &[u8]) -> Vec<u8> {
     // Measure time to process input image
     println!("Loaded image in ... {:?}", start.elapsed());
 
-    // Open and read the TFLite label input data
-    let file = File::open("labelmap.txt").unwrap();
-    let reader = BufReader::new(file);
-    // Create dict/map from the label data
-    let mut map = HashMap::new();
-    // Process the lines of labelmap.txt
-    let mut i: u32 = 0;
-    for line in reader.lines() {
-        if i != 0 {
-            if line.unwrap() != "???" {
-                let mut a = HashMap::new();
-                a.insert("id", i.to_string());
-                a.insert("name", line.unwrap());
-                map.insert(i.to_string(), a);
-                a.clear();
-                i = i + 1;
-            }
-        }
-    }
-    println!("Labels: {:?}", map);
-
-    /* TODO
-    // Load TFLite model data
+    // Load in the model and label data
     let model_data: &[u8] = include_bytes!("detect.tflite");
-    let labels = include_str!("labelmap.txt");
+    let labels = include_str!("labelmap_v2.txt");
 
     let mut session = ssvm_tensorflow_interface::Session::new(model_data, ssvm_tensorflow_interface::ModelType::TensorFlowLite);
+
+    // Load TFLite model data
     session.add_input("input", &flat_img, &[1, 300, 300, 3]);
-    //session.add_output("MobilenetV2/Predictions/Softmax");
+    session.add_output("TFLite_Detection_PostProcess");
+    session.add_output("TFLite_Detection_PostProcess:1");
+    session.add_output("TFLite_Detection_PostProcess:2");
+    session.add_output("TFLite_Detection_PostProcess:3");
     session.run();
-    let res_vec: Vec<f32> = session.get_output("MobilenetV2/Predictions/Softmax");
+    let res_vec: Vec<f32> = session.get_output("TFLite_Detection_PostProcess");
     println!("{:?}", res_vec);
+    let res_vec1: Vec<f32> = session.get_output("TFLite_Detection_PostProcess:1");
+    println!("{:?}", res_vec1);
+    let res_vec2: Vec<f32> = session.get_output("TFLite_Detection_PostProcess:2");
+    println!("{:?}", res_vec2);
+    let res_vec3: Vec<f32> = session.get_output("TFLite_Detection_PostProcess:3");
+    println!("{:?}", res_vec3);
+
     // Parse results.
     let mut iter = 0;
     let mut box_vec: Vec<[f32; 4]> = Vec::new();
@@ -86,7 +76,7 @@ pub fn infer(image_data: &[u8]) -> Vec<u8> {
         let rect = Rect::at(x1, y1).of_size((x2 - x1) as u32, (y2 - y1) as u32);
         draw_hollow_rect_mut(&mut img, rect, *line);
     }
-    */
+
     let mut buf = Vec::new();
     img.write_to(&mut buf, image::ImageOutputFormat::Jpeg(80u8)).expect("Unable to write");
     println!("Drawn on image in ... {:?}", start.elapsed());
