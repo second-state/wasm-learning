@@ -1,0 +1,17 @@
+[package]
+name = "ocr"
+version = "0.1.0"
+authors = ["azureuser"]
+edition = "2018"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.ht
+[lib]
+name = "ocr_lib"
+path = "src/lib.rs"
+crate-type =["cdylib"]
+
+[dependencies]
+wasm-bindgen = "=0.2.61"
+ssvm_process_interface = "0.1.3"
+ssvm-wasi-helper = "=0.1.0"
+image = "0.23.12"

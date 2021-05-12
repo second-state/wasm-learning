@@ -1,0 +1,18 @@
+const {only_detection } = require('../pkg/ocr_lib.js');
+const {only_classification } = require('../pkg/ocr_lib.js');
+const {detection_classification_and_recognition } = require('../pkg/ocr_lib.js');
+const {detection_and_recognition } = require('../pkg/ocr_lib.js');
+//const {ocr } = require('../pkg/ocr_lib.js');
+const fs = require('fs');
+//console.time("yOLO Detection");
+//var img_src = fs.readFileSync("./test/img_12.jpg");
+var img_src ="./test/img_12.jpg";
+//console.timeLog("YOLO Detection");
+only_detection(img_src);
+only_classification(img_src);
+detection_classification_and_recognition(img_src);
+detection_and_recognition(img_src);
+//ocr("./test/img_12.jpg");
+//console.timeLog("YOLO Detection");
+//fs.writeFileSync("res.jpg", img_res);
+//console.timeEnd("YOLO Detection");
