@@ -1,7 +1,7 @@
-use ssvm_tensorflow_interface;
 use std::env;
 use std::fs::File;
 use std::io::Read;
+use wasmedge_tensorflow_interface;
 
 use image::{GenericImageView, Pixel};
 use imageproc::drawing::draw_hollow_rect_mut;
@@ -28,14 +28,22 @@ fn main() {
         flat_img.push(rgb[0] as f32);
     }
 
-    let mut session = ssvm_tensorflow_interface::Session::new(&mod_buf, ssvm_tensorflow_interface::ModelType::TensorFlow);
-    session.add_input("min_size", &[20.0f32], &[])
-           .add_input("thresholds", &[0.6f32, 0.7f32, 0.7f32], &[3])
-           .add_input("factor", &[0.709f32], &[])
-           .add_input("input", &flat_img, &[img.height().into(), img.width().into(), 3])
-           .add_output("box")
-           .add_output("prob")
-           .run();
+    let mut session = wasmedge_tensorflow_interface::Session::new(
+        &mod_buf,
+        wasmedge_tensorflow_interface::ModelType::TensorFlow,
+    );
+    session
+        .add_input("min_size", &[20.0f32], &[])
+        .add_input("thresholds", &[0.6f32, 0.7f32, 0.7f32], &[3])
+        .add_input("factor", &[0.709f32], &[])
+        .add_input(
+            "input",
+            &flat_img,
+            &[img.height().into(), img.width().into(), 3],
+        )
+        .add_output("box")
+        .add_output("prob")
+        .run();
 
     let res_vec: Vec<f32> = session.get_output("box");
 
@@ -63,6 +71,5 @@ fn main() {
         let rect = Rect::at(x1, y1).of_size((x2 - x1) as u32, (y2 - y1) as u32);
         draw_hollow_rect_mut(&mut img, rect, *line);
     }
-    
     img.save(img_out_path).unwrap();
 }
