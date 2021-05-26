@@ -38,7 +38,7 @@ pub fn infer(image_data: &[u8]) -> String {
         }
         i += 1;
     }
-    println!("{} : {}", max_index, max_value);
+    // println!("{} : {}", max_index, max_value);
 
     let mut confidence = "low";
     if max_value > 0.75 {
