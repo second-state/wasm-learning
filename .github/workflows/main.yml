@@ -92,7 +92,7 @@ jobs:
       run: |
         rustwasmc build
         node node/app.js
-        ssvmup clean
+        rustwasmc clean
       working-directory: nodejs/wasi
 
     - name: MobileNet Interpreter
