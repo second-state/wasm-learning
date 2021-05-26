@@ -110,23 +110,23 @@ jobs:
     #     rustwasmc clean
     #   working-directory: faas/mobilenet
 
-    - name: MTCNN Interpreter
-      run: |
-        rustwasmc build --enable-ext
-        cd test/
-        node test.js
-        cd ..
-        rustwasmc clean
-      working-directory: faas/mtcnn
+    # - name: MTCNN Interpreter
+    #   run: |
+    #     rustwasmc build --enable-ext
+    #     cd test/
+    #     node test.js
+    #     cd ..
+    #     rustwasmc clean
+    #   working-directory: faas/mtcnn
 
-    - name: MTCNN AOT
-      run: |
-        rustwasmc build --enable-aot --enable-ext
-        cd test/
-        node test.js
-        cd ..
-        rustwasmc clean
-      working-directory: faas/mtcnn
+    # - name: MTCNN AOT
+    #   run: |
+    #     rustwasmc build --enable-aot --enable-ext
+    #     cd test/
+    #     node test.js
+    #     cd ..
+    #     rustwasmc clean
+    #   working-directory: faas/mtcnn
 
     - name: kmeans example AOT
       run: |
