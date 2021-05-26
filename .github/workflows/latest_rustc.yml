@@ -158,6 +158,6 @@ jobs:
 
     - name: WasmEdge rust wasi application example
       run: |
-        cargo build --release --target wasm32-wasi
+        rustwasmc build
         node app.js
       working-directory: ssvm/file-example
