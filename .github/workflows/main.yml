@@ -81,19 +81,19 @@ jobs:
         rustwasmc clean
       working-directory: nodejs/json_io
 
-    # - name: RSA AOT
-    #   run: |
-    #     rustwasmc build --enable-aot
-    #     node node/app.js
-    #     rustwasmc clean
-    #   working-directory: nodejs/rsa_example
+    - name: RSA AOT
+      run: |
+        rustwasmc build --enable-aot
+        node node/app.js
+        rustwasmc clean
+      working-directory: nodejs/rsa_example
 
-    # - name: WASI
-    #  run: |
-    #    ssvmup build
-    #    node node/app.js
-    #    ssvmup clean
-    #  working-directory: nodejs/wasi
+    - name: WASI
+      run: |
+        rustwasmc build
+        node node/app.js
+        ssvmup clean
+      working-directory: nodejs/wasi
 
     - name: MobileNet Interpreter
       run: |
