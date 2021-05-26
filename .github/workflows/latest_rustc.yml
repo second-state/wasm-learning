@@ -128,14 +128,14 @@ jobs:
     #     rustwasmc clean
     #   working-directory: faas/mtcnn
 
-    - name: kmeans example AOT
-      run: |
-        rustwasmc build --enable-aot
-        cd node/
-        node app.js
-        cd ../
-        rustwasmc clean
-      working-directory: nodejs/kmeans
+    # - name: kmeans example AOT
+    #   run: |
+    #     rustwasmc build --enable-aot
+    #     cd node/
+    #     node app.js
+    #     cd ../
+    #     rustwasmc clean
+    #   working-directory: nodejs/kmeans
 
     - name: Deno example
       run: |
