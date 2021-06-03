@@ -5,7 +5,6 @@ use std::collections::HashMap;
 use wasm_bindgen::prelude::*;
 use ssvm_tensorflow_interface;
 use image::{GenericImageView, Pixel};
-//use image::{GenericImageView, Pixel, FilterType};
 use imageproc::drawing::draw_hollow_rect_mut;
 use imageproc::rect::Rect;
 use std::str;
@@ -20,11 +19,11 @@ pub fn detect(image_data: &[u8]) -> Vec<u8> {
     // Image is resized to 300px X 300px
     let mut img = img_pre.resize(300, 300, image::imageops::FilterType::Gaussian);
     // Flatten image
-    let mut flat_img: Vec<f32> = Vec::new();
+    let mut flat_img: Vec<u8> = Vec::new();
     for (_x, _y, rgb) in img.pixels() {
-        flat_img.push(rgb[2] as f32);
-        flat_img.push(rgb[1] as f32);
-        flat_img.push(rgb[0] as f32);
+        flat_img.push(rgb[2] as u8);
+        flat_img.push(rgb[1] as u8);
+        flat_img.push(rgb[0] as u8);
     }
     // Measure time to process input image
     println!("Loaded image in ... {:?}", start.elapsed());
