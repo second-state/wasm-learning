@@ -1,6 +1,6 @@
-# The MobileNet example
+# Car detection 
 
-Run MobileNet tensorflow models as functions.
+TL;DR [Try this live demo!](https://second-state.github.io/wasm-learning/faas/mobilenet_cars/html/index.html)
 
 ## Prerequisites
 
