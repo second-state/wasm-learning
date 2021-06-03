@@ -45,7 +45,7 @@ Make a function call via the web.
 ```
 $ curl --location --request POST 'https://rpc.ssvm.secondstate.io:8081/api/run/146/infer' \
 --header 'Content-Type: application/octet-stream' \
---data-binary '@test/grace_hopper.jpg'
+--data-binary '@test/256px-BMW_M3.jpeg'
 ```
 
 ## Local test
