@@ -76,9 +76,9 @@ Returns
 Note: You can update this binary with the `SSVM_Admin_Key`.
 
 ```
-$ curl --location --request PUT 'https://rpc.ssvm.secondstate.io:8081/api/update_wasm_binary/370' \
+$ curl --location --request PUT 'https://rpc.ssvm.secondstate.io:8081/api/update_wasm_binary/392' \
 --header 'Content-Type: application/octet-stream' \
---header 'SSVM_Admin_Key: 7dxxxxxx-xxxx-xxxx-xxxx-xxxxxxxx0c41' \
+--header 'SSVM_Admin_Key: 76e6f3dc-15ff-4f4d-a9a0-dd793b1d1c20' \
 --data-binary '@pkg/mobilenet_service_lib_bg.wasm'
 ```
 
@@ -87,7 +87,7 @@ $ curl --location --request PUT 'https://rpc.ssvm.secondstate.io:8081/api/update
 Make a function call via the web.
 
 ```
-$ curl --location --request POST 'https://rpc.ssvm.secondstate.io:8081/api/run/370/detect' \
+$ curl --location --request POST 'https://rpc.ssvm.secondstate.io:8081/api/run/392/detect' \
 --header 'Content-Type: application/octet-stream' \
 --data-binary '@test/table.jpg'
 ```
