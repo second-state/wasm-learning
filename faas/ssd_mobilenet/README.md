@@ -70,7 +70,7 @@ $ curl --location --request POST 'https://rpc.ssvm.secondstate.io:8081/api/execu
 Returns
 
 ```
-{"wasm_id":370,"wasm_sha256":"0x469c28daae7aba392076b4bc5ee3b43ec6d667083d8ae63207bf74b1da03fc26","SSVM_Usage_Key":"00000000-0000-0000-0000-000000000000","SSVM_Admin_Key":"7dxxxxxx-xxxx-xxxx-xxxx-xxxxxxxx0c41"}
+{"wasm_id":392,"wasm_sha256":"0x9f18414daa717c4ea5235623f087c737bd4994c81dd1c0e80ff3d9b5e1f5c029","SSVM_Usage_Key":"00000000-0000-0000-0000-000000000000","SSVM_Admin_Key":"76e6f3dc-15ff-4f4d-a9a0-dd793b1d1c20"}
 ```
 
 Note: You can update this binary with the `SSVM_Admin_Key`.
