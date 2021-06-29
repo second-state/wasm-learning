@@ -53,7 +53,7 @@ Output details:
 ## Build the WASM bytecode
 
 ```
-$ ssvmup build --enable-aot --enable-ext
+$ rustwasmc build --enable-aot --enable-ext
 ```
 
 ## Create FaaS function
