@@ -5,7 +5,7 @@ authors = ["Michael Yuan <michael@secondstate.io>"]
 edition = "2018"
 
 [lib]
-name = "mobilenet_service_lib"
+name = "tf_lite_natural_language"
 path = "src/lib.rs"
 crate-type = ["cdylib"]
 

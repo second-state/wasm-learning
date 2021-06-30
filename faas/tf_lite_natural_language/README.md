@@ -64,7 +64,7 @@ Upload the wasm file in the `pkg` folder to the FaaS. Double check the `.wasm` f
 $ curl --location --request POST 'https://rpc.ssvm.secondstate.io:8081/api/executables' \
 --header 'Content-Type: application/octet-stream' \
 --header 'SSVM-Description: mobilenet' \
---data-binary '@pkg/mobilenet_service_lib_bg.wasm'
+--data-binary '@pkg/tf_lite_natural_language.wasm'
 ```
 
 Returns
