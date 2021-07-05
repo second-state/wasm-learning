@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Image Classification</title>
+    <title>Natural Language Classification</title>
 
     <link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
@@ -17,17 +17,14 @@ function callService() {
   },0);
 
   $.ajax({
-      url: "https://rpc.ssvm.secondstate.io:8081/api/run/370/detect/bytes",
+      url: "https://rpc.ssvm.secondstate.io:8081/api/run/392/classify",
       type: "post",
-      data : $('#input')[0].files[0],
-      contentType: "application/octet-stream",
+      data : $('#input').val(),
+      contentType: "text/plain",
       processData: false,
-      xhrFields:{
-        responseType: 'blob'
-      },
       success: function (data) {
-        const img_url = URL.createObjectURL(data);
-        $('#wm_img').prop('src', img_url);
+        console.log(data);
+        $('#result').html(data);
         $('#process').prop('disabled', false);
       },
       error: function(){
@@ -48,18 +45,18 @@ function callService() {
         <div style="font-size:90%;color:gray;margin:20px"><a href="https://www.secondstate.io/faas/">Fast, safe, portable and serverless Rust functions as services</a></div>
       </div>
 
-      <h1>Object detection</h1>
-      <form id="draw" enctype="multipart/form-data">
+      <h1>Language classification</h1>
+      <form id="faas">
         <div class="form-group">
-          <label for="input">Please upload an image file (<a href="table.jpg">like this example</a>)</label>
-          <input type="file" class="form-control-file" id="input" name="input">
+          <label for="input">Please type a phrase below i.e. "I really liked this movie, it was great!"</label>
+          <input type="text" class="form-control" id="input" name="input" value=""/>
         </div>
 
-        <button class="btn btn-primary mb-2" id="process" name="process" value="1" onclick="return callService();">Detect Objects</button>
+        <button class="btn btn-primary mb-2" id="process" name="process" value="1" onclick="return callService();">Classify</button>
       </form>
       
       <div class="jumbotron">
-        <img id="wm_img" class="rounded mx-auto d-block"/>
+        <p id="result">Type in a sentence and press the Classify button</p>
       </div>
 
     </div> <!-- /container -->
