@@ -63,7 +63,7 @@ rustwasmc build --enable-aot
 
 ## Run the WASM bytecode
 
-You must have Node.js and NPM installed to proceed.
+You must have Node.js and NPM installed to proceed. In addition you will need a Nodejs addon, which you can [install via these instructions](https://github.com/second-state/wasm-joey/blob/master/documentation/installation.md#ssvm-nodejs-add-on)
 
 Install TensorFlow Lite
 
@@ -138,15 +138,6 @@ var img_src = fs.readFileSync("image.png");
 // Run function
 var return_value = vm_aot.RunUint8Array("infer", img_src);
 
-```
-
-Run the local test on Node.js.
-
-```
-$ cd test
-$ node test.js
-Drawing box: 30 results ...
-Face Detection: 888.961ms
 ```
 
 
