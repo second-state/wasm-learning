@@ -1,6 +1,6 @@
 # The YOLOv4 TensorFlow Lite example
 
-Run MTCNN tensorflow models as functions.
+Run YOLO model as functions.
 
 [Live Demo](https://second-state.github.io/wasm-learning/faas/yolo-tflite/html/index.html)
 
@@ -53,57 +53,91 @@ The above command creates a `yolov4-416.tflite` file in the checkpoints director
 
 ## Build the WASM bytecode
 
-```
-$ ssvmup build --enable-aot --enable-ext
-```
-
-## Create FaaS function
-
-Upload the wasm file in the `pkg` folder to the FaaS. Double check the `.wasm` file name before you upload.
-
-```
-$ curl --location --request POST 'https://rpc.ssvm.secondstate.io:8081/api/executables' \
---header 'Content-Type: application/octet-stream' \
---header 'SSVM-Description: yolo4 tflite' \
---data-binary '@pkg/yolo_tflite_lib_bg.wasm'
+```bash
+rustup target add wasm32-wasi
 ```
 
-Returns
-
-```
-{"wasm_id":195,"wasm_sha256":"0x469c28daae7aba392076b4bc5ee3b43ec6d667083d8ae63207bf74b1da03fc26","SSVM_Usage_Key":"00000000-0000-0000-0000-000000000000","SSVM_Admin_Key":"7dxxxxxx-xxxx-xxxx-xxxx-xxxxxxxx0c41"}
+```bash
+rustwasmc build --enable-aot
 ```
 
-Note: You can update this binary with the `SSVM_Admin_Key`.
+## Run the WASM bytecode
+
+You must have Node.js and NPM installed to proceed.
+
+Install TensorFlow Lite
 
 ```
-$ curl --location --request PUT 'https://rpc.ssvm.secondstate.io:8081/api/update_wasm_binary/195' \
---header 'Content-Type: application/octet-stream' \
---header 'SSVM_Admin_Key: 7dxxxxxx-xxxx-xxxx-xxxx-xxxxxxxx0c41' \
---data-binary '@pkg/yolo_tflite_lib_bg.wasm'
+wget https://storage.googleapis.com/tensorflow/libtensorflow/libtensorflow-cpu-linux-x86_64-2.3.0.tar.gz
+sudo tar -C /usr/local -xzf libtensorflow-cpu-linux-x86_64-2.3.0.tar.gz
+sudo ldconfig
 ```
 
-## Test
+Install dependencies
 
-Make a function call via the web.
-
-```
-$ curl --location --request POST 'https://rpc.ssvm.secondstate.io:8081/api/run/195/infer/bytes' \
---header 'Content-Type: application/octet-stream' \
---data-binary '@test/solvay.jpg' \
---output tmp.jpg
+```bash
+sudo apt-get update
+sudo apt-get -y upgrade
+sudo apt install build-essential curl wget git vim libboost-all-dev llvm-dev liblld-10-dev
 ```
 
-## Local test
+# Option 1
+## Wasm
 
-You must have Node.js and NPM installed. Install SSVM extensions and dependencies.
+We set up node to execute `.wasm` file via WasmEdge like this
+
+```javascript
+// Import file system library
+const fs = require('fs');
+
+// Create ssvm instance
+const ssvm = require("ssvm-extensions");
+
+
+// Use this first time (initial call)
+const path = "/media/nvme/yolo/wasm-learning/faas/yolo-tflite/pkg/yolo_tflite_lib_bg.wasm";
+vm = new ssvm.VM(path, { args:process.argv, env:process.env, preopens:{"/": "/tmp"} });
+
+// Open image
+var img_src = fs.readFileSync("image.png");
+
+// Run function
+var return_value = vm.RunUint8Array("infer", img_src);
 
 ```
-$ sudo apt install -y libjpeg-dev libpng-dev
-$ wget https://storage.googleapis.com/tensorflow/libtensorflow/libtensorflow-cpu-linux-x86_64-2.3.0.tar.gz
-$ sudo tar -C /usr/local -xzf libtensorflow-cpu-linux-x86_64-2.3.0.tar.gz
-$ sudo ldconfig
-$ npm i ssvm-extensions
+
+# Option 2
+## AOT
+
+We set up node to create an AOT executable which we execute via WasmEdge like this
+
+```javascript
+// Import file system library
+const fs = require('fs');
+
+// Create ssvm instance
+const ssvm = require("ssvm-extensions");
+
+
+// Use this first time (initial call)
+const path = "/media/nvme/yolo/wasm-learning/faas/yolo-tflite/pkg/yolo_tflite_lib_bg.wasm";
+vm = new ssvm.VM(path, { args:process.argv, env:process.env, preopens:{"/": "/tmp"} });
+
+// AOT path
+aot_path = "/media/nvme/node_rpc/aot_file"
+
+// If you want to, please go ahead and make an aot file
+vm.Compile(aot_path);
+
+// Use this after the first time (subsequent calls)
+var vm_aot = new ssvm.VM(aot_path, { args:process.argv, env:process.env, preopens:{"/": "/tmp"} });
+
+// Open image
+var img_src = fs.readFileSync("image.png");
+
+// Run function
+var return_value = vm_aot.RunUint8Array("infer", img_src);
+
 ```
 
 Run the local test on Node.js.

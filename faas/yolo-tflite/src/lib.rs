@@ -30,6 +30,7 @@ pub fn infer(image_data: &[u8]) -> Vec<u8> {
     let res_vec: Vec<f32> = session.get_output("Identity");
     println!("Obtained session's output successfully ...");
     println!("{:?}", res_vec);
+    /*
     // Parse results.
     let mut iter = 0;
     let mut box_vec: Vec<[f32; 4]> = Vec::new();
@@ -61,4 +62,10 @@ pub fn infer(image_data: &[u8]) -> Vec<u8> {
     println!("Drawn on image in ... {:?}", start.elapsed());
 
     return buf;
+    */
+
+    // Temporary blank vector
+    let mut vec = Vec::new();
+    vec.push(1);
+    return vec;
 }
