@@ -107,9 +107,9 @@ var return_value = vm.RunUint8Array("infer", img_src);
 ```
 
 # Option 2
-## AOT
+## AOT - compile only
 
-We set up node to create an AOT executable which we execute via WasmEdge like this
+We set up node to create an AOT executable 
 
 ```javascript
 // Import file system library
@@ -124,20 +124,30 @@ const path = "/media/nvme/yolo/wasm-learning/faas/yolo-tflite/pkg/yolo_tflite_li
 vm = new ssvm.VM(path, { args:process.argv, env:process.env, preopens:{"/": "/tmp"} });
 
 // AOT path
-aot_path = "/media/nvme/node_rpc/aot_file"
+aot_path = "/media/nvme/aot_file.so"
 
 // If you want to, please go ahead and make an aot file
 vm.Compile(aot_path);
+```
+
+## AOT - Run the compiled AOT file
+
+```javascript
+// Import file system library
+const fs = require('fs');
+
+// Create ssvm instance
+const ssvm = require("ssvm-extensions");
+
+// AOT path
+aot_path = "/media/nvme/aot_file.so"
 
 // Use this after the first time (subsequent calls)
-var vm_aot = new ssvm.VM(aot_path, { args:process.argv, env:process.env, preopens:{"/": "/tmp"} });
+var vm_aot = new ssvm.VM(aot_path, { EnableAOT:true, rgs:process.argv, env:process.env, preopens:{"/": "/tmp"} });
 
 // Open image
 var img_src = fs.readFileSync("image.png");
 
 // Run function
 var return_value = vm_aot.RunUint8Array("infer", img_src);
-
 ```
-
-
