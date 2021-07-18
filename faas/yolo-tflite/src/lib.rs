@@ -10,11 +10,13 @@ use std::time::{Instant};
 pub fn infer(image_data: &[u8]) -> Vec<u8> {
     let start = Instant::now();
     let mut img = image::load_from_memory(image_data).unwrap();
+    let resized = image::imageops::thumbnail(&img, 416, 416);
+    println!("Resized image in ... {:?}", start.elapsed());
     let mut flat_img: Vec<f32> = Vec::new();
-    for (_x, _y, rgb) in img.pixels() {
-        flat_img.push(rgb[2] as f32);
-        flat_img.push(rgb[1] as f32);
-        flat_img.push(rgb[0] as f32);
+    for rgb in resized.pixels() {
+        flat_img.push(rgb[0] as f32 / 255.);
+        flat_img.push(rgb[1] as f32 / 255.);
+        flat_img.push(rgb[2] as f32 / 255.);
     }
     println!("Loaded image in ... {:?}", start.elapsed());
 
@@ -25,10 +27,11 @@ pub fn infer(image_data: &[u8]) -> Vec<u8> {
     println!("Input added ...");
     session.add_output("Identity");
     println!("Output added ...");
+    println!("All preparation completed in ... {:?}", start.elapsed());
     session.run();
-    println!("Session ran sucessfully ...");
+    println!("Session successfully ran in ... {:?}", start.elapsed());
     let res_vec: Vec<f32> = session.get_output("Identity");
-    println!("Obtained session's output successfully ...");
+    println!("Output obtained in ... {:?}", start.elapsed());
     println!("{:?}", res_vec);
     /*
     // Parse results.
