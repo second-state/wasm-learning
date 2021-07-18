@@ -26,13 +26,19 @@ pub fn infer(image_data: &[u8]) -> Vec<u8> {
     session.add_input("input_1", &flat_img, &[1,416,416,3]);
     println!("Input added ...");
     session.add_output("Identity");
-    println!("Output added ...");
+    println!("Output added ... Identity");
+    session.add_output("Identity_1");
+    println!("Output added ... Identity_1");
     println!("All preparation completed in ... {:?}", start.elapsed());
     session.run();
     println!("Session successfully ran in ... {:?}", start.elapsed());
     let res_vec: Vec<f32> = session.get_output("Identity");
+    let res_vec_1: Vec<f32> = session.get_output("Identity_1");
     println!("Output obtained in ... {:?}", start.elapsed());
+    println!("Identity:");
     println!("{:?}", res_vec);
+    println!("Identity_1:");
+    println!("{:?}", res_vec_1);
     /*
     // Parse results.
     let mut iter = 0;
