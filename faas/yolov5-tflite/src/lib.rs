@@ -10,20 +10,20 @@ use std::time::{Instant};
 pub fn infer(image_data: &[u8]) -> Vec<u8> {
     let start = Instant::now();
     let mut img = image::load_from_memory(image_data).unwrap();
-    let resized = image::imageops::thumbnail(&img, 416, 416);
+    let resized = image::imageops::thumbnail(&img, 320, 320);
     println!("Resized image in ... {:?}", start.elapsed());
-    let mut flat_img: Vec<f32> = Vec::new();
+    let mut flat_img: Vec<u8> = Vec::new();
     for rgb in resized.pixels() {
-        flat_img.push(rgb[0] as f32 / 255.);
-        flat_img.push(rgb[1] as f32 / 255.);
-        flat_img.push(rgb[2] as f32 / 255.);
+        flat_img.push(rgb[0] as u8);
+        flat_img.push(rgb[1] as u8);
+        flat_img.push(rgb[2] as u8);
     }
     println!("Loaded image in ... {:?}", start.elapsed());
 
-    let model_data: &[u8] = include_bytes!("yolov4-416.tflite");
+    let model_data: &[u8] = include_bytes!("/Users/tpmccallum/yolov5s-int8.tflite");
 
     let mut session = ssvm_tensorflow_interface::Session::new(model_data, ssvm_tensorflow_interface::ModelType::TensorFlowLite);
-    session.add_input("input_1", &flat_img, &[1,416,416,3]);
+    session.add_input("input_1", &flat_img, &[1,320,320,3]);
     println!("Input added ...");
     session.add_output("Identity");
     println!("Output added ... Identity");
@@ -32,13 +32,10 @@ pub fn infer(image_data: &[u8]) -> Vec<u8> {
     println!("All preparation completed in ... {:?}", start.elapsed());
     session.run();
     println!("Session successfully ran in ... {:?}", start.elapsed());
-    let res_vec: Vec<f32> = session.get_output("Identity");
-    let res_vec_1: Vec<f32> = session.get_output("Identity_1");
+    let res_vec: Vec<u8> = session.get_output("Identity");
     println!("Output obtained in ... {:?}", start.elapsed());
     println!("Identity:");
     println!("{:?}", res_vec);
-    println!("Identity_1:");
-    println!("{:?}", res_vec_1);
     /*
     // Parse results.
     let mut iter = 0;
