@@ -7,7 +7,8 @@ use std::str;
 use std::time::{Instant};
 
 #[wasm_bindgen]
-pub fn infer(image_data: &[u8]) -> Vec<u8> {
+pub fn detect(image_data: &[u8]) -> Vec<u8> {
+    println!("{:?}", image_data);
     let start = Instant::now();
     let mut img = image::load_from_memory(image_data).unwrap();
     let resized = image::imageops::thumbnail(&img, 320, 320);
