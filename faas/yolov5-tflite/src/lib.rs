@@ -36,7 +36,7 @@ pub fn detect(image_data: &[u8]) -> Vec<u8> {
     let res_vec: Vec<u8> = session.get_output("Identity");
     println!("Output obtained in ... {:?}", start.elapsed());
     println!("Identity:");
-    println!("{:?}", res_vec);
+    //println!("{:?}", res_vec);
     /*
     // Parse results.
     let mut iter = 0;
