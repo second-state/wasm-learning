@@ -21,7 +21,7 @@ pub fn detect(image_data: &[u8]) -> Vec<u8> {
     }
     println!("Loaded image in ... {:?}", start.elapsed());
 
-    let model_data: &[u8] = include_bytes!("/Users/tpmccallum/yolov5s-int8.tflite");
+    let model_data: &[u8] = include_bytes!("/media/nvme/yolov5/yolov5/weights/yolov5s-int8.tflite");
 
     let mut session = ssvm_tensorflow_interface::Session::new(model_data, ssvm_tensorflow_interface::ModelType::TensorFlowLite);
     session.add_input("input_1", &flat_img, &[1,320,320,3]);
