@@ -21,7 +21,7 @@ pub fn detect(image_data: &[u8]) -> Vec<u8> {
         flat_img.push(rgb[2] as f32 / 255.);
     }
     println!("Flat image:");
-    println!(flat_img);
+    println!("{:?}", flat_img);
     println!("Loaded image in ... {:?}", start.elapsed());
 
     let model_data: &[u8] = include_bytes!("/media/nvme/yolov5/yolov5/weights/yolov5s-int8.tflite");
