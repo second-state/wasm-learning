@@ -14,12 +14,14 @@ pub fn detect(image_data: &[u8]) -> Vec<u8> {
     println!("** {:?}", img);
     let resized = image::imageops::thumbnail(&img, 320, 320);
     println!("Resized image in ... {:?}", start.elapsed());
-    let mut flat_img: Vec<u8> = Vec::new();
+    let mut flat_img: Vec<f32> = Vec::new();
     for rgb in resized.pixels() {
-        flat_img.push(rgb[0] as u8);
-        flat_img.push(rgb[1] as u8);
-        flat_img.push(rgb[2] as u8);
+        flat_img.push(rgb[0] as f32 / 255.);
+        flat_img.push(rgb[1] as f32 / 255.);
+        flat_img.push(rgb[2] as f32 / 255.);
     }
+    println!("Flat image:");
+    println!(flat_img);
     println!("Loaded image in ... {:?}", start.elapsed());
 
     let model_data: &[u8] = include_bytes!("/media/nvme/yolov5/yolov5/weights/yolov5s-int8.tflite");
