@@ -8,9 +8,10 @@ use std::time::{Instant};
 
 #[wasm_bindgen]
 pub fn detect(image_data: &[u8]) -> Vec<u8> {
-    println!("{:?}", image_data);
+    println!("* {:?}", image_data);
     let start = Instant::now();
     let mut img = image::load_from_memory(image_data).unwrap();
+    println!("** {:?}", img);
     let resized = image::imageops::thumbnail(&img, 320, 320);
     println!("Resized image in ... {:?}", start.elapsed());
     let mut flat_img: Vec<u8> = Vec::new();
