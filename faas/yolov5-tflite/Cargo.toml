@@ -16,3 +16,4 @@ image = { version = "0.23.0", default-features = false, features = ["jpeg", "png
 imageproc = "0.21.0"
 serde = { version = "^1.0.59", features = ["derive"] }
 serde_json = "^1.0.51"
+opencv = "0.53"
