@@ -12,7 +12,7 @@ pub fn detect(image_data: &[u8]) -> Vec<u8> {
     let mut img = image::load_from_memory(image_data).unwrap();
     let resized = image::imageops::thumbnail(&img, 320, 320);
     println!("Resized image in ... {:?}", start.elapsed());
-    println!("Image ... {:?}", resized,pixels());
+    println!("Image ... {:?}", resized.pixels());
     // Set rounding precision
     let precision = 5;
     // Create 3 new arrays of size 320 and fill with zeros
