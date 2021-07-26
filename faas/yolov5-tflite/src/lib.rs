@@ -15,9 +15,9 @@ pub fn detect(image_data: &[u8]) -> Vec<u8> {
     // Set rounding precision
     let precision = 5;
     // Create 3 new arrays of size 320 and fill with zeros
-    let mut array_0: [f32; 320] = [0.0; 320];
-    let mut array_1: [f32; 320] = [0.0; 320];
-    let mut array_2: [f32; 320] = [0.0; 320];
+    let mut array_0 = Vec::new();
+    let mut array_1 = Vec::new();
+    let mut array_2 = Vec::new();
     // Populate arrays with RGB data
     for rgb in resized.pixels() {
         array_0.push(format!("{:.1$}", rgb[0] as f32 / 255., precision).parse().unwrap());
@@ -31,9 +31,9 @@ pub fn detect(image_data: &[u8]) -> Vec<u8> {
     println!("Loaded image in ... {:?}", start.elapsed());
 
     let model_data: &[u8] = include_bytes!("/media/nvme/yolov5/yolov5/weights/yolov5s-int8.tflite");
-
+/*
     let mut session = ssvm_tensorflow_interface::Session::new(model_data, ssvm_tensorflow_interface::ModelType::TensorFlowLite);
-    session.add_input("input_1", &flat_img, &[1,320,320,3]);
+    session.add_input("input_1", &flat_img[..], &[1,320,320,3]);
     println!("Input added ...");
     session.add_output("Identity");
     println!("Output added ... Identity");
@@ -46,6 +46,7 @@ pub fn detect(image_data: &[u8]) -> Vec<u8> {
     println!("Output obtained in ... {:?}", start.elapsed());
     println!("Identity:");
     //println!("{:?}", res_vec);
+    */
     /*
     // Parse results.
     let mut iter = 0;
