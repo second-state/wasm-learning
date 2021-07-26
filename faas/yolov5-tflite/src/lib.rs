@@ -12,13 +12,20 @@ pub fn detect(image_data: &[u8]) -> Vec<u8> {
     let mut img = image::load_from_memory(image_data).unwrap();
     let resized = image::imageops::thumbnail(&img, 320, 320);
     println!("Resized image in ... {:?}", start.elapsed());
-    let mut flat_img: Vec<f32> = Vec::new();
+    // Set rounding precision
     let precision = 5;
+    // Create 3 new arrays of size 320 and fill with zeros
+    let mut array_0: [f32; 320] = [0.0; 320];
+    let mut array_1: [f32; 320] = [0.0; 320];
+    let mut array_2: [f32; 320] = [0.0; 320];
+    // Populate arrays with RGB data
     for rgb in resized.pixels() {
-        flat_img.push(format!("{:.1$}", rgb[2] as f32 / 255., precision).parse().unwrap());
-        flat_img.push(format!("{:.1$}", rgb[1] as f32 / 255., precision).parse().unwrap());
-        flat_img.push(format!("{:.1$}", rgb[0] as f32 / 255., precision).parse().unwrap());
+        array_0.push(format!("{:.1$}", rgb[0] as f32 / 255., precision).parse().unwrap());
+        array_1.push(format!("{:.1$}", rgb[1] as f32 / 255., precision).parse().unwrap());
+        array_2.push(format!("{:.1$}", rgb[2] as f32 / 255., precision).parse().unwrap());
     }
+    // Create flat image array which contains the above three arrays
+    let flat_img = vec![&array_0, &array_1, array_2];
     println!("Flat image:");
     println!("{:?}", flat_img);
     println!("Loaded image in ... {:?}", start.elapsed());
