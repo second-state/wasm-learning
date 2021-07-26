@@ -13,10 +13,11 @@ pub fn detect(image_data: &[u8]) -> Vec<u8> {
     let resized = image::imageops::thumbnail(&img, 320, 320);
     println!("Resized image in ... {:?}", start.elapsed());
     let mut flat_img: Vec<f32> = Vec::new();
+    let precision = 5;
     for rgb in resized.pixels() {
-        flat_img.push(rgb[2] as f32 / 255.);
-        flat_img.push(rgb[1] as f32 / 255.);
-        flat_img.push(rgb[0] as f32 / 255.);
+        flat_img.push(format!("{:.1$}", rgb[2] as f32 / 255., precision).parse().unwrap());
+        flat_img.push(format!("{:.1$}", rgb[1] as f32 / 255., precision).parse().unwrap());
+        flat_img.push(format!("{:.1$}", rgb[0] as f32 / 255., precision).parse().unwrap());
     }
     println!("Flat image:");
     println!("{:?}", flat_img);
