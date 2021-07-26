@@ -25,7 +25,7 @@ pub fn detect(image_data: &[u8]) -> Vec<u8> {
         array_2.push(format!("{:.1$}", rgb[2] as f32 / 255., precision).parse().unwrap());
     }
     // Create flat image array which contains the above three arrays
-    let flat_img = vec![&array_0, &array_1, array_2];
+    let flat_img = vec![&array_0, &array_1, &array_2];
     println!("Flat image:");
     println!("{:?}", flat_img);
     println!("Loaded image in ... {:?}", start.elapsed());
