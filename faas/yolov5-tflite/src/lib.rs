@@ -15,9 +15,9 @@ pub fn detect(image_data: &[u8]) -> Vec<u8> {
     // Set rounding precision
     let precision = 5;
     // Create 3 new arrays of size 320 and fill with zeros
-    let mut array_0 = Vec::new();
-    let mut array_1 = Vec::new();
-    let mut array_2 = Vec::new();
+    let mut array_0: Vec<f32> = Vec::new();
+    let mut array_1: Vec<f32> = Vec::new();
+    let mut array_2: Vec<f32> = Vec::new();
     // Populate arrays with RGB data
     for rgb in resized.pixels() {
         array_0.push(format!("{:.1$}", rgb[0] as f32 / 255., precision).parse().unwrap());
