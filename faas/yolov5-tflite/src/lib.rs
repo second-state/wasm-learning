@@ -12,7 +12,7 @@ pub fn detect(image_data: &[u8]) -> Vec<u8> {
     let mut img = image::load_from_memory(image_data).unwrap();
     let resized = image::imageops::thumbnail(&img, 320, 320);
     println!("Resized image in ... {:?}", start.elapsed());
-    println!("Image ... {:?}", resized);
+    println!("Image ... {:?}", resized,pixels());
     // Set rounding precision
     let precision = 5;
     // Create 3 new arrays of size 320 and fill with zeros
@@ -27,8 +27,8 @@ pub fn detect(image_data: &[u8]) -> Vec<u8> {
     }
     // Create flat image array which contains the above three arrays
     let flat_img = vec![&array_0, &array_1, &array_2];
-    println!("Flat image:");
-    println!("{:?}", flat_img);
+    //println!("Flat image:");
+    //println!("{:?}", flat_img);
     println!("Loaded image in ... {:?}", start.elapsed());
 
     let model_data: &[u8] = include_bytes!("/media/nvme/yolov5/yolov5/weights/yolov5s-int8.tflite");
