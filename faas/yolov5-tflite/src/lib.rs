@@ -5,21 +5,17 @@ use imageproc::drawing::draw_hollow_rect_mut;
 use imageproc::rect::Rect;
 use std::str;
 use std::time::{Instant};
-use opencv::prelude::*;
 
 #[wasm_bindgen]
 pub fn detect(image_data: &[u8]) -> Vec<u8> {
     let start = Instant::now();
-    //let mut img = image::load_from_memory(image_data).unwrap();
-    //let resized = image::imageops::thumbnail(&img, 320, 320);
+    let mut img = image::load_from_memory(image_data).unwrap();
+    let resized = image::imageops::thumbnail(&img, 320, 320);
     println!("Resized image in ... {:?}", start.elapsed());
-    let img0 = imgcodecs::imdecode(image_data);
-    let mut reduced = Mat::default();
-    imgproc::resize( &img0, &mut reduced, core::Size {width: 320,height: 320}, 0.25f64, 0.25f64, imgproc::INTER_LINEAR);
+    println!("Image ... {:?}", resized.pixels());
     // Set rounding precision
     let precision = 5;
     // Create 3 new arrays of size 320 and fill with zeros
-    /*
     let mut array_0: Vec<f32> = Vec::new();
     let mut array_1: Vec<f32> = Vec::new();
     let mut array_2: Vec<f32> = Vec::new();
@@ -31,13 +27,12 @@ pub fn detect(image_data: &[u8]) -> Vec<u8> {
     }
     // Create flat image array which contains the above three arrays
     let flat_img = vec![&array_0, &array_1, &array_2];
-    //println!("Flat image:");
-    //println!("{:?}", flat_img);
+    println!("Flat image:");
+    println!("{:?}", flat_img);
     println!("Loaded image in ... {:?}", start.elapsed());
 
-    //let model_data: &[u8] = include_bytes!("/media/nvme/yolov5/yolov5/weights/yolov5s-int8.tflite");
-    */
-    /*
+    let model_data: &[u8] = include_bytes!("/media/nvme/yolov5/yolov5/weights/yolov5s-int8.tflite");
+/*
     let mut session = ssvm_tensorflow_interface::Session::new(model_data, ssvm_tensorflow_interface::ModelType::TensorFlowLite);
     session.add_input("input_1", &flat_img[..], &[1,320,320,3]);
     println!("Input added ...");
