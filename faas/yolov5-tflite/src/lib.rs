@@ -5,6 +5,7 @@ use imageproc::drawing::draw_hollow_rect_mut;
 use imageproc::rect::Rect;
 use std::str;
 use std::time::{Instant};
+extern crate tensorflow;
 
 #[wasm_bindgen]
 pub fn detect(image_data: &[u8]) -> Vec<u8> {
@@ -26,10 +27,12 @@ pub fn detect(image_data: &[u8]) -> Vec<u8> {
         array_1.push(format!("{:.1$}", rgb[1] as f32 / 255., precision).parse().unwrap());
         array_2.push(format!("{:.1$}", rgb[0] as f32 / 255., precision).parse().unwrap());
     }
+
     // Create flat image array which contains the above three arrays
     let flat_img = vec![&array_0, &array_1, &array_2];
-    println!("Flat image:");
-    println!("{:?}", flat_img);
+    let a_tensor = Tensor::new(&[320, 320]).with_values(&flat_img).unwrap();
+    println!("Flat image as tensor:");
+    println!("{:?}", a_tensor);
     println!("Loaded image in ... {:?}", start.elapsed());
 
     let model_data: &[u8] = include_bytes!("/media/nvme/yolov5/yolov5/weights/yolov5s-int8.tflite");
