@@ -30,9 +30,8 @@ pub fn detect(image_data: &[u8]) -> Vec<u8> {
 
     // Create flat image array which contains the above three arrays
     let flat_img = vec![&array_0, &array_1, &array_2];
-    let a_tensor = Tensor::new(&[320, 320]).with_values(&flat_img).unwrap();
-    println!("Flat image as tensor:");
-    println!("{:?}", a_tensor);
+    println!("Flat image:");
+    println!("{:?}", flat_img);
     println!("Loaded image in ... {:?}", start.elapsed());
 
     let model_data: &[u8] = include_bytes!("/media/nvme/yolov5/yolov5/weights/yolov5s-int8.tflite");
