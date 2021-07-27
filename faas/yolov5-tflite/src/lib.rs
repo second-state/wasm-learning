@@ -5,7 +5,6 @@ use imageproc::drawing::draw_hollow_rect_mut;
 use imageproc::rect::Rect;
 use std::str;
 use std::time::{Instant};
-extern crate tensorflow;
 
 #[wasm_bindgen]
 pub fn detect(image_data: &[u8]) -> Vec<u8> {
