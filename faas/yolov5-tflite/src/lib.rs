@@ -21,9 +21,10 @@ pub fn detect(image_data: &[u8]) -> Vec<u8> {
     let mut array_2: Vec<f32> = Vec::new();
     // Populate arrays with RGB data
     for rgb in resized.pixels() {
-        array_0.push(format!("{:.1$}", rgb[0] as f32 / 255., precision).parse().unwrap());
+        println!("{:?}", rgb);
+        array_0.push(format!("{:.1$}", rgb[2] as f32 / 255., precision).parse().unwrap());
         array_1.push(format!("{:.1$}", rgb[1] as f32 / 255., precision).parse().unwrap());
-        array_2.push(format!("{:.1$}", rgb[2] as f32 / 255., precision).parse().unwrap());
+        array_2.push(format!("{:.1$}", rgb[0] as f32 / 255., precision).parse().unwrap());
     }
     // Create flat image array which contains the above three arrays
     let flat_img = vec![&array_0, &array_1, &array_2];
