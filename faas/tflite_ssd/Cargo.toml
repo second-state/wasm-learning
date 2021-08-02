@@ -1,11 +1,11 @@
 [package]
-name = "yolo_tflite"
+name = "tflite_ssd"
 version = "0.1.0"
 authors = ["Michael Yuan <michael@secondstate.io>"]
 edition = "2018"
 
 [lib]
-name = "yolo_tflite_lib"
+name = "tflite_ssd_lib"
 path = "src/lib.rs"
 crate-type = ["cdylib"]
 

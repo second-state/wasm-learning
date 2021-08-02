@@ -8,6 +8,15 @@ Run SSD model as functions.
 
 If you have not done so already, follow these simple instructions to install [Rust](https://www.rust-lang.org/tools/install) and [ssvmup](https://www.secondstate.io/articles/ssvmup/).
 
+## Getting the SSD model trained
+
+There is a process to create and train a model. You can find the full instructions here on [the official TensorFlow site](https://www.tensorflow.org/lite/tutorials/model_maker_object_detection)
+
+Once you have a model, please add the path to your model (inside this repository's lib.rs file)
+
+```
+let model_data: &[u8] = include_bytes!("/path/to/your/model.tflite");
+```
 
 ## Build the WASM bytecode
 
