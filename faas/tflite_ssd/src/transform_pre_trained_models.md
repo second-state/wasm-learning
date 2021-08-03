@@ -26,5 +26,5 @@ protoc object_detection/protos/*.proto --python_out=.
 
 cd /media/nvme/20210803/models/research/object_detection
 
-python3 export_tflite_graph_tf2.py --trained_checkpoint_dir {'/media/nvme/20210803/ssd_mobilenet_v2_fpnlite_640x640_coco17_tpu-8/checkpoint/'} --output_directory {'/media/nvme/20210803/ssd_mobilenet_v2_fpnlite_640x640_coco17_tpu-8/tflite'} --pipeline_config_path {'/media/nvme/20210803/ssd_mobilenet_v2_fpnlite_640x640_coco17_tpu-8/pipeline.config'}
+python3 export_tflite_graph_tf2.py --trained_checkpoint_dir '/media/nvme/20210803/ssd_mobilenet_v2_fpnlite_640x640_coco17_tpu-8/checkpoint/' --output_directory '/media/nvme/20210803/ssd_mobilenet_v2_fpnlite_640x640_coco17_tpu-8/tflite' --pipeline_config_path '/media/nvme/20210803/ssd_mobilenet_v2_fpnlite_640x640_coco17_tpu-8/pipeline.config'
 ```
