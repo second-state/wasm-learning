@@ -38,5 +38,11 @@ python3
 Then run this code
 
 ```python
-export TFLITE_MODEL_PATH="/media/nvme/20210803/ssd_mobilenet_v2_fpnlite_640x640_coco17_tpu-8/model.tflite
+TFLITE_MODEL_PATH="/media/nvme/20210803/ssd_mobilenet_v2_fpnlite_640x640_coco17_tpu-8/model.tflite
+converter = tf.lite.TFLiteConverter.from_saved_model('/media/nvme/20210803/ssd_mobilenet_v2_fpnlite_640x640_coco17_tpu-8/tflite/saved_model/saved_model.pb')
+converter.optimizations = [tf.lite.Optimize.DEFAULT]
+tflite_model = converter.convert()
+
+with open(_TFLITE_MODEL_PATH, 'wb') as f:
+  f.write(tflite_model)
 ```
