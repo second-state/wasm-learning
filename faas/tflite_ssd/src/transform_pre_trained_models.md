@@ -1,4 +1,4 @@
-Training models takes a lot of time and energy. There are comprehensive trained models which already exist. We just need to convert them to tflite so that we can use them. Here is a method to do just that.
+Training models takes a lot of time and energy. There are comprehensive trained models which already exist. We just need to convert them to tflite so that we can use them. Here is a method to do just that. The following section is based on [this TensorFlow document](https://colab.research.google.com/github/tensorflow/models/blob/master/research/object_detection/colab_tutorials/convert_odt_model_to_TFLite.ipynb)
 
 ```bash
 pip3 install object_detection
