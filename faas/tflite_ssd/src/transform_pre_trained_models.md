@@ -32,8 +32,9 @@ python3 export_tflite_graph_tf2.py --trained_checkpoint_dir '/media/nvme/2021080
 Then run this code in the Python interpreter
 
 ```bash
-
+python3
+```
 
 ```python
-export TFLITE_MODEL_PATH="/media/nvme/20210803/ssd_mobilenet_v2_fpnlite_640x640_coco17_tpu-8/model.tflite"
+export TFLITE_MODEL_PATH="/media/nvme/20210803/ssd_mobilenet_v2_fpnlite_640x640_coco17_tpu-8/model.tflite
 ```
