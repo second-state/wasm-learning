@@ -1,0 +1,15 @@
+[package]
+name = "classify_yml"
+version = "0.1.0"
+authors = ["csh"]
+edition = "2018"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+wasmedge_tensorflow_interface = { git = "https://github.com/second-state/wasmedge_tensorflow_interface" }
+argparse = "0.2.2"
+image = { version = "0.23.0", default-features = false, features = ["jpeg", "png"] }
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+serde_yaml = "0.8"
