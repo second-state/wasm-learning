@@ -1,6 +1,6 @@
 [中文](README.md) | [Live demo!](https://sls-website-ap-hongkong-5x0ayxu-1302315972.cos-website.ap-hongkong.myqcloud.com/)
 
-## Prerequist
+## Prerequisite
 
 Please use Ubuntu 20.04 or 20.10, and install <a href="https://www.serverless.com/framework/docs/providers/tencent/guide/installation/">Serverless Framework</a>, <a href="https://www.rust-lang.org/tools/install">Rust</a>, and <a href="https://www.secondstate.io/articles/ssvmup/">ssvmup</a>.
 
