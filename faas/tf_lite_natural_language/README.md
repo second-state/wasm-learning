@@ -1,6 +1,6 @@
-# TensorFlow Object Detection 
+# TensorFlow Natural Language
 
-This tutorial demonstrates how to create a a Function as a Service (FaaS), using TensorFlow Object Detection, which is able to classify natural language in terms of connotation/sentiment. 
+This tutorial demonstrates how to create a a Function as a Service (FaaS), using TensorFlow Natural Language, which is able to classify natural language in terms of connotation/sentiment. 
 
 ## Build the WASM bytecode
 
