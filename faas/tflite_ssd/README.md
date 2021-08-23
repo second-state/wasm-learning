@@ -1,9 +1,5 @@
 # The TensorFlow Lite Single Shot Detector (SSD) example
 
-Run SSD model as functions.
-
-[Live Demo](https://second-state.github.io/wasm-learning/faas/tflite_ssd/html/index.html)
-
 ## Prerequisites
 
 If you have not done so already, follow these simple instructions to install [Rust](https://www.rust-lang.org/tools/install) and [ssvmup](https://www.secondstate.io/articles/ssvmup/).
