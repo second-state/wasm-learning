@@ -9,6 +9,7 @@
       <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
       <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
       <script>
+
         function callService() {
           setTimeout(function() {
             $('#process').prop('disabled', true);
@@ -18,56 +19,57 @@
           formData.append('input_1', $('#input_1').val());
           formData.append('fetch_input_2', $('#input_2').val());
           console.log("Running ...");
-          console.log(...formData);
           $.ajax({
             url: "https://rpc.ssvm.secondstate.io:8081/api/multipart/run/392/classify",
-            type: "POST",
+            type: "post",
+            cache: false,
             data: formData,
-            contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+            contentType: false,
             processData: false,
             xhrFields: {
               responseType: "" // defaults to text
             },
-            success: function(data) {
+            success: function(r_data) {
               console.log("Successfully ran the ajax");
-              document.getElementById("result").innerHTML = data;
+              document.getElementById("result_box").innerHTML = r_data;
               $('#process').prop('disabled', false);
             },
-            error: function() {
+            error: function(r_error) {
+              console.log("Error running the ajax: " + r_error);
               alert("Rate limit exceeded");
               $('#process').prop('disabled', false);
             }
           });
-
+          console.log("END");
           return false;
         }
       </script>
    </head>
-   <body>
-      <div class="container">
-         <div style="text-align:center;margin:25px">
-            <a href="https://www.secondstate.io/"><img style="border:0;" src="https://www.secondstate.io/assets/img/logo.png"></a>
-            <div style="font-size:90%;color:gray;margin:20px"><a href="https://www.secondstate.io/faas/">Fast, safe, portable and serverless Rust functions as services</a></div>
-         </div>
-         <h1>Natural language - sentiment analysis</h1>
-         <hr />
-         <form id="draw" enctype="multipart/form-data">
-            <div class="panel panel-default">
-               <div class="form-group">
-                  <label for="input_1">Please enter a sentence for analysis</label>
-                  <input type="text" class="form-control-file" id="input_1" name="input_1" value="Fun and awesome - I highly recommend this film!">
-                  <label for="input_2">This is the dictionary file URL</label>
-                  <!-- Always use final URL which will not redirect -->
-                  <input style="color:gray" type="text" class="form-control-file" id="input_2" name="input_2" value="https://raw.githubusercontent.com/tpmccallum/Tim2/main/dictionary_testing.txt" readonly>
-               </div>
-            </div>
-            <hr />
-            <button class="btn btn-success mb-2" id="process" name="process" value="1" onclick="return callService();">Analyse text</button>
-         </form>
-         <div class="jumbotron">
-            <pre id="result">Please type in your sentence, and then press the "Analyse text" button.</pre>
-         </div>
-      </div>
-      <!-- /container -->
-   </body>
+  <body>
+     <div class="container">
+        <div style="text-align:center;margin:25px">
+           <a href="https://www.secondstate.io/"><img style="border:0;" src="https://www.secondstate.io/assets/img/logo.png"></a>
+           <div style="font-size:90%;color:gray;margin:20px"><a href="https://www.secondstate.io/faas/">Fast, safe, portable and serverless Rust functions as services</a></div>
+        </div>
+        <h1>Natural language - sentiment analysis</h1>
+        <hr />
+        <form id="draw" enctype="multipart/form-data">
+           <div class="panel panel-default">
+              <div class="form-group">
+                 <label for="input_1">Please enter a sentence for analysis</label>
+                 <input rows="4" cols="200" type="text" class="form-control-file" id="input_1" name="input_1" value="Fun and Awesome I highly recommend this film">
+                 <label for="input_2">This is the dictionary file URL</label>
+                 <!-- Always use final URL which will not redirect -->
+                 <input style="color:gray" type="text" class="form-control-file" id="input_2" name="input_2" value="https://raw.githubusercontent.com/tpmccallum/Tim2/main/dictionary.txt" readonly>
+              </div>
+           </div>
+           <hr />
+           <button class="btn btn-success mb-2" id="process" name="process" value="1" onclick="return callService();">Analyse text</button>
+        </form>
+        <div class="jumbotron">
+           <p id="result_box"></p>
+        </div>
+     </div>
+     <!-- /container -->
+  </body>
 </html>
