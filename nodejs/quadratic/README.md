@@ -10,7 +10,7 @@ If you have not done so already, follow these simple instructions to [install Ru
 ## Build the application
 
 ```
-$ ssvmup build --enable-aot
+$ rustwasmc build --enable-aot
 ```
 
 ## Test
