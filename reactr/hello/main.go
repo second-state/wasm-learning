@@ -14,9 +14,9 @@ func main() {
 
 func runBundle() {
 	r := rt.New()
-	r.Register("hello-echo", rwasm.NewRunner("./hello_echo.wasm"))
+	doWasm := r.Register("hello-echo", rwasm.NewRunner("./hello_echo.wasm"))
 
-	res, err := r.Do(rt.NewJob("hello-echo", []byte("wasmWorker!"))).Then()
+	res, err := doWasm([]byte("wasmWorker!")).Then()
 	if err != nil {
 		fmt.Println(err)
 		return
