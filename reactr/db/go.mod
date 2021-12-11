@@ -3,7 +3,7 @@ module db
 go 1.17
 
 require (
-	github.com/suborbital/reactr v0.13.1
+	github.com/suborbital/reactr v0.12.1-0.20211208141943-8e8dcbbda027
 	github.com/suborbital/vektor v0.5.1
 )
 
@@ -25,6 +25,7 @@ require (
 	github.com/jmoiron/sqlx v1.3.4 // indirect
 	github.com/julienschmidt/httprouter v1.3.0 // indirect
 	github.com/pkg/errors v0.9.1 // indirect
+	github.com/second-state/WasmEdge-go v0.9.0-rc5 // indirect
 	github.com/sethvargo/go-envconfig v0.4.0 // indirect
 	github.com/suborbital/grav v0.4.1 // indirect
 	github.com/wasmerio/wasmer-go v1.0.4 // indirect

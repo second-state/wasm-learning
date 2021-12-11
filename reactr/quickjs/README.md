@@ -8,7 +8,7 @@ Reactr has support for Wasm-packaged Runnables. The rwasm package contains a mul
 
 The default Wasm VM is Wasmer, WasmEdge can be turned on by passing `-tags wasmedge` to any go command.
 
-## Install and setup Rust
+## Install and setup
 
 ```
 $ sudo apt-get update
@@ -19,38 +19,12 @@ $ source $HOME/.cargo/env
 $ rustup target add wasm32-wasi
 ```
 
-## Install and setup PostgreSQL
-```
-# Start PostgreSQL with Docker
-$ docker pull postgres
-$ docker run --name reactr-postgres -p 5432:5432 -e POSTGRES_PASSWORD=12345 -d postgres
-
-# Attach via psql
-$ docker run -it --rm --network host postgres psql -h 127.0.0.1 -U postgres
-
-# Create a database
-postgres=# CREATE DATABASE reactr;
-postgres=# \c reactr;
-
-# Create a table:
-postgres=# CREATE TABLE users (
-    uuid        varchar(100) CONSTRAINT firstkey PRIMARY KEY,
-    email       varchar(50) NOT NULL,
-    created_at  date,
-    state       char(1),
-    identifier  integer
-);
-
-# Export environment variable of connection url
-$ export REACTR_DB_CONN_STRING='postgresql://postgres:12345@127.0.0.1:5432/reactr'
-```
-
 ## Compile and run
 
 ```
-$ cd rs-db
+$ cd rs-embed-js
 $ cargo build --target wasm32-wasi --release
-$ cp target/wasm32-wasi/release/rs_db.wasm ..
+$ cp target/wasm32-wasi/release/rs_embed_js.wasm ..
 
 $ cd ..
 $ go mod tidy

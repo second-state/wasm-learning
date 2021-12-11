@@ -28,6 +28,6 @@ $ cp target/wasm32-wasi/release/hello_echo.wasm ..
 
 $ cd ..
 $ go mod tidy
-$ go run main.go -tags wasmedge
+$ go run -tags wasmedge main.go
 ```
 

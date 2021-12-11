@@ -1,0 +1,13 @@
+[package]
+name = "rs-embed-js"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[lib]
+crate-type = ["cdylib", "rlib"]
+
+[dependencies]
+suborbital = "0.13.1"
+wasmedge_quickjs = "0.2.0"
