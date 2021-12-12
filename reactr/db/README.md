@@ -6,7 +6,7 @@ Reactr runs functions called Runnables, and transparently spawns workers to proc
 
 Reactr has support for Wasm-packaged Runnables. The rwasm package contains a multi-tenant Wasm scheduler, an API to grant capabilities to Wasm Runnables, and support for several languages including Rust (stable), TypeScript/AssemblyScript (beta), and Swift (alpha).
 
-The default Wasm VM is Wasmer, WasmEdge can be turned on by passing `-tags wasmedge` to any go command.
+To use Reactr with WasmEdge, you need to pass `-tags wasmedge` to the go command.
 
 ## Install and setup Rust
 
