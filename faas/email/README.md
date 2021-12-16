@@ -4,12 +4,12 @@ In this example, we will demonstrate how to redirect the return value from a Faa
 
 ## Prerequisites
 
-If you have not done so already, follow these simple instructions to install [Rust](https://www.rust-lang.org/tools/install) and [ssvmup](https://www.secondstate.io/articles/ssvmup/).
+If you have not done so already, follow these simple instructions to install [Rust](https://www.rust-lang.org/tools/install) and [rustwasmc](https://www.secondstate.io/articles/ssvmup/).
 
 ## Build the WASM bytecode
 
 ```
-$ ssvmup build
+rustwasmc build
 ```
 
 ## Create FaaS function
@@ -17,7 +17,7 @@ $ ssvmup build
 Upload the wasm file in the `pkg` folder to the FaaS. Double check the `.wasm` file name before you upload.
 
 ```
-$ curl --location --request POST 'https://rpc.ssvm.secondstate.io:8081/api/executables' \
+curl --location --request POST 'https://rpc.ssvm.secondstate.io:8081/api/executables' \
 --header 'Content-Type: application/octet-stream' \
 --header 'SSVM-Description: send email' \
 --data-binary '@pkg/send_email_lib_bg.wasm'
@@ -26,13 +26,13 @@ $ curl --location --request POST 'https://rpc.ssvm.secondstate.io:8081/api/execu
 Returns
 
 ```
-{"wasm_id":151,"wasm_sha256":"0xec9e4c7d01920f...644bed9bf7922","SSVM_Usage_Key":"00000000-0000-0000-0000-000000000000","SSVM_Admin_Key":"b425089...8bfa58e6"}
+{"wasm_id":481,"wasm_sha256":"0xd8d98d8edbd445c97e663c68d2067c9528fbd9bbfbf8a3ad39a5ba3f88b9cd34","SSVM_Usage_Key":"00000000-0000-0000-0000-000000000000","SSVM_Admin_Key":"f958eebd-c681-4f39-b0d1-83d894548c1d"}%  
 ```
 
 Note: You can update this binary with the `SSVM_Admin_Key`.
 
 ```
-$ curl --location --request PUT 'https://rpc.ssvm.secondstate.io:8081/api/update_wasm_binary/151' \
+$ curl --location --request PUT 'https://rpc.ssvm.secondstate.io:8081/api/update_wasm_binary/481' \
 --header 'Content-Type: application/octet-stream' \
 --header 'SSVM_Admin_Key: 7dxxxxxx-xxxx-xxxx-xxxx-xxxxxxxx0c41' \
 --data-binary '@pkg/send_email_lib_bg.wasm'
@@ -43,7 +43,7 @@ $ curl --location --request PUT 'https://rpc.ssvm.secondstate.io:8081/api/update
 Make a function call via the web.
 
 ```
-$ curl --location --request POST 'https://rpc.ssvm.secondstate.io:8081/api/run/151/send_email' \
+curl --location --request POST 'https://rpc.ssvm.secondstate.io:8081/api/run/481/send_email' \
 --header 'Content-Type: text/plain' \
 --data '{"from":"michael@secondstate.io", "token":"SG.xxx", "to":"juntao_yuan@yahoo.com", "subject":"This is a HTTP Proxy FaaS test", "mime":"text/plain", "body":"Hello Second State FaaS!"}'
 ```
