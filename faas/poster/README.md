@@ -4,12 +4,12 @@ In this example, we demonstrate how to create and run a Rust function in the Sec
 
 ## Prerequisites
 
-If you have not done so already, follow these simple instructions to install [Rust](https://www.rust-lang.org/tools/install) and [ssvmup](https://www.secondstate.io/articles/ssvmup/).
+If you have not done so already, follow these simple instructions to install [Rust](https://www.rust-lang.org/tools/install) and [rustwasmc](https://www.secondstate.io/articles/ssvmup/).
 
 ## Build the WASM bytecode
 
 ```
-ssvmup build
+rustwasmc build
 ```
 
 ## FaaS
