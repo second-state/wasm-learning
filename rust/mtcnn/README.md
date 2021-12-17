@@ -1,4 +1,4 @@
-# SSVM-Tensorflow Example for Running MTCNN Model
+# WasmEdge-Tensorflow Example for Running MTCNN Model
 
 ## Setup the wasm32-wasi target of Cargo
 
@@ -16,29 +16,29 @@ $ cargo build --release --target=wasm32-wasi
 
 The result wasm file will be at `target/wasm32-wasi/release/mtcnn.wasm`.
 
-### Get ssvm-tensorflow
+### Get WasmEdge-tensorflow
 
-### Option 1. Build ssvm-tensorflow
+### Option 1. Build WasmEdge-tensorflow
 
-Get [ssvm-tensorflow](https://github.com/second-state/ssvm-tensorflow).
+Get [WasmEdge-tensorflow-tools](https://github.com/second-state/WasmEdge-tensorflow-tools).
 
 ```bash
-$ docker pull secondstate/ssvm
+$ docker pull WasmEdge/WasmEdge
 $ docker run -it --rm \
-    -v <path/to/your/ssvm-tensorflow/source/folder>:/root/ssvm-tensorflow \
-    secondstate/ssvm:latest
-(docker)$ cd /root/ssvm-tensorflow
+    -v <path/to/your/WasmEdge-tensorflow/source/folder>:/root/WasmEdge-tensorflow-tools \
+    WasmEdge/WasmEdge:latest
+(docker)$ cd /root/WasmEdge-tensorflow-tools
 (docker)$ mkdir -p build && cd build
-# Build ssvm-tensorflow
+# Build WasmEdge-tensorflow-tools
 (docker)$ cmake -DCMAKE_BUILD_TYPE=Release .. && make -j
 ```
 
-### Option 2. Get ssvm-tensorflow release version
+### Option 2. Get WasmEdge-tensorflow-tools release version
 
 ```bash
-wget https://github.com/second-state/ssvm-tensorflow/releases/download/0.1.0/ssvm-tensorflow-0.1.0-linux-x64.tar.gz
-tar -zxvf ssvm-tensorflow-0.1.0-linux-x64.tar.gz
-./download_dependencies  # Download the required shared libraries and make symbolic links.
+wget https://github.com/second-state/WasmEdge-tensorflow-tools/releases/download/0.8.0/WasmEdge-tensorflow-tools-0.8.0-manylinux2014_x86_64.tar.gz
+tar -zxvf WasmEdge-tensorflow-tools-0.8.0-manylinux2014_x86_64.tar.gz
+./download_dependencies_all.sh  # Download the required shared libraries and make symbolic links.
 ```
 
 ## Run
@@ -47,13 +47,13 @@ Interpreter mode:
 
 ```bash
 # Copy input image, model, and wasm file to the current directory.
-LD_LIBRARY_PATH=. ./ssvm-tensorflow --dir .:. mtcnn.wasm mtcnn.pb solvay.jpg tmp.jpg
+LD_LIBRARY_PATH=. ./wasmedge-tensorflow --dir .:. mtcnn.wasm mtcnn.pb solvay.jpg tmp.jpg
 ```
 
 AOT mode:
 
 ```bash
 # Copy input image, model, and wasm file to the current directory.
-./ssvmc-tensorflow mtcnn.wasm mtcnn.wasm.so
-LD_LIBRARY_PATH=. ./ssvm-tensorflow --dir .:. mtcnn.wasm.so mtcnn.pb solvay.jpg tmp.jpg
+./wasmedgec-tensorflow mtcnn.wasm mtcnn.wasm.so
+LD_LIBRARY_PATH=. ./wasmedge-tensorflow --dir .:. mtcnn.wasm.so mtcnn.pb solvay.jpg tmp.jpg
 ```

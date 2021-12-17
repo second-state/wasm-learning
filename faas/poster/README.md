@@ -1,15 +1,15 @@
-# The image watermark example
+# The poster watermark example
 
-In this example, we demonstrate how to create and run a Rust function in the Second State Rust FaaS.
+In this example, we demonstrate how to create and run a Rust function in the Second State Rust Functions.
 
 ## Prerequisites
 
-If you have not done so already, follow these simple instructions to install [Rust](https://www.rust-lang.org/tools/install) and [ssvmup](https://www.secondstate.io/articles/ssvmup/).
+If you have not done so already, follow these simple instructions to install [Rust](https://www.rust-lang.org/tools/install) and [rustwasmc](https://www.secondstate.io/articles/ssvmup/).
 
 ## Build the WASM bytecode
 
 ```
-ssvmup build
+rustwasmc build
 ```
 
 ## FaaS
@@ -38,7 +38,7 @@ $ curl --location --request PUT 'https://rpc.ssvm.secondstate.io:8081/api/update
 --data-binary '@pkg/watermark_lib_bg.wasm'
 ```
 
-## Setup the watermark text
+## Insert your name
 
 Add watermark to a local PNG image.
 

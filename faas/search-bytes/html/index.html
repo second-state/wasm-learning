@@ -55,7 +55,7 @@ function searchBytes() {
 </script>
 <script type="text/javascript">
 function searchBytesII() {
-    var buffer_1 = new ArrayBuffer(1000000);
+    var buffer_1 = new ArrayBuffer(500);
     var buffer_2 = new ArrayBuffer(1000000);
     var needle = new Uint8Array(buffer_1);
     var haystack = new Uint8Array(buffer_2);
@@ -80,7 +80,7 @@ function searchBytesII() {
     array_to_go.set(needle, 10);
     array_to_go.set(haystack, 10 + needle_length);
 
-    var url = "https://rpc.ssvm.secondstate.io:8081/api/run/226/search_bytes_single_input";
+    var url = "https://rpc.ssvm.secondstate.io:8081/api/run/353/search_bytes_single_input";
 
     var xhr = new XMLHttpRequest();
 
@@ -122,7 +122,7 @@ function searchBytesII() {
       If the sequence of bytes from the <code>needle</code> are <b>NOT</b> present in the <code>haystack</code>, then the result below will be <code>Absent</code>.
       <br />
       <br />
-      <button class="btn btn-primary mb-2" id="process" name="process" value="1" onclick="return searchBytes();">Compare bytes</button>
+      <button class="btn btn-primary mb-2" id="process" name="process" value="1" onclick="return searchBytes();">Compare bytes ...</button>
 <br />
 <br />
 
@@ -136,15 +136,15 @@ function searchBytesII() {
 
       This example creates two much bigger ArrayBuffers using Javascript.<br />
       <br />
-      <code>var buffer_1 = new ArrayBuffer(1000000);<br />
+      <code>var buffer_1 = new ArrayBuffer(500);<br />
       var buffer_2 = new ArrayBuffer(1000000);<br />
       var needle = new Uint8Array(buffer_1);<br />
       var haystack = new Uint8Array(buffer_2);<br />
       needle.fill(111)<br />
       haystack.fill(111)</code><br />
       <br />
-      In this second example, both ArrayBuffers are 2 million bytes in size.<br />
-      To demonstrate a case where data is present, as you can see, they are both filled with the same data <code>[111, 111, 111 ... 111, 111]</code> vs <code>[111, 111, 111 ... 111, 111]</code><br />
+      In this second example, the needle is 500 bytes in length, the haystack is one million bytes long, and the data is present.<br />
+      As you can see, they are both filled with the same data <code>[111, 111, 111 ... 111, 111]</code> vs <code>[111, 111, 111 ... 111, 111]</code><br />
       When you click this button, this page sends these two byte arrays away to a FaaS which will see if the needle is in the haystack<br />
       If the sequence of bytes from the <code>needle</code> are present in the <code>haystack</code>, then the result below will be <code>Present</code>.
       <br />
@@ -156,7 +156,7 @@ function searchBytesII() {
 
       
       <div class="jumbotron">
-        <p id="resultII">Result ...</p>
+        <p id="resultII">Result!</p>
       </div>
       <p>This work is explained in more detail in an online article called <a href="https://medium.com/wasm/an-easy-way-to-boost-your-client-side-javascript-using-webassembly-wasm-de35c53cc2a2" target="_blank">An easy way to boost your client-side Javascript using WebAssembly(Wasm)</a>. An additional follow-up article called <a href="https://medium.com/wasm/how-to-detect-a-sequence-of-bytes-in-a-byte-array-using-client-side-javascript-859ed08611d3" target="_blank">How to detect a sequence of bytes, in a byte array, using client-side Javascript</a> also provides additional details about this work.</p>
 

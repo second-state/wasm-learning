@@ -1,7 +1,7 @@
-use ssvm_tensorflow_interface;
 use std::env;
 use std::fs::File;
 use std::io::Read;
+use wasmedge_tensorflow_interface;
 
 fn main() {
     let args: Vec<String> = env::args().collect();
@@ -15,17 +15,22 @@ fn main() {
     let mut img_buf = Vec::new();
     file_img.read_to_end(&mut img_buf).unwrap();
 
-    let flat_img = ssvm_tensorflow_interface::load_jpg_image_to_rgb8(&img_buf, 640, 640);
-    let mut args = ssvm_tensorflow_interface::SessionArgs::new();
-    args.add_input("input_tensor", &flat_img, &[1, 640, 640, 3]);
-    args.add_output("StatefulPartitionedCall:1");
-    args.add_output("StatefulPartitionedCall:2");
-    args.add_output("StatefulPartitionedCall:4");
+    let flat_img = wasmedge_tensorflow_interface::load_jpg_image_to_rgb8(&img_buf, 640, 640);
 
-    let res = ssvm_tensorflow_interface::exec_model(&mod_buf, &args);
-    let detection_boxes: Vec<f32> = res.get_output("StatefulPartitionedCall:1");
-    let detection_classes: Vec<f32> = res.get_output("StatefulPartitionedCall:2");
-    let detection_scores: Vec<f32> = res.get_output("StatefulPartitionedCall:4");
+    let mut session = wasmedge_tensorflow_interface::Session::new(
+        &mod_buf,
+        wasmedge_tensorflow_interface::ModelType::TensorFlow,
+    );
+    session
+        .add_input("input_tensor", &flat_img, &[1, 640, 640, 3])
+        .add_output("StatefulPartitionedCall:1")
+        .add_output("StatefulPartitionedCall:2")
+        .add_output("StatefulPartitionedCall:4")
+        .run();
+
+    let detection_boxes: Vec<f32> = session.get_output("StatefulPartitionedCall:1");
+    let detection_classes: Vec<f32> = session.get_output("StatefulPartitionedCall:2");
+    let detection_scores: Vec<f32> = session.get_output("StatefulPartitionedCall:4");
 
     println!("Boxes : {:?}", detection_boxes);
     println!("Classes : {:?}", detection_classes);

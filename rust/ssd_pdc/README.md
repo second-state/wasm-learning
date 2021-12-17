@@ -1,4 +1,4 @@
-# SSVM-Tensorflow Example for Running Mobilenet_v2 Model
+# WasmEdge-Tensorflow Example for Running Mobilenet_v2 Model
 
 ## Setup the wasm32-wasi target of Cargo
 
@@ -16,25 +16,29 @@ $ cargo build --release --target=wasm32-wasi
 
 The result wasm file will be at `target/wasm32-wasi/release/ssd_pdc.wasm`.
 
-### Build ssvm-tensorflow
+### Get WasmEdge-tensorflow
 
-Get [ssvm-tensorflow](https://github.com/second-state/ssvm-tensorflow).
+### Option 1. Build WasmEdge-tensorflow
+
+Get [WasmEdge-tensorflow-tools](https://github.com/second-state/WasmEdge-tensorflow-tools).
 
 ```bash
-$ docker pull secondstate/ssvm
+$ docker pull WasmEdge/WasmEdge
 $ docker run -it --rm \
-    -v <path/to/your/ssvm-tensorflow/source/folder>:/root/ssvm-tensorflow \
-    secondstate/ssvm:latest
-(docker)$ cd /root/ssvm-tensorflow
+    -v <path/to/your/WasmEdge-tensorflow/source/folder>:/root/WasmEdge-tensorflow-tools \
+    WasmEdge/WasmEdge:latest
+(docker)$ cd /root/WasmEdge-tensorflow-tools
 (docker)$ mkdir -p build && cd build
-# Install the JPEG and PNG library
-(docker)$ apt-get update && apt-get install -y libjpeg-dev libpng-dev
-# Install the tensorflow library
-(docker)$ wget https://storage.googleapis.com/tensorflow/libtensorflow/libtensorflow-cpu-linux-x86_64-2.3.0.tar.gz
-(docker)$ tar -C /usr/local -xzf libtensorflow-cpu-linux-x86_64-2.3.0.tar.gz
-(docker)$ ldconfig
-# Build ssvm-tensorflow
+# Build WasmEdge-tensorflow-tools
 (docker)$ cmake -DCMAKE_BUILD_TYPE=Release .. && make -j
+```
+
+### Option 2. Get WasmEdge-tensorflow-tools release version
+
+```bash
+wget https://github.com/second-state/WasmEdge-tensorflow-tools/releases/download/0.8.0/WasmEdge-tensorflow-tools-0.8.0-manylinux2014_x86_64.tar.gz
+tar -zxvf WasmEdge-tensorflow-tools-0.8.0-manylinux2014_x86_64.tar.gz
+./download_dependencies_all.sh  # Download the required shared libraries and make symbolic links.
 ```
 
 ## Run
@@ -42,18 +46,16 @@ $ docker run -it --rm \
 Interpreter mode:
 
 ```bash
-(docker)$ cd /root/ssvm-tensorflow/build/tools
-# Copy input image, model, and wasm file to /root/ssvm-tensorflow/build/tools
-(docker)$ ./ssvm-tensorflow --dir .:. ssd_pdc.wasm.so mobilenet_ssd_256res_0.125_person_cat_dog.pb dog_cat.jpg
+# Copy input image, model, and wasm file to the current directory.
+LD_LIBRARY_PATH=. ./wasmedge-tensorflow --dir .:. ssd_pdc.wasm mobilenet_ssd_256res_0.125_person_cat_dog.pb dog_cat.jpg
 ```
 
 AOT mode:
 
 ```bash
-(docker)$ cd /root/ssvm-tensorflow/build/tools
-# Copy input image, model, and wasm file to /root/ssvm-tensorflow/build/tools
-(docker)$ ./ssvmc-tensorflow ssd_pdc.wasm ssd_pdc.wasm.so
-(docker)$ ./ssvm-tensorflow --dir .:. ssd_pdc.wasm.so mobilenet_ssd_256res_0.125_person_cat_dog.pb dog_cat.jpg
+# Copy input image, model, and wasm file to the current directory.
+./wasmedgec-tensorflow ssd_pdc.wasm ssd_pdc.wasm.so
+LD_LIBRARY_PATH=. ./wasmedge-tensorflow --dir .:. ssd_pdc.wasm.so mobilenet_ssd_256res_0.125_person_cat_dog.pb dog_cat.jpg
 ```
 
 Note: the box anchors are: https://github.com/google/aiyprojects-raspbian/blob/a4298c65b8d5e583f78570da7f38ab2f32e06c2f/src/aiy/vision/models/object_detection_anchors.py

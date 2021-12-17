@@ -20,3 +20,15 @@ pkg
 
 # local computer
 .DS_Store
+
+# vim swap files
+.*.sw?
+.sw?
+
+# VS2017 and VSCode config files.
+.vscode
+.vs
+
+# ignore large files explicitly
+faas/yolo-tflite/pkg/yolo_tflite_lib_bg.wasm
+faas/yolo-tflite/src/yolov4-416.tflite

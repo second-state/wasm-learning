@@ -9,7 +9,7 @@ If you have not done so already, follow these simple instructions to install [Ru
 ## Build the WASM bytecode
 
 ```
-rustwasmc build --enable-aot --enable-ext
+rustwasmc build --enable-ext
 ```
 
 ## Create FaaS function
@@ -26,14 +26,13 @@ curl --location --request POST 'https://rpc.ssvm.secondstate.io:8081/api/executa
 Returns
 
 ```
-Output:
-{"wasm_id":206,"wasm_sha256":"0x469c28daae7aba392076b4bc5ee3b43ec6d667083d8ae63207bf74b1da03fc26","SSVM_Usage_Key":"00000000-0000-0000-0000-000000000000","SSVM_Admin_Key":"7dxxxxxx-xxxx-xxxx-xxxx-xxxxxxxx0c41"}
+{"wasm_id":492,"wasm_sha256":"0x469c28daae7aba392076b4bc5ee3b43ec6d667083d8ae63207bf74b1da03fc26","SSVM_Usage_Key":"00000000-0000-0000-0000-000000000000","SSVM_Admin_Key":"7dxxxxxx-xxxx-xxxx-xxxx-xxxxxxxx0c41"}
 ```
 
 Note: You can update this binary with the `SSVM_Admin_Key`.
 
 ```
-curl --location --request PUT 'https://rpc.ssvm.secondstate.io:8081/api/update_wasm_binary/206' \
+$ curl --location --request PUT 'https://rpc.ssvm.secondstate.io:8081/api/update_wasm_binary/492' \
 --header 'Content-Type: application/octet-stream' \
 --header 'SSVM_Admin_Key: ffxxxxxx-xxxx-xxxx-xxxx-xxxxxxxx8c73' \
 --data-binary '@pkg/mobilenet_service_lib_bg.wasm'

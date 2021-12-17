@@ -1,0 +1,163 @@
+name: Node.js examples with the latest rustc
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+  workflow_dispatch:
+    branches: [ master ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-20.04
+    strategy:
+      matrix:
+        node-version: [10.x, 12.x, 14.x]
+
+    steps:
+    - uses: actions/checkout@v2
+      
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v1
+      with:
+        node-version: ${{ matrix.node-version }}
+
+    - name: Install apt-get packages
+      run: |
+        sudo ACCEPT_EULA=Y apt-get update
+        sudo ACCEPT_EULA=Y apt-get upgrade
+        sudo apt-get install build-essential curl wget git vim libboost-all-dev
+        sudo apt-get install llvm-dev liblld-10-dev libboost-all-dev
+        sudo apt-get install libjpeg-dev libpng-dev
+    
+    - name: Install Tensorflow
+      run: |
+        wget https://storage.googleapis.com/tensorflow/libtensorflow/libtensorflow-cpu-linux-x86_64-2.4.0.tar.gz
+        sudo tar -C /usr/local/ -xzf libtensorflow-cpu-linux-x86_64-2.4.0.tar.gz
+        wget https://github.com/second-state/ssvm-tensorflow-deps/releases/download/0.1.0/ssvm-tensorflow-deps-lite-0.1.0-linux-x64.tar.gz
+        sudo tar -C /usr/local/lib -zxvf ssvm-tensorflow-deps-lite-0.1.0-linux-x64.tar.gz libtensorflowlite_c.so
+        sudo ldconfig
+        cargo install http_proxy
+        cargo install mtcnn
+        cargo install mobilenet_v2
+    
+    - name: Install npm packages and Deno
+      run: |
+        npm i ssvm ssvm-extensions sync-request better-sqlite3
+        npm install -g rustwasmc
+        npm i -g wasm-pack
+        curl -fsSL https://deno.land/x/install/install.sh | sh
+    
+    - name: Functions Interpreter
+      run: |
+        rustwasmc build
+        node node/app.js
+        rustwasmc clean
+      working-directory: nodejs/functions
+      
+    - name: Functions AOT
+      run: |
+        rustwasmc build --enable-aot
+        node node/app.js
+        rustwasmc clean
+      working-directory: nodejs/functions
+      
+    - name: JSON IO Interpreter
+      run: |
+        rustwasmc build
+        node node/app.js
+        rustwasmc clean
+      working-directory: nodejs/json_io
+
+    - name: JSON IO AOT
+      run: |
+        rustwasmc build --enable-aot
+        node node/app.js
+        rustwasmc clean
+      working-directory: nodejs/json_io
+
+    # - name: RSA AOT
+    #   run: |
+    #     rustwasmc build --enable-aot
+    #     node node/app.js
+    #     rustwasmc clean
+    #   working-directory: nodejs/rsa_example
+
+    # - name: WASI
+    #  run: |
+    #    ssvmup build
+    #    node node/app.js
+    #    ssvmup clean
+    #  working-directory: nodejs/wasi
+
+    # - name: MobileNet Interpreter
+    #   run: |
+    #     rustwasmc build --enable-ext
+    #     cd test/
+    #     node test.js
+    #     cd ..
+    #     rustwasmc clean
+    #   working-directory: faas/mobilenet
+
+    # - name: MobileNet AOT
+    #   run: |
+    #     rustwasmc build --enable-aot --enable-ext
+    #     cd test/
+    #     node test.js
+    #     cd ..
+    #     rustwasmc clean
+    #   working-directory: faas/mobilenet
+
+    # - name: MTCNN Interpreter
+    #   run: |
+    #     rustwasmc build --enable-ext
+    #     cd test/
+    #     node test.js
+    #     cd ..
+    #     rustwasmc clean
+    #   working-directory: faas/mtcnn
+
+    # - name: MTCNN AOT
+    #   run: |
+    #     rustwasmc build --enable-aot --enable-ext
+    #     cd test/
+    #     node test.js
+    #     cd ..
+    #     rustwasmc clean
+    #   working-directory: faas/mtcnn
+
+    # - name: kmeans example AOT
+    #   run: |
+    #     rustwasmc build --enable-aot
+    #     cd node/
+    #     node app.js
+    #     cd ../
+    #     rustwasmc clean
+    #   working-directory: nodejs/kmeans
+
+    - name: Deno example
+      run: |
+        rustwasmc build --target deno
+        $HOME/.deno/bin/deno run --allow-read --allow-env --unstable deno/test.ts
+        rustwasmc clean
+      working-directory: deno/functions
+
+    - name: Nodejs API
+      run: |
+        wasm-pack build --target nodejs
+        cd node/
+        node date.js
+        node db.js
+        node http.js
+        node image.js
+        node cleanup.js
+        rm -rf ../target ../pkg
+      working-directory: nodejs/nodejs_example
+
+    - name: WasmEdge rust wasi application example
+      run: |
+        rustwasmc build
+        node app.js
+      working-directory: ssvm/file-example

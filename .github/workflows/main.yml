@@ -26,8 +26,8 @@ jobs:
 
     - name: Install apt-get packages
       run: |
-        sudo apt-get update
-        sudo apt-get upgrade
+        sudo ACCEPT_EULA=Y apt-get update
+        sudo ACCEPT_EULA=Y apt-get upgrade
         sudo apt-get install build-essential curl wget git vim libboost-all-dev
         sudo apt-get install llvm-dev liblld-10-dev libboost-all-dev
         sudo apt-get install libjpeg-dev libpng-dev
@@ -42,106 +42,109 @@ jobs:
         cargo install http_proxy
         cargo install mtcnn
         cargo install mobilenet_v2
-        
+    
+    - name: Set Rust to required version
+      run: rustup override set 1.50.0
+    
     - name: Install npm packages and Deno
       run: |
         npm i ssvm ssvm-extensions sync-request better-sqlite3
-        npm i -g ssvmup
+        npm install -g rustwasmc
         npm i -g wasm-pack
         curl -fsSL https://deno.land/x/install/install.sh | sh
     
     - name: Functions Interpreter
       run: |
-        ssvmup build
+        rustwasmc build
         node node/app.js
-        ssvmup clean
+        rustwasmc clean
       working-directory: nodejs/functions
       
     - name: Functions AOT
       run: |
-        ssvmup build --enable-aot
+        rustwasmc build --enable-aot
         node node/app.js
-        ssvmup clean
+        rustwasmc clean
       working-directory: nodejs/functions
       
     - name: JSON IO Interpreter
       run: |
-        ssvmup build
+        rustwasmc build
         node node/app.js
-        ssvmup clean
+        rustwasmc clean
       working-directory: nodejs/json_io
 
     - name: JSON IO AOT
       run: |
-        ssvmup build --enable-aot
+        rustwasmc build --enable-aot
         node node/app.js
-        ssvmup clean
+        rustwasmc clean
       working-directory: nodejs/json_io
 
     - name: RSA AOT
       run: |
-        ssvmup build --enable-aot
+        rustwasmc build --enable-aot
         node node/app.js
-        ssvmup clean
+        rustwasmc clean
       working-directory: nodejs/rsa_example
 
     - name: WASI
       run: |
-        ssvmup build
+        rustwasmc build
         node node/app.js
-        ssvmup clean
+        rustwasmc clean
       working-directory: nodejs/wasi
 
     - name: MobileNet Interpreter
       run: |
-        ssvmup build --enable-ext
+        rustwasmc build --enable-ext
         cd test/
         node test.js
         cd ..
-        ssvmup clean
+        rustwasmc clean
       working-directory: faas/mobilenet
 
     - name: MobileNet AOT
       run: |
-        ssvmup build --enable-aot --enable-ext
+        rustwasmc build --enable-aot --enable-ext
         cd test/
         node test.js
         cd ..
-        ssvmup clean
+        rustwasmc clean
       working-directory: faas/mobilenet
 
     - name: MTCNN Interpreter
       run: |
-        ssvmup build --enable-ext
+        rustwasmc build --enable-ext
         cd test/
         node test.js
         cd ..
-        ssvmup clean
+        rustwasmc clean
       working-directory: faas/mtcnn
 
     - name: MTCNN AOT
       run: |
-        ssvmup build --enable-aot --enable-ext
+        rustwasmc build --enable-aot --enable-ext
         cd test/
         node test.js
         cd ..
-        ssvmup clean
+        rustwasmc clean
       working-directory: faas/mtcnn
 
     - name: kmeans example AOT
       run: |
-        ssvmup build --enable-aot
+        rustwasmc build --enable-aot
         cd node/
         node app.js
         cd ../
-        ssvmup clean
+        rustwasmc clean
       working-directory: nodejs/kmeans
 
     - name: Deno example
       run: |
-        ssvmup build --target deno
+        rustwasmc build --target deno
         $HOME/.deno/bin/deno run --allow-read --allow-env --unstable deno/test.ts
-        ssvmup clean
+        rustwasmc clean
       working-directory: deno/functions
 
     - name: Nodejs API
@@ -156,8 +159,8 @@ jobs:
         rm -rf ../target ../pkg
       working-directory: nodejs/nodejs_example
 
-    - name: SSVM rust wasi application  example
+    - name: WasmEdge rust wasi application example
       run: |
-        cargo build --release --target wasm32-wasi
+        rustwasmc build
         node app.js
       working-directory: ssvm/file-example
