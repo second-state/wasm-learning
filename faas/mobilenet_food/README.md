@@ -17,7 +17,7 @@ rustwasmc build --enable-ext
 Upload the wasm file in the `pkg` folder to the FaaS. Double check the `.wasm` file name before you upload.
 
 ```
-$ curl --location --request POST 'https://rpc.ssvm.secondstate.io:8081/api/executables' \
+curl --location --request POST 'https://rpc.ssvm.secondstate.io:8081/api/executables' \
 --header 'Content-Type: application/octet-stream' \
 --header 'SSVM-Description: mobilenet' \
 --data-binary '@pkg/mobilenet_service_lib_bg.wasm'
@@ -43,7 +43,7 @@ $ curl --location --request PUT 'https://rpc.ssvm.secondstate.io:8081/api/update
 Make a function call via the web.
 
 ```
-$ curl --location --request POST 'https://rpc.ssvm.secondstate.io:8081/api/run/206/infer' \
+curl --location --request POST 'https://rpc.ssvm.secondstate.io:8081/api/run/206/infer' \
 --header 'Content-Type: application/octet-stream' \
 --data-binary '@test/food.jpg'
 ```

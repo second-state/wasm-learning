@@ -9,7 +9,7 @@ If you have not done so already, follow these simple instructions to install [Ru
 ## Build the WASM bytecode
 
 ```
-$ rustwasmc build --enable-aot --enable-ext
+rustwasmc build --enable-ext
 ```
 
 ## Create FaaS function
@@ -17,7 +17,7 @@ $ rustwasmc build --enable-aot --enable-ext
 Upload the wasm file in the `pkg` folder to the FaaS. Double check the `.wasm` file name before you upload.
 
 ```
-$ curl --location --request POST 'https://rpc.ssvm.secondstate.io:8081/api/executables' \
+curl --location --request POST 'https://rpc.ssvm.secondstate.io:8081/api/executables' \
 --header 'Content-Type: application/octet-stream' \
 --header 'SSVM-Description: mobilenet' \
 --data-binary '@pkg/mobilenet_service_lib_bg.wasm'
@@ -32,7 +32,7 @@ Returns
 Note: You can update this binary with the `SSVM_Admin_Key`.
 
 ```
-$ curl --location --request PUT 'https://rpc.ssvm.secondstate.io:8081/api/update_wasm_binary/146' \
+curl --location --request PUT 'https://rpc.ssvm.secondstate.io:8081/api/update_wasm_binary/146' \
 --header 'Content-Type: application/octet-stream' \
 --header 'SSVM_Admin_Key: 7dxxxxxx-xxxx-xxxx-xxxx-xxxxxxxx0c41' \
 --data-binary '@pkg/mobilenet_service_lib_bg.wasm'
@@ -43,7 +43,7 @@ $ curl --location --request PUT 'https://rpc.ssvm.secondstate.io:8081/api/update
 Make a function call via the web.
 
 ```
-$ curl --location --request POST 'https://rpc.ssvm.secondstate.io:8081/api/run/482/infer' \
+curl --location --request POST 'https://rpc.ssvm.secondstate.io:8081/api/run/482/infer' \
 --header 'Content-Type: application/octet-stream' \
 --data-binary '@test/grace_hopper.jpg'
 ```
