@@ -20,7 +20,7 @@ pub fn infer(image_data: &[u8]) -> Vec<u8> {
 
     let model_data: &[u8] = include_bytes!("mtcnn.pb");
 
-    let mut session = wasmedge_tensorflow_interface::Session::new(model_data, ssvm_tensorflow_interface::ModelType::TensorFlow);
+    let mut session = wasmedge_tensorflow_interface::Session::new(model_data, wasmedge_tensorflow_interface::ModelType::TensorFlow);
     session.add_input("min_size", &[20.0f32], &[])
            .add_input("thresholds", &[0.6f32, 0.7f32, 0.7f32], &[3])
            .add_input("factor", &[0.709f32], &[])
