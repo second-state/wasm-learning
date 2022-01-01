@@ -110,4 +110,148 @@ Drawing box: 30 results ...
 Face Detection: 888.961ms
 ```
 
+---
 
+# Appendix A
+
+This section shows how to use wasmedge_bindgen as apposed to wasm_bingen.
+
+## Lib.rs
+
+Updates to the lib.rs file are as follows
+
+```
+use wasmedge_bindgen::*;
+use wasmedge_bindgen_macro::*;
+use wasmedge_tensorflow_interface;
+use image::{GenericImageView, Pixel};
+use imageproc::drawing::draw_hollow_rect_mut;
+use imageproc::rect::Rect;
+use std::str;
+use std::time::{Instant};
+
+#[wasmedge_bindgen]
+pub fn infer(image_data: Vec<u8>) -> Result<Vec<u8>, String> {
+    let start = Instant::now();
+    let mut img = image::load_from_memory(&image_data[..]).unwrap();
+    let mut flat_img: Vec<f32> = Vec::new();
+    for (_x, _y, rgb) in img.pixels() {
+        flat_img.push(rgb[2] as f32);
+        flat_img.push(rgb[1] as f32);
+        flat_img.push(rgb[0] as f32);
+    }
+    println!("Loaded image in ... {:?}", start.elapsed());
+
+    let model_data: &[u8] = include_bytes!("mtcnn.pb");
+
+    let mut session = wasmedge_tensorflow_interface::Session::new(model_data, wasmedge_tensorflow_interface::ModelType::TensorFlow);
+    session.add_input("min_size", &[20.0f32], &[])
+           .add_input("thresholds", &[0.6f32, 0.7f32, 0.7f32], &[3])
+           .add_input("factor", &[0.709f32], &[])
+           .add_input("input", &flat_img, &[img.height().into(), img.width().into(), 3])
+           .add_output("box")
+           .add_output("prob")
+           .run();
+    let res_vec: Vec<f32> = session.get_output("box");
+
+    // Parse results.
+    let mut iter = 0;
+    let mut box_vec: Vec<[f32; 4]> = Vec::new();
+    while (iter * 4) < res_vec.len() {
+        box_vec.push([
+            res_vec[4 * iter + 1], // x1
+            res_vec[4 * iter],     // y1
+            res_vec[4 * iter + 3], // x2
+            res_vec[4 * iter + 2], // y2
+        ]);
+        iter += 1;
+    }
+    println!("Parsed results in ... {:?}", start.elapsed());
+
+    println!("Drawing box: {} results ...", box_vec.len());
+    let line = Pixel::from_slice(&[0, 255, 0, 0]);
+    for i in 0..box_vec.len() {
+        let xy = box_vec[i];
+        let x1: i32 = xy[0] as i32;
+        let y1: i32 = xy[1] as i32;
+        let x2: i32 = xy[2] as i32;
+        let y2: i32 = xy[3] as i32;
+        let rect = Rect::at(x1, y1).of_size((x2 - x1) as u32, (y2 - y1) as u32);
+        draw_hollow_rect_mut(&mut img, rect, *line);
+    }
+    
+    let mut buf = Vec::new();
+    img.write_to(&mut buf, image::ImageOutputFormat::Jpeg(80u8)).expect("Unable to write");
+    println!("Drawn on image in ... {:?}", start.elapsed());
+
+    return Ok(buf);
+}
+```
+
+You can see that we import the wasmedge components
+
+```
+use wasmedge_bindgen::*;
+use wasmedge_bindgen_macro::*;
+```
+
+Then we change the first two lines where the function is defined
+
+```
+#[wasmedge_bindgen]
+pub fn infer(image_data: Vec<u8>) -> Result<Vec<u8>, String> {
+```
+
+We also update how the image is read (due to the function parameters being different)
+
+```
+let mut img = image::load_from_memory(&image_data[..]).unwrap();
+```
+
+Finally we return a `Result` (which complies with the function definition above) instead of just returning raw data
+
+```
+return Ok(buf);
+```
+
+## Cargo.toml
+
+The new wasmedge components have to be added to Cargo.toml file also
+
+```
+wasmedge-bindgen = "0.1.8"
+wasmedge-bindgen-macro = "0.1.8"
+```
+
+## Rust/Wasm system and environment changes
+
+We no longer need to use `rustwasmc` to compile, we can use `cargo` if the following system configuration is met
+
+First install latest version of Rust
+
+```
+curl --proto '=https' --tlsv1.2 https://sh.rustup.rs -sSf | sh
+```
+
+Add the wasm32-wasi target
+
+```
+rustup target add wasm32-wasi
+```
+
+Compile using cargo
+
+```
+cargo build --target wasm32-wasi --release
+```
+
+## Uploading to FaaS
+
+The following slightly modified HTTP request can be used to run the Wasm on FaaS
+
+```
+curl --location --request POST 'https://rpc.ssvm.secondstate.io:8081/api/executables' \
+--header 'Content-Type: application/octet-stream' \
+--header 'SSVM-Description: MTCNN' \
+--data-binary '@target/wasm32-wasi/release/mtcnn_service_lib.wasm'
+```
