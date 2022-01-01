@@ -53,19 +53,57 @@ $ curl --location --request POST 'https://rpc.ssvm.secondstate.io:8081/api/run/4
 
 ## Local test
 
-You must have Node.js and NPM installed. Install SSVM extensions and dependencies.
+You must have Node.js and NPM installed. Install dependencies.
 
 ```
 $ sudo apt install -y libjpeg-dev libpng-dev
 $ wget https://storage.googleapis.com/tensorflow/libtensorflow/libtensorflow-cpu-linux-x86_64-2.3.0.tar.gz
 $ sudo tar -C /usr/local -xzf libtensorflow-cpu-linux-x86_64-2.3.0.tar.gz
 $ sudo ldconfig
-$ npm i ssvm-extensions
+```
+
+Install wasmedge-extensions from source
+
+You will need to alter the Git configuration on the machine where this installation procedure is being performed. Reason being, this machine will not have the SSH keys to communicate with git@github. If you add the following config, you will be able to successfully run the `npm install --build-from-source ...` below.
+
+```bash
+git config --global url."https://github.com/".insteadOf git@github.com:
+git config --global url."https://".insteadOf git://
+```
+
+You can check that this config worked by typing 
+
+```bash
+git config -l
+```
+
+Temporarily downgrade npm
+
+The following installation will require that npm is downgraded to `6.14.9`. There is [an npm cli issue](https://github.com/npm/cli/issues/1865) which prevents us from using the latest npm for this particular build from source task.
+
+Because of the complexity of dependency management, please install aptitude because it provides a way to automatically resolve depencency conflicts.
+
+```bash
+sudo apt install aptitude
+sudo aptitude install npm
+```
+
+The following command is used to alter the npm version.
+
+```bash
+sudo npm install -g npm@6.14.9
+```
+
+Once you have temporarily downgraded npm, please go ahead and install the latest wasmedge-extensions like this
+
+```bash
+git clone --recurse-submodules https://github.com/second-state/wasmedge-extensions.git
+npm install --build-from-source wasmedge-extensions
 ```
 
 Run the local test on Node.js.
 
-```
+```bash
 $ cd test
 $ node test.js
 Drawing box: 30 results ...
