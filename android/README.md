@@ -10,7 +10,7 @@ Currently, WasmEdge only supports the arm64-v8a architecture on Android devices.
 
 In Ubuntu Linux, you can use the `apt-get` command to install Android debugging and testing tool `adb`. Using the `adb shell` command on the Ubuntu dev machine, you can open a CLI shell to execute commands on the connected Android device.
 
-```
+```bash
 $ sudo apt-get install adb
 ```
 
@@ -21,7 +21,7 @@ To compile programs which use wasmedge-tensorflow c api, you need to install the
 ## Program
 
 The following is an example for using wasmedge-tensorflow c api and running a WASM file. Assume that the WASM file `birds_v1.wasm` is copied into the current directory, and the C file test.c is as following:
-```
+```c
 #include <wasmedge/wasmedge.h>
 #include <wasmedge/wasmedge-image.h>
 #include <wasmedge/wasmedge-tensorflowlite.h>
@@ -82,7 +82,7 @@ int main(int argc, char *argv[]) {
 
 ### Install dependencies
 
-```
+```bash
 $ wget https://github.com/WasmEdge/WasmEdge/releases/download/0.9.1-rc.1/WasmEdge-0.9.1-rc.1-android_aarch64.tar.gz
 $ wget https://github.com/second-state/WasmEdge-image/releases/download/0.9.1-rc.1/WasmEdge-image-0.9.1-rc.1-android_aarch64.tar.gz
 $ wget https://github.com/second-state/WasmEdge-tensorflow/releases/download/0.9.1-rc.1/WasmEdge-tensorflowlite-0.9.1-rc.1-android_aarch64.tar.gz
@@ -95,7 +95,7 @@ $ tar -zxf WasmEdge-tensorflow-deps-TFLite-0.9.1-rc.1-android_aarch64.tar.gz -C 
 
 ### Compile
 
-```
+```bash
 $ (/path/to/ndk)/toolchains/llvm/prebuilt/(HostPlatform)/bin/aarch64-linux-(AndroidApiVersion)-clang test.c -I./WasmEdge-0.9.1-rc.1-Android/include -L./WasmEdge-0.9.1-rc.1-Android/lib -lwasmedge-image_c -lwasmedge-tensorflowlite_c -ltensorflowlite_c -lwasmedge_c
 ```
 
@@ -103,7 +103,8 @@ $ (/path/to/ndk)/toolchains/llvm/prebuilt/(HostPlatform)/bin/aarch64-linux-(Andr
 ## Run
 
 ### push files onto Android
-```
+
+```bash
 $ adb push a.out /data/local/tmp
 $ adb push birds_v1.wasm /data/local/tmp
 $ adb push lite-model_aiy_vision_classifier_birds_V1_3.tflite /data/local/tmp
@@ -112,7 +113,8 @@ $ adb push ./WasmEdge-0.9.1-rc.1-Android/lib /data/local/tmp
 ```
 
 ### run the example
-```
+
+```bash
 $ adb shell
 sirius:/ $ cd /data/local/tmp
 sirius:/data/local/tmp $ export LD_LIBRARY_PATH=/data/local/tmp/lib:$LD_LIBRARY_PATH
