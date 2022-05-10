@@ -11,6 +11,7 @@ Install WasmEdge by downloading and extracting the `wasmedge` binary executable 
 ## Build the WASM bytecode
 
 ```
+$ rustup target add wasm32-wasi
 $ cargo build --target wasm32-wasi
 ```
 
