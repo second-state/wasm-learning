@@ -1,0 +1,12 @@
+[package]
+name = "add"
+version = "0.1.0"
+authors = ["ubuntu"]
+edition = "2018"
+
+[lib]
+name = "add"
+path = "src/lib.rs"
+crate-type =["cdylib"]
+
+[dependencies]

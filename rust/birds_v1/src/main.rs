@@ -1,7 +1,7 @@
-use ssvm_tensorflow_interface;
 use std::env;
 use std::fs::File;
 use std::io::Read;
+use wasmedge_tensorflow_interface;
 
 fn main() {
     let args: Vec<String> = env::args().collect();
@@ -15,12 +15,20 @@ fn main() {
     let mut img_buf = Vec::new();
     file_img.read_to_end(&mut img_buf).unwrap();
 
-    let flat_img = ssvm_tensorflow_interface::load_jpg_image_to_rgb8(&img_buf, 224, 224);
+    let flat_img = wasmedge_tensorflow_interface::load_jpg_image_to_rgb8(&img_buf, 224, 224);
 
-    let mut session = ssvm_tensorflow_interface::Session::new(&mod_buf, ssvm_tensorflow_interface::ModelType::TensorFlowLite);
-    session.add_input("module/hub_input/images_uint8", &flat_img, &[1, 224, 224, 3])
-           //.add_output("module/prediction")   For tensorflow-lite case, add_output is not needed.
-           .run();
+    let mut session = wasmedge_tensorflow_interface::Session::new(
+        &mod_buf,
+        wasmedge_tensorflow_interface::ModelType::TensorFlowLite,
+    );
+    session
+        .add_input(
+            "module/hub_input/images_uint8",
+            &flat_img,
+            &[1, 224, 224, 3],
+        )
+        //.add_output("module/prediction")   For tensorflow-lite case, add_output is not needed.
+        .run();
 
     let res_vec: Vec<u8> = session.get_output("module/prediction");
     let mut i = 0;

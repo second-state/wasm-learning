@@ -1,7 +1,7 @@
-use ssvm_tensorflow_interface;
 use std::env;
 use std::fs::File;
 use std::io::Read;
+use wasmedge_tensorflow_interface;
 
 fn main() {
     let args: Vec<String> = env::args().collect();
@@ -15,7 +15,7 @@ fn main() {
     let mut img_buf = Vec::new();
     file_img.read_to_end(&mut img_buf).unwrap();
 
-    let flat_img = ssvm_tensorflow_interface::load_jpg_image_to_rgb32f(&img_buf, 224, 224);
+    let flat_img = wasmedge_tensorflow_interface::load_jpg_image_to_rgb32f(&img_buf, 224, 224);
     /* The `flat_img` float vector can prepared as following:
     let img = image::load_from_memory(&img_buf).unwrap().to_rgb();
     let resized = image::imageops::resize(&img, 224, 224, ::image::imageops::FilterType::Triangle);
@@ -30,10 +30,14 @@ fn main() {
     image = { version = "0.23.0", default-features = false, features = ["jpeg", "png", "gif"] }
     imageproc = "0.21.0"
     */
-    let mut session = ssvm_tensorflow_interface::Session::new(&mod_buf, ssvm_tensorflow_interface::ModelType::TensorFlow);
-    session.add_input("hub_input/images", &flat_img, &[1, 224, 224, 3])
-           .add_output("prediction")
-           .run();
+    let mut session = wasmedge_tensorflow_interface::Session::new(
+        &mod_buf,
+        wasmedge_tensorflow_interface::ModelType::TensorFlow,
+    );
+    session
+        .add_input("hub_input/images", &flat_img, &[1, 224, 224, 3])
+        .add_output("prediction")
+        .run();
     let res_vec: Vec<f32> = session.get_output("prediction");
 
     let mut i = 0;
