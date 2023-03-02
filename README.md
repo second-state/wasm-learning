@@ -13,7 +13,7 @@ Developers: [Getting started](https://www.secondstate.io/articles/getting-starte
 * WebAssembly's security and portability
 * JavaScript's ease-of-use
 
-> Quickstart: [Fork this repository](https://github.com/second-state/ssvm-nodejs-starter) and start editing the source code files on GitHub. [Learn more](hhttps://www.secondstate.io/articles/getting-started-rust-nodejs-vscode/). 
+> Quickstart: [Fork this repository](https://github.com/second-state/ssvm-nodejs-starter) and start editing the source code files on GitHub. [Learn more](https://www.secondstate.io/articles/getting-started-rust-nodejs-vscode/). 
 
 [Hello World](nodejs/hello/README.md)
 
