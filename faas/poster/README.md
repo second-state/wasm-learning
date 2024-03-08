@@ -70,4 +70,4 @@ Run the following commland to see the tested result.
 cargo run
 ```
 
-If everything goes well, follow the aboving instrcutions to publish your web application.
+If everything goes well, follow the aboving instructions to publish your web application.
