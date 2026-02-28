@@ -1,0 +1,15 @@
+model:
+  path: model/mobilenet_v2_1.4_224_frozen.pb
+  type: TensorFlow # TensorFlow / TensorFlowLite
+
+input:
+  name: input
+  size: [224,224]
+  type: rgb32f # rgb8 / rgb32f / bgr8 / bgr32f / luma8 / luma32f
+
+output:
+  name: MobilenetV2/Predictions/Softmax
+  type: f32 # u8 / f32
+  label:
+    path: model/imagenet_slim_labels.txt
+  top: 4

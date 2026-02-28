@@ -11,8 +11,8 @@ pub fn search_bytes(haystack: &[u8], needle: &[u8]) -> String {
 #[wasm_bindgen]
 pub fn search_bytes_single_input(byte_array: &[u8]) -> String {
 	// Parse the byte array to fetch the first 10 bytes as a literal number and remove the leading zero
-	// The cost of having 10 bytes to store the size (and the leading zero to ensure that one byte never exceeds 255) is negligable
-	// when compared with the dissadvantage of only being able to store up to 255 bytes per byte array and/or having to manage multidimensional arrays etc.
+	// The cost of having 10 bytes to store the size (and the leading zero to ensure that one byte never exceeds 255) is negligible
+	// when compared with the disadvantage of only being able to store up to 255 bytes per byte array and/or having to manage multidimensional arrays etc.
     let mut number_of_bytes_str = "".to_string();
     for i in 0..10 {
         number_of_bytes_str.push_str(&byte_array[i].to_string());

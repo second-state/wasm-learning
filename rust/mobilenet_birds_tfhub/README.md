@@ -1,4 +1,4 @@
-# SSVM-Tensorflow Example for Running Mobilenet_v2 Model
+# WasmEdge-Tensorflow Example for Running Mobilenet_v2 Model
 
 ## Setup the wasm32-wasi target of Cargo
 
@@ -16,28 +16,28 @@ $ cargo build --release --target=wasm32-wasi
 
 The result wasm file will be at `target/wasm32-wasi/release/mobilenet_v2.wasm`.
 
-### Get ssvm-tensorflow
+### Get WasmEdge-tensorflow
 
-### Option 1. Build ssvm-tensorflow
+### Option 1. Build WasmEdge-tensorflow
 
-Get [ssvm-tensorflow-tools](https://github.com/second-state/ssvm-tensorflow-tools).
+Get [WasmEdge-tensorflow-tools](https://github.com/second-state/WasmEdge-tensorflow-tools).
 
 ```bash
-$ docker pull secondstate/ssvm
+$ docker pull WasmEdge/WasmEdge
 $ docker run -it --rm \
-    -v <path/to/your/ssvm-tensorflow/source/folder>:/root/ssvm-tensorflow-tools \
-    secondstate/ssvm:latest
-(docker)$ cd /root/ssvm-tensorflow-tools
+    -v <path/to/your/WasmEdge-tensorflow/source/folder>:/root/WasmEdge-tensorflow-tools \
+    WasmEdge/WasmEdge:latest
+(docker)$ cd /root/WasmEdge-tensorflow-tools
 (docker)$ mkdir -p build && cd build
-# Build ssvm-tensorflow-tools
+# Build WasmEdge-tensorflow-tools
 (docker)$ cmake -DCMAKE_BUILD_TYPE=Release .. && make -j
 ```
 
-### Option 2. Get ssvm-tensorflow-tools release version
+### Option 2. Get WasmEdge-tensorflow-tools release version
 
 ```bash
-wget https://github.com/second-state/ssvm-tensorflow-tools/releases/download/0.8.0-rc1/ssvm-tensorflow-tools-0.8.0-rc1-manylinux2014_x86_64.tar.gz
-tar -zxvf ssvm-tensorflow-tools-0.8.0-rc1-manylinux2014_x86_64.tar.gz
+wget https://github.com/second-state/WasmEdge-tensorflow-tools/releases/download/0.8.0/WasmEdge-tensorflow-tools-0.8.0-manylinux2014_x86_64.tar.gz
+tar -zxvf WasmEdge-tensorflow-tools-0.8.0-manylinux2014_x86_64.tar.gz
 ./download_dependencies_all.sh  # Download the required shared libraries and make symbolic links.
 ```
 
@@ -47,15 +47,15 @@ Interpreter mode:
 
 ```bash
 # Copy input image, model, and wasm file to the current directory.
-LD_LIBRARY_PATH=. ./ssvm-tensorflow --dir .:. mobilenet_v2.wasm frozen.pb PurpleGallinule.jpg
+LD_LIBRARY_PATH=. ./wasmedge-tensorflow --dir .:. mobilenet_v2.wasm frozen.pb PurpleGallinule.jpg
 ```
 
 AOT mode:
 
 ```bash
 # Copy input image, model, and wasm file to the current directory.
-./ssvmc-tensorflow mobilenet_v2.wasm mobilenet_v2.wasm.so
-LD_LIBRARY_PATH=. ./ssvm-tensorflow --dir .:. mobilenet_v2.wasm.so frozen.pb PurpleGallinule.jpg
+./wasmedgec-tensorflow mobilenet_v2.wasm mobilenet_v2.wasm.so
+LD_LIBRARY_PATH=. ./wasmedge-tensorflow --dir .:. mobilenet_v2.wasm.so frozen.pb PurpleGallinule.jpg
 ```
 
 The output will be:

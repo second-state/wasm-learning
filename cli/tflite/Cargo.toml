@@ -1,0 +1,13 @@
+[package]
+name = "tflite_example"
+version = "0.1.0"
+authors = ["ubuntu"]
+edition = "2018"
+
+[[bin]]
+name = "classify"
+path = "src/main.rs"
+
+[dependencies]
+wasmedge_tensorflow_interface = "^0.2.0"
+

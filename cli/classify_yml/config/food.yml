@@ -1,0 +1,15 @@
+model:
+  path: model/mobilenet_v1_192res_1.0_seefood.tflite
+  type: TensorFlowLite # TensorFlow / TensorFlowLite
+
+input:
+  name: input
+  size: [192,192]
+  type: rgb8 # rgb8 / rgb32f / bgr8 / bgr32f / luma8 / luma32f
+
+output:
+  name: MobilenetV1/Predictions/Softmax
+  type: u8 # u8 / f32
+  label:
+    path: model/aiy_food_V1_labelmap.txt
+  top: 4

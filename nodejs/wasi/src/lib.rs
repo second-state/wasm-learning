@@ -4,7 +4,7 @@ use std::fs;
 use std::fs::File;
 use std::io::{Write, Read};
 use std::env;
-use ssvm_wasi_helper::ssvm_wasi_helper::_initialize;
+use wasmedge_wasi_helper::wasmedge_wasi_helper::_initialize;
 
 #[wasm_bindgen]
 pub fn get_random_i32() -> i32 {

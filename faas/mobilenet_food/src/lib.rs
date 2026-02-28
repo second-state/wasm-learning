@@ -1,5 +1,5 @@
 use wasm_bindgen::prelude::*;
-use ssvm_tensorflow_interface;
+use wasmedge_tensorflow_interface;
 use std::str;
 use std::time::{Instant};
 
@@ -22,7 +22,7 @@ pub fn infer(image_data: &[u8]) -> String {
     let model_data: &[u8] = include_bytes!("mobilenet_v1_192res_1.0_seefood.pb");
     let labels = include_str!("aiy_food_V1_labelmap.txt");
 
-    let mut session = ssvm_tensorflow_interface::Session::new(model_data, ssvm_tensorflow_interface::ModelType::TensorFlow);
+    let mut session = wasmedge_tensorflow_interface::Session::new(model_data, wasmedge_tensorflow_interface::ModelType::TensorFlow);
     session.add_input("input", &flat_img, &[1, 192, 192, 3])
            .add_output("MobilenetV1/Predictions/Softmax")
            .run();

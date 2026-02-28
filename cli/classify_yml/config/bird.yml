@@ -1,0 +1,15 @@
+model:
+  path: model/mobilenet_v2_192res_1.0_inat_bird.pb
+  type: TensorFlow # TensorFlow / TensorFlowLite
+
+input:
+  name: map/TensorArrayStack/TensorArrayGatherV3
+  size: [192,192]
+  type: rgb32f # rgb8 / rgb32f / bgr8 / bgr32f / luma8 / luma32f
+
+output:
+  name: prediction
+  type: f32 # u8 / f32
+  label:
+    path: model/aiy_birds_V1_labelmap.txt
+  top: 4

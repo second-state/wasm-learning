@@ -1,7 +1,7 @@
-use ssvm_tensorflow_interface;
 use std::env;
 use std::fs::File;
 use std::io::Read;
+use wasmedge_tensorflow_interface;
 
 fn main() {
     let args: Vec<String> = env::args().collect();
@@ -15,11 +15,11 @@ fn main() {
     let mut img_buf = Vec::new();
     file_img.read_to_end(&mut img_buf).unwrap();
 
-    let flat_img = ssvm_tensorflow_interface::load_jpg_image_to_rgb8(&img_buf, 640, 640);
+    let flat_img = wasmedge_tensorflow_interface::load_jpg_image_to_rgb8(&img_buf, 640, 640);
 
-    let mut session = ssvm_tensorflow_interface::Session::new(
+    let mut session = wasmedge_tensorflow_interface::Session::new(
         &mod_buf,
-        ssvm_tensorflow_interface::ModelType::TensorFlow,
+        wasmedge_tensorflow_interface::ModelType::TensorFlow,
     );
     session
         .add_input("input_tensor", &flat_img, &[1, 640, 640, 3])
